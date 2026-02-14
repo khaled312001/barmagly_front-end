@@ -102,16 +102,16 @@ export default function PublicRepairPage() {
                     </Button>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <Button asChild variant="outline" fullWidth>
-                            <Link href="/">
+                        <Link href="/" className="w-full">
+                            <Button variant="outline" fullWidth>
                                 <Home size={18} className="mr-2" /> Back to Home
-                            </Link>
-                        </Button>
-                        <Button asChild variant="outline" fullWidth>
-                            <Link href="/admin/login">
+                            </Button>
+                        </Link>
+                        <Link href="/admin/login" className="w-full">
+                            <Button variant="outline" fullWidth>
                                 <Lock size={18} className="mr-2" /> Go to Login
-                            </Link>
-                        </Button>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
