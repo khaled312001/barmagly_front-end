@@ -18,6 +18,10 @@ export default function PublicRepairPage() {
     const { showToast } = useToast();
 
     const handleInitialize = async () => {
+        if (!process.env.NEXT_PUBLIC_API_URL) {
+            showToast('API URL is not configured. Please set NEXT_PUBLIC_API_URL', 'error');
+            return;
+        }
         setLoading(true);
         setLogs([]);
         setStatus('idle');
