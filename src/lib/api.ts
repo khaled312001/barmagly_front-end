@@ -141,3 +141,9 @@ export const adminApi = {
     getPageSections: (page: string) => authClient.get(`/admin/pages/${page}`),
     updatePageSection: (page: string, section: string, data: any) => authClient.post(`/admin/pages/${page}/sections/${section}`, data),
 };
+
+export const systemApi = {
+    getHealth: () => axios.get(`${API_URL}/system/health`),
+    getStatus: () => authClient.get('/system/status'),
+    runRepair: () => authClient.post('/system/repair'),
+};
