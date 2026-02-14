@@ -33,11 +33,7 @@ export default function AdminMediaPage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { showToast } = useToast();
 
-    useEffect(() => {
-        fetchMedia();
-    }, []);
-
-    const fetchMedia = async () => {
+    const fetchMedia = useCallback(async () => {
         try {
             const { data } = await adminApi.getMedia();
             setItems(data);
@@ -46,7 +42,11 @@ export default function AdminMediaPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
+
+    useEffect(() => {
+        fetchMedia();
+    }, [fetchMedia]);
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

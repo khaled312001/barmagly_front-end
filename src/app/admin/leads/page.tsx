@@ -38,11 +38,7 @@ export default function LeadsPage() {
     const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
     const { showToast } = useToast();
 
-    useEffect(() => {
-        fetchLeads();
-    }, [page, filter]);
-
-    const fetchLeads = async () => {
+    const fetchLeads = useCallback(async () => {
         setLoading(true);
         try {
             const params: Record<string, string> = { page: String(page), limit: '20' };
@@ -55,7 +51,11 @@ export default function LeadsPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, filter]);
+
+    useEffect(() => {
+        fetchLeads();
+    }, [fetchLeads]);
 
     const updateStatus = async (id: string, status: string) => {
         try {

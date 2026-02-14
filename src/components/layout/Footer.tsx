@@ -28,7 +28,7 @@ export function Footer() {
 
     // Use settings or fallbacks
     const address = settings?.address || COMPANY_ADDRESS;
-    const email = settings?.email || 'info@barmagly.com';
+    const email = settings?.email || 'info@barmagly.ch';
     const phone = settings?.phone || '+41 77 941 21 26';
     const license = settings?.license || COMPANY_LICENSE;
     const whatsapp = settings?.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}` : WHATSAPP_URL;

@@ -637,7 +637,7 @@ function ContactFormSection({ data }: { data?: any }) {
                                     { icon: <Globe size={20} />, title: 'Location', content: COMPANY_ADDRESS, color: 'cyan' },
                                     { icon: <Shield size={20} />, title: 'Swiss License', content: COMPANY_LICENSE, color: 'purple' },
                                     { icon: <Smartphone size={20} />, title: 'WhatsApp', content: '+41 77 941 21 26', color: 'cyan' },
-                                    { icon: <Mail size={20} />, title: 'Email Us', content: 'info@barmagly.com', color: 'purple' },
+                                    { icon: <Mail size={20} />, title: 'Email Us', content: 'info@barmagly.ch', color: 'purple' },
                                 ].map((item, i) => (
                                     <div key={i} className="glass-card p-6 border-white/5 hover:border-brand-accent/20 transition-all group/info hover:bg-white/[0.01]">
                                         <div className="flex items-center gap-4 mb-4">

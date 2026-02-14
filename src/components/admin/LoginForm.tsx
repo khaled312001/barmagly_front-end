@@ -97,7 +97,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                                 <Input
                                     label="Admin Email"
                                     type="email"
-                                    placeholder="admin@barmagly.com"
+                                    placeholder="admin@barmagly.ch"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required

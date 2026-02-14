@@ -83,11 +83,8 @@ export default function BlogPage() {
             );
         }
 
-        setFilteredProjects(result); // Using setFilteredPosts
-    }, [activeCategory, searchQuery, posts]);
-
-    // Renamed setFilteredProjects to setFilteredPosts in effect above... fixed below
-    const setFilteredProjects = setFilteredPosts;
+        setFilteredPosts(result);
+    }, [activeCategory, searchQuery, posts, setFilteredPosts]);
 
     return (
         <>

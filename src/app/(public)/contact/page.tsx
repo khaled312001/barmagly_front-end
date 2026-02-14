@@ -15,7 +15,7 @@ import { useSiteSettings } from '@/lib/contexts/SiteContext';
 export default function ContactPage() {
     const { settings } = useSiteSettings();
     const address = settings?.address || COMPANY_ADDRESS;
-    const email = settings?.email || 'info@barmagly.com';
+    const email = settings?.email || 'info@barmagly.ch';
     const whatsapp = settings?.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}` : WHATSAPP_URL;
 
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
