@@ -12,7 +12,6 @@ import {
 import { useAuthStore } from '@/store';
 import { adminApi } from '@/lib/api';
 import { cn } from '@/lib/utils';
-import { ToastProvider } from '@/components/ui/Toast';
 
 const sidebarLinks = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -211,11 +210,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 {/* Content */}
                 <main className="flex-1 p-6 lg:p-10">
-                    <ToastProvider>
-                        <div className="max-w-[1600px] mx-auto">
-                            {children}
-                        </div>
-                    </ToastProvider>
+                    <div className="max-w-[1600px] mx-auto">
+                        {children}
+                    </div>
                 </main>
             </div>
         </div>

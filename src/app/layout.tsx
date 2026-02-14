@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { ToastProvider } from '@/components/ui/Toast';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://barmagly.com'),
@@ -97,7 +98,11 @@ export default function RootLayout({
                     }}
                 />
             </head>
-            <body className="antialiased">{children}</body>
+            <body className="antialiased">
+                <ToastProvider>
+                    {children}
+                </ToastProvider>
+            </body>
         </html>
     );
 }
