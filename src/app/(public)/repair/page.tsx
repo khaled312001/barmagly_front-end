@@ -158,7 +158,7 @@ export default function PublicRepairPage() {
                     <div className="space-y-1">
                         <p className="text-xs font-bold text-brand-text">Important Note</p>
                         <p className="text-[11px] text-brand-muted leading-relaxed">
-                            This tool creates the user <strong>admin@barmagly.ch</strong> with password <strong>admin123</strong>.
+                            This tool creates the user <strong>admin@barmagly.tech</strong> with password <strong>admin123</strong>.
                             If it fails, ensure <code>DATABASE_URL</code> is correctly set in your Vercel project settings.
                         </p>
                     </div>
