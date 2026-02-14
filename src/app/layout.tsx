@@ -3,7 +3,7 @@ import './globals.css';
 import { ToastProvider } from '@/components/ui/Toast';
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://barmagly.com'),
+    metadataBase: new URL('https://www.barmagly.tech'),
     title: {
         default: 'Barmagly | Swiss Licensed Software Development Company',
         template: '%s | Barmagly',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://barmagly.com',
+        url: 'https://www.barmagly.tech',
         siteName: 'Barmagly',
         title: 'Barmagly | Swiss Licensed Software Development Company',
         description:
@@ -77,8 +77,8 @@ export default function RootLayout({
                             '@context': 'https://schema.org',
                             '@type': 'Organization',
                             name: 'Barmagly',
-                            url: 'https://barmagly.com',
-                            logo: 'https://barmagly.com/logo.png',
+                            url: 'https://www.barmagly.tech',
+                            logo: 'https://www.barmagly.tech/logo.png',
                             description:
                                 'Swiss-licensed software development company specializing in enterprise solutions.',
                             address: {
