@@ -28,7 +28,7 @@ export default function AdminSystemPage() {
     const [repairLogs, setRepairLogs] = useState<string[]>([]);
     const { showToast } = useToast();
 
-    const fetchStatus = async () => {
+    const fetchStatus = React.useCallback(async () => {
         try {
             setLoading(true);
             const { data } = await systemApi.getStatus();
@@ -38,11 +38,11 @@ export default function AdminSystemPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showToast]);
 
     useEffect(() => {
         fetchStatus();
-    }, []);
+    }, [fetchStatus]);
 
     const handleRepair = async () => {
         if (!confirm('This will verify critical data and re-seed the admin if missing. Continue?')) return;
@@ -145,7 +145,7 @@ export default function AdminSystemPage() {
                     <div className="p-3 rounded-xl bg-brand-accent/5 border border-brand-accent/10">
                         <p className="text-[10px] text-brand-accent leading-relaxed">
                             <AlertTriangle className="inline mr-1" size={10} />
-                            If variables show "Missing", ensure they are correctly set in the Vercel Dashboard and the site is redeployed.
+                            If variables show &quot;Missing&quot;, ensure they are correctly set in the Vercel Dashboard and the site is redeployed.
                         </p>
                     </div>
                 </motion.div>
