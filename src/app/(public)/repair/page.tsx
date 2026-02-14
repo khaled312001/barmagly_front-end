@@ -74,8 +74,15 @@ export default function PublicRepairPage() {
                             <span>Connectivity</span>
                         </div>
                         <p className="text-xs text-brand-muted">
-                            API URL: <span className="text-brand-accent truncate block">{process.env.NEXT_PUBLIC_API_URL || 'Not Set'}</span>
+                            API URL: <span className={process.env.NEXT_PUBLIC_API_URL ? "text-brand-accent truncate block" : "text-red-400 font-bold truncate block"}>
+                                {process.env.NEXT_PUBLIC_API_URL || 'MISSING (Check Vercel Environment Variables)'}
+                            </span>
                         </p>
+                        {!process.env.NEXT_PUBLIC_API_URL?.endsWith('/api') && process.env.NEXT_PUBLIC_API_URL && (
+                            <p className="text-[10px] text-yellow-500 font-medium">
+                                Warning: URL should probably end with /api
+                            </p>
+                        )}
                     </div>
                     <div className="p-4 rounded-2xl bg-brand-surface border border-brand-glass-border space-y-2">
                         <div className="flex items-center gap-2 text-brand-text font-bold text-sm">

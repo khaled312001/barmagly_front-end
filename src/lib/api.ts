@@ -1,6 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const getBaseUrl = () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || '';
+    if (!url) return '';
+    // If the user forgot /api, we can add it, but it's risky if they just put the domain.
+    // Let's just return it as is but ensure no trailing slash.
+    return url.replace(/\/$/, '');
+};
+
+const API_URL = getBaseUrl();
 
 // ============ PUBLIC API ============
 
