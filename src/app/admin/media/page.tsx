@@ -66,7 +66,7 @@ export default function AdminMediaPage() {
 
             // Re-checking api.ts... it has 'createMedia'? No, it has 'getMedia' and 'deleteMedia', but not upload.
             // Let me add createMedia to adminApi first.
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/admin/media`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ''}/admin/media`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -99,7 +99,8 @@ export default function AdminMediaPage() {
     };
 
     const copyUrl = (url: string) => {
-        const fullUrl = `${window.location.origin.replace(':3000', ':3001')}${url}`;
+        const backendBase = (process.env.NEXT_PUBLIC_API_URL || '').replace('/api', '');
+        const fullUrl = `${backendBase}${url}`;
         navigator.clipboard.writeText(fullUrl);
         showToast('URL copied to clipboard', 'success');
     };

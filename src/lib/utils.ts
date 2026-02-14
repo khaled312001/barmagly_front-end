@@ -30,7 +30,7 @@ export const WHATSAPP_NUMBER = '+41779412126';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\+/g, '')}`;
 export const COMPANY_ADDRESS = 'Hardstrasse 201, 8005 Zürich, Switzerland';
 export const COMPANY_LICENSE = 'CHE-154.312.079';
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 export function formatBytes(bytes: number, decimals: number = 2): string {
     if (bytes === 0) return '0 Bytes';

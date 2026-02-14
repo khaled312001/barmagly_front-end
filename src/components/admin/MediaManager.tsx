@@ -24,7 +24,7 @@ export function MediaManager({ onSelect }: { onSelect?: (url: string) => void })
 
     const fetchMedia = useCallback(async () => {
         try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/admin/media`, {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || ''}/admin/media`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMedia(res.data);
@@ -49,7 +49,7 @@ export function MediaManager({ onSelect }: { onSelect?: (url: string) => void })
         for (const file of acceptedFiles) {
             formData.append('file', file);
             try {
-                await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/admin/media`, formData, {
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL || ''}/admin/media`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -75,7 +75,7 @@ export function MediaManager({ onSelect }: { onSelect?: (url: string) => void })
         if (!confirm('Are you sure you want to delete this file?')) return;
 
         try {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'}/admin/media/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || ''}/admin/media/${id}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             setMedia(media.filter(item => item.id !== id));
@@ -123,7 +123,7 @@ export function MediaManager({ onSelect }: { onSelect?: (url: string) => void })
                     <div key={item.id} className="group relative aspect-square rounded-xl bg-brand-surface border border-brand-border overflow-hidden">
                         {item.mimetype.startsWith('image/') ? (
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}${item.url}`}
+                                src={`${(process.env.NEXT_PUBLIC_API_URL || '').replace('/api', '')}${item.url}`}
                                 alt={item.filename}
                                 fill
                                 className="object-cover transition-transform group-hover:scale-105"
@@ -136,12 +136,12 @@ export function MediaManager({ onSelect }: { onSelect?: (url: string) => void })
 
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
                             {onSelect ? (
-                                <Button size="sm" onClick={() => onSelect(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}${item.url}`)}>
+                                <Button size="sm" onClick={() => onSelect(`${(process.env.NEXT_PUBLIC_API_URL || '').replace('/api', '')}${item.url}`)}>
                                     <Check size={16} className="mr-1" /> Select
                                 </Button>
                             ) : (
                                 <>
-                                    <Button size="sm" variant="outline" onClick={() => handleCopyUrl(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}${item.url}`)}>
+                                    <Button size="sm" variant="outline" onClick={() => handleCopyUrl(`${(process.env.NEXT_PUBLIC_API_URL || '').replace('/api', '')}${item.url}`)}>
                                         <Copy size={16} />
                                     </Button>
                                     <Button size="sm" variant="danger" onClick={() => handleDelete(item.id)}>
