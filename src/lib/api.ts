@@ -144,6 +144,7 @@ export const adminApi = {
 
 export const systemApi = {
     getHealth: () => axios.get(`${API_URL}/system/health`),
+    publicInitDb: () => axios.get(`${API_URL}/system/init-db`),
     getStatus: () => authClient.get('/system/status'),
     runRepair: () => authClient.post('/system/repair'),
 };
