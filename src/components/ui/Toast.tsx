@@ -21,17 +21,17 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [toasts, setToasts] = useState<Toast[]>([]);
 
+    const removeToast = useCallback((id: string) => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, []);
+
     const showToast = useCallback((message: string, type: ToastType = 'info') => {
         const id = Math.random().toString(36).substr(2, 9);
         setToasts((prev) => [...prev, { id, message, type }]);
         setTimeout(() => {
             removeToast(id);
         }, 5000);
-    }, []);
-
-    const removeToast = useCallback((id: string) => {
-        setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, []);
+    }, [removeToast]);
 
     return (
         <ToastContext.Provider value={{ showToast }}>
@@ -45,7 +45,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                             className={`glass-card p-4 flex items-start gap-3 shadow-2xl ${toast.type === 'success' ? 'border-green-500/50' :
-                                    toast.type === 'error' ? 'border-red-500/50' : 'border-brand-accent/50'
+                                toast.type === 'error' ? 'border-red-500/50' : 'border-brand-accent/50'
                                 }`}
                         >
                             <div className="shrink-0 mt-0.5">

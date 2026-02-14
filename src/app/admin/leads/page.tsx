@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Filter, Download, Eye, ChevronLeft, ChevronRight, MessageSquare, Info, Trash2, CheckCircle } from 'lucide-react';
 import { adminApi } from '@/lib/api';

@@ -9,6 +9,7 @@ import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, heroTextReveal } from '@/lib/animations';
 import { publicApi } from '@/lib/api';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ProjectDetailPage() {
     const { slug } = useParams();
@@ -113,7 +114,14 @@ export default function ProjectDetailPage() {
             <section className="relative px-4 sm:px-8">
                 <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video relative group">
                     {project.image ? (
-                        <img src={project.image} alt={project.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+                        <div className="relative w-full h-full">
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                className="object-cover transform group-hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
                     ) : (
                         <div className="w-full h-full bg-brand-surface flex items-center justify-center">
                             <Layers size={64} className="text-brand-muted opacity-20" />
@@ -164,7 +172,12 @@ export default function ProjectDetailPage() {
                                             <div className="grid grid-cols-2 gap-4">
                                                 {project.images.map((img: any) => (
                                                     <div key={img.id} className="aspect-square rounded-lg overflow-hidden bg-brand-surface relative">
-                                                        <img src={img.url} alt={img.alt || 'Gallery'} className="w-full h-full object-cover" />
+                                                        <Image
+                                                            src={img.url}
+                                                            alt={img.alt || 'Gallery image'}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
                                                     </div>
                                                 ))}
                                             </div>

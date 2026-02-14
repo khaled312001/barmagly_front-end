@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/FormElements';
 import { useToast } from '@/components/ui/Toast';
 import { formatBytes } from '@/lib/utils';
 import { staggerContainer, staggerItem } from '@/lib/animations';
+import Image from 'next/image';
 
 interface MediaItem {
     id: string;
@@ -210,11 +211,14 @@ export default function AdminMediaPage() {
                                 <>
                                     <div className="aspect-square relative bg-brand-surface/50 flex items-center justify-center">
                                         {item.mimetype.startsWith('image/') ? (
-                                            <img
-                                                src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001'}${item.url}`}
-                                                alt={item.alt || item.filename}
-                                                className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                                            />
+                                            <div className="relative w-full h-full">
+                                                <Image
+                                                    src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001'}${item.url}`}
+                                                    alt={item.alt || item.filename}
+                                                    fill
+                                                    className="object-cover transition-transform group-hover:scale-110"
+                                                />
+                                            </div>
                                         ) : (
                                             <div className="flex flex-col items-center gap-2">
                                                 {getFileIcon(item.mimetype)}
@@ -243,11 +247,13 @@ export default function AdminMediaPage() {
                                 </>
                             ) : (
                                 <>
-                                    <div className="w-12 h-12 rounded-lg bg-brand-surface flex items-center justify-center shrink-0 overflow-hidden">
+                                    <div className="w-12 h-12 rounded-lg bg-brand-surface flex items-center justify-center shrink-0 overflow-hidden relative">
                                         {item.mimetype.startsWith('image/') ? (
-                                            <img
+                                            <Image
                                                 src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001'}${item.url}`}
-                                                className="w-full h-full object-cover"
+                                                alt={item.alt || item.filename}
+                                                fill
+                                                className="object-cover"
                                             />
                                         ) : getFileIcon(item.mimetype)}
                                     </div>
@@ -301,10 +307,14 @@ export default function AdminMediaPage() {
                                     <X size={20} />
                                 </button>
                                 {selectedItem.mimetype.startsWith('image/') ? (
-                                    <img
-                                        src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001'}${selectedItem.url}`}
-                                        className="max-w-full max-h-full object-contain shadow-2xl"
-                                    />
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3001'}${selectedItem.url}`}
+                                            alt={selectedItem.alt || selectedItem.filename}
+                                            fill
+                                            className="object-contain shadow-2xl"
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="flex flex-col items-center gap-4">
                                         <div className="w-24 h-24 rounded-2xl bg-brand-surface flex items-center justify-center text-brand-accent">

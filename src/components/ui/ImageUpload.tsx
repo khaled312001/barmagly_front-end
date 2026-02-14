@@ -6,6 +6,7 @@ import { adminApi } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/components/ui/Toast';
+import Image from 'next/image';
 
 interface ImageUploadProps {
     value?: string;
@@ -51,7 +52,7 @@ export function ImageUpload({ value, onChange, label = "Upload Image", className
             <div className="relative">
                 {value ? (
                     <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 group">
-                        <img src={value} alt="Preview" className="w-full h-full object-cover" />
+                        <Image src={value} alt="Preview" fill className="object-cover" />
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Button
                                 type="button"

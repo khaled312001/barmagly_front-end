@@ -15,6 +15,7 @@ import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations'
 import { WHATSAPP_URL } from '@/lib/utils';
 import { publicApi } from '@/lib/api';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // Helper to render icon dynamically
 const DynamicIcon = ({ name, size = 48, className = "" }: { name: string; size?: number; className?: string }) => {
@@ -153,7 +154,14 @@ export default function ServiceDetailPage() {
                         >
                             <div className="relative z-10 p-1 glass-card border-white/10 rounded-[2.5rem] overflow-hidden lg:h-[600px] w-full shadow-2xl">
                                 {service.image ? (
-                                    <img src={service.image} alt={service.title} className="w-full h-full object-cover rounded-[2rem]" />
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src={service.image}
+                                            alt={service.title}
+                                            fill
+                                            className="object-cover rounded-[2rem]"
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="w-full h-full bg-brand-surface flex items-center justify-center rounded-[2.2rem] flex-col gap-8">
                                         <div className="relative">
