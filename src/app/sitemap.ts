@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
-import { adminApi, publicApi } from '@/lib/api'; // Or direct fetch if possible, but api client works
+import { publicApi } from '@/lib/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://barmagly.com';
+    const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://www.barmagly.tech';
 
     // Static routes
     const routes = [
@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         '/portfolio',
         '/blog',
         '/contact',
+        '/repair', // Utility page
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
@@ -19,9 +20,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: route === '' ? 1 : 0.8,
     }));
 
-    // Dynamic routes (fetch from API ideally, but for now placeholder or try fetch)
-    // Since this runs at build time or request time on server, we can fetch
-    // But let's keep it simple and robust for now given limited context access to exact API shape here without complex setup
+    try {
+        // Fetch dynamic routes concurrently
+        const [servicesRes, portfolioRes, blogRes] = await Promise.all([
+            publicApi.getServices().catch(() => ({ data: [] })),
+            publicApi.getPortfolio().catch(() => ({ data: [] })),
+            publicApi.getBlog().catch(() => ({ data: { posts: [] } })), // Blog usually returns { posts: [], meta: ... }
+        ]);
 
-    return [...routes];
+        const services = (servicesRes.data || []).map((service: any) => ({
+            url: `${baseUrl}/services/${service.slug}`,
+            lastModified: new Date(service.updatedAt || new Date()),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        }));
+
+        const portfolio = (portfolioRes.data || []).map((project: any) => ({
+            url: `${baseUrl}/portfolio/${project.slug}`,
+            lastModified: new Date(project.updatedAt || new Date()),
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+        }));
+
+        // Handle potential different response structure for blog (pagination etc)
+        const blogPosts = (Array.isArray(blogRes.data) ? blogRes.data : (blogRes.data.posts || [])).map((post: any) => ({
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: new Date(post.updatedAt || new Date()),
+            changeFrequency: 'weekly' as const,
+            priority: 0.7,
+        }));
+
+        return [...routes, ...services, ...portfolio, ...blogPosts];
+
+    } catch (error) {
+        console.error('Sitemap generation failed to fetch dynamic content:', error);
+        return [...routes];
+    }
 }
