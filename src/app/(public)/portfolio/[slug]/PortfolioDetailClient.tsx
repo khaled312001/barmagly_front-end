@@ -85,28 +85,8 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
                 </div>
             </section>
 
-            {/* Main Image */}
-            <section className="relative px-4 sm:px-8">
-                <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-video relative group">
-                    {project.image ? (
-                        <div className="relative w-full h-full">
-                            <Image
-                                src={project.image}
-                                alt={project.title}
-                                fill
-                                className="object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            />
-                        </div>
-                    ) : (
-                        <div className="w-full h-full bg-brand-surface flex items-center justify-center">
-                            <Layers size={64} className="text-brand-muted opacity-20" />
-                        </div>
-                    )}
-                </div>
-            </section>
-
             {/* Content & Tech Stack */}
-            <section className="section-padding">
+            <section className="section-padding pt-0">
                 <div className="section-container">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
                         <div className="lg:col-span-2 space-y-12">
