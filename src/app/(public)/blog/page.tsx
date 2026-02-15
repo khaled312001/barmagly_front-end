@@ -36,8 +36,9 @@ export default function BlogPage() {
         const fetchPosts = async () => {
             try {
                 const { data } = await publicApi.getBlog({ status: 'PUBLISHED' });
-                // Normalize data
-                const mapped = data.map((p: any) => ({
+                // Normalize data - API returns { posts: [], pagination: {} }
+                const postsData = Array.isArray(data) ? data : (data.posts || []);
+                const mapped = postsData.map((p: any) => ({
                     id: p.id,
                     slug: p.slug,
                     title: p.title,
