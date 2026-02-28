@@ -8,9 +8,11 @@ import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations'
 import { COMPANY_LICENSE, COMPANY_ADDRESS } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 // ============ HERO ============
 function AboutHero() {
+    const dict = useDictionary();
     return (
         <section className="relative pt-48 pb-24 overflow-hidden bg-brand-primary">
             {/* Background Effects */}
@@ -57,20 +59,20 @@ function AboutHero() {
                     <motion.div variants={heroTextReveal} className="mb-8">
                         <span className="inline-flex items-center gap-2 px-6 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-[0.2em] bg-brand-glass border border-brand-accent/30 text-brand-accent shadow-neon-cyan backdrop-blur-md">
                             <Zap size={14} className="animate-pulse" />
-                            Digital Excellence
+                            {dict.about.hero.badge}
                         </span>
                     </motion.div>
 
                     <motion.h1 variants={heroTextReveal} className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 leading-[1.1] tracking-tight">
-                        Crafting Digital <br />
+                        {dict.about.hero.titleLine1} <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_20px_rgba(0,212,255,0.3)]">
-                            Solutions with Precision
+                            {dict.about.hero.titleHighlight}
                         </span>
                     </motion.h1>
 
-                    <motion.p variants={heroTextReveal} className="text-xl md:text-2xl text-brand-muted leading-relaxed max-w-2xl mx-auto font-light">
-                        We are a <span className="text-white font-semibold">Swiss-licensed</span> software power-house, engineering advanced systems that redefine industry standards through precision and innovation.
-                    </motion.p>
+                    <motion.div variants={heroTextReveal}>
+                        <p className="text-xl md:text-2xl text-brand-muted leading-relaxed max-w-2xl mx-auto font-light" dangerouslySetInnerHTML={{ __html: dict.about.hero.subtitle }} />
+                    </motion.div>
                 </motion.div>
             </div>
         </section>
@@ -80,6 +82,7 @@ function AboutHero() {
 // ============ STORY ============
 function StorySection() {
     const { settings } = useSiteSettings();
+    const dict = useDictionary();
     const address = settings?.address || COMPANY_ADDRESS;
     const license = settings?.license || COMPANY_LICENSE;
 
@@ -92,26 +95,24 @@ function StorySection() {
                         <div className="relative">
                             <div className="absolute -top-10 -left-10 w-24 h-24 bg-brand-accent/5 rounded-full blur-3xl" />
                             <SectionHeading
-                                badge="Our Origin"
-                                title="From Zürich to the World"
+                                badge={dict.about.story.badge}
+                                title={dict.about.story.title}
                                 align="left"
-                                description="Barmagly was born from a simple yet powerful vision: to bridge the gap between cutting-edge technology and real-world business needs."
+                                description={dict.about.story.desc1}
                             />
                             <div className="space-y-6 text-brand-muted leading-relaxed text-lg font-light">
+                                <p dangerouslySetInnerHTML={{ __html: dict.about.story.desc2 }} />
                                 <p>
-                                    Founded in the Heart of <span className="text-white font-medium">Switzerland</span>, we set out to create software solutions that don&apos;t just meet expectations — they redefine them through absolute technical excellence.
-                                </p>
-                                <p>
-                                    Our multidisciplinary team combines Swiss engineering traditions with global innovative speed. We specialize in architecting complex digital ecosystems that empower businesses to lead in a technology-first world.
+                                    {dict.about.story.desc3}
                                 </p>
                                 <div className="pt-6 grid grid-cols-2 gap-4">
                                     <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 group hover:border-brand-accent/30 transition-colors">
-                                        <p className="text-brand-accent font-display font-bold text-3xl mb-1">100+</p>
-                                        <p className="text-xs uppercase tracking-widest opacity-60">Projects Delivered</p>
+                                        <p className="text-brand-accent font-display font-bold text-3xl mb-1">{dict.about.story.stat1Value}</p>
+                                        <p className="text-xs uppercase tracking-widest opacity-60">{dict.about.story.stat1Label}</p>
                                     </div>
                                     <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 group hover:border-brand-secondary/30 transition-colors">
-                                        <p className="text-brand-secondary font-display font-bold text-3xl mb-1">5+</p>
-                                        <p className="text-xs uppercase tracking-widest opacity-60">Years of Innovation</p>
+                                        <p className="text-brand-secondary font-display font-bold text-3xl mb-1">{dict.about.story.stat2Value}</p>
+                                        <p className="text-xs uppercase tracking-widest opacity-60">{dict.about.story.stat2Label}</p>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +125,7 @@ function StorySection() {
                             <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent to-brand-secondary rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
 
                             <div className="glass-card p-10 relative overflow-hidden bg-brand-dark/50 border-white/10 backdrop-blur-2xl">
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[100px] -mr-32 -mt-32" />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[100px] rtl:-ml-32 rtl:mr-auto ltr:-mr-32 -mt-32" />
 
                                 <div className="relative space-y-10">
                                     <div className="flex items-start gap-6 group/item">
@@ -132,7 +133,7 @@ function StorySection() {
                                             <Shield size={28} />
                                         </div>
                                         <div>
-                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">Swiss Licensed Enterprise</p>
+                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.licenseTitle}</p>
                                             <p className="text-brand-accent font-mono text-sm tracking-widest bg-brand-accent/5 px-3 py-1 rounded-md border border-brand-accent/10 inline-block">
                                                 {license}
                                             </p>
@@ -144,9 +145,9 @@ function StorySection() {
                                             <Award size={28} />
                                         </div>
                                         <div>
-                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">Quality Certified</p>
+                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.qualityTitle}</p>
                                             <p className="text-brand-muted text-sm leading-relaxed">
-                                                Adhering to the most rigorous Swiss standards for software engineering and data security.
+                                                {dict.about.story.qualityDesc}
                                             </p>
                                         </div>
                                     </div>
@@ -169,6 +170,7 @@ function StorySection() {
 
 // ============ MISSION & VISION ============
 function MissionVisionSection() {
+    const dict = useDictionary();
     return (
         <section className="section-padding relative overflow-hidden bg-brand-primary">
             <div className="absolute inset-0 bg-accent-gradient opacity-5" />
@@ -182,10 +184,8 @@ function MissionVisionSection() {
                             <div className="p-4 rounded-2xl bg-brand-accent/10 text-brand-accent w-fit mb-8 border border-brand-accent/20 group-hover:shadow-neon-cyan transition-all duration-500">
                                 <Target size={32} />
                             </div>
-                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">Our Mission</h3>
-                            <p className="text-brand-muted leading-relaxed text-lg font-light">
-                                To empower businesses worldwide with <span className="text-white font-medium">innovative, reliable, and scalable</span> software solutions. We are committed to transforming complex challenges into elegant digital experiences that drive measurable growth and lasting impact.
-                            </p>
+                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">{dict.about.missionVision.missionTitle}</h3>
+                            <p className="text-brand-muted leading-relaxed text-lg font-light" dangerouslySetInnerHTML={{ __html: dict.about.missionVision.missionDesc }} />
                         </div>
                     </SectionReveal>
 
@@ -195,10 +195,8 @@ function MissionVisionSection() {
                             <div className="p-4 rounded-2xl bg-brand-secondary/10 text-brand-secondary w-fit mb-8 border border-brand-secondary/20 group-hover:shadow-neon-purple transition-all duration-500">
                                 <Eye size={32} />
                             </div>
-                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">Our Vision</h3>
-                            <p className="text-brand-muted leading-relaxed text-lg font-light">
-                                To be the leading <span className="text-white font-medium">Swiss software company</span> recognized globally for innovation, quality, and client success. We envision a future where every business, regardless of size, can harness the power of technology to reach its full potential.
-                            </p>
+                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">{dict.about.missionVision.visionTitle}</h3>
+                            <p className="text-brand-muted leading-relaxed text-lg font-light" dangerouslySetInnerHTML={{ __html: dict.about.missionVision.visionDesc }} />
                         </div>
                     </SectionReveal>
                 </div>
@@ -209,37 +207,40 @@ function MissionVisionSection() {
 
 // ============ VALUES ============
 function ValuesSection({ data }: { data?: any[] }) {
+    const dict = useDictionary();
     const iconMap: Record<string, React.ReactNode> = {
         'Excellence': <Award size={28} />,
+        'التميز': <Award size={28} />,
         'Innovation': <Lightbulb size={28} />,
+        'الابتكار': <Lightbulb size={28} />,
         'Integrity': <Heart size={28} />,
+        'النزاهة': <Heart size={28} />,
         'Collaboration': <Users size={28} />,
+        'التعاون': <Users size={28} />,
         'Reliability': <Shield size={28} />,
+        'الموثوقية': <Shield size={28} />,
         'Impact': <Target size={28} />,
+        'التأثير': <Target size={28} />,
     };
 
-    const defaultValues = [
-        { icon: <Award size={28} />, title: 'Excellence', desc: 'We deliver nothing short of the highest quality in every single unit of code.', color: 'cyan' },
-        { icon: <Lightbulb size={28} />, title: 'Innovation', desc: 'Continuously pushing boundaries with futuristic technical solutions.', color: 'purple' },
-        { icon: <Heart size={28} />, title: 'Integrity', desc: 'Transparent, honest, and ethical in every partnership we build.', color: 'cyan' },
-        { icon: <Users size={28} />, title: 'Collaboration', desc: 'Working closely with clients as true architects of their success.', color: 'purple' },
-        { icon: <Shield size={28} />, title: 'Reliability', desc: 'Delivering on our promises with Swiss precision, every time.', color: 'cyan' },
-        { icon: <Target size={28} />, title: 'Impact', desc: 'Creating digital solutions that make a tangible difference.', color: 'purple' },
-    ];
+    const defaultValues: any[] = dict.about.values.default;
 
     const displayValues = data ? data.map(v => ({
         ...v,
         icon: iconMap[v.title] || <Award size={28} />
-    })) : defaultValues;
+    })) : defaultValues.map(v => ({
+        ...v,
+        icon: iconMap[v.title] || <Award size={28} />
+    }));
 
     return (
         <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-white/5">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <SectionHeading
-                    badge="Core Principles"
-                    title="The Barmagly DNA"
-                    description="These core values are the foundation of everything we architect."
+                    badge={dict.about.values.badge}
+                    title={dict.about.values.title}
+                    description={dict.about.values.description}
                 />
 
                 <motion.div
@@ -270,14 +271,8 @@ function ValuesSection({ data }: { data?: any[] }) {
 
 // ============ TIMELINE ============
 function TimelineSection({ data }: { data?: any[] }) {
-    const defaultMilestones = [
-        { year: '2019', title: 'Company Founded', desc: 'Barmagly established in Zürich, Switzerland with a vision for tech excellence.' },
-        { year: '2020', title: 'Enterprise Milestone', desc: 'Delivered our first large-scale enterprise system for a Swiss financial client.' },
-        { year: '2021', title: 'Core Expansion', desc: 'Grew to 15+ specialists across architecture, development and digital design.' },
-        { year: '2022', title: 'Global Reach', desc: 'Extended innovation to clients across Europe and the Middle East.' },
-        { year: '2023', title: '150+ Projects', desc: 'Milestone of delivering over 150 successful high-performance solutions.' },
-        { year: '2024', title: 'Future Tech Hub', desc: 'Launched R&D division for AI integration and enterprise cloud systems.' },
-    ];
+    const dict = useDictionary();
+    const defaultMilestones = dict.about.timeline.default;
 
     const milestones = data || defaultMilestones;
 
@@ -285,7 +280,7 @@ function TimelineSection({ data }: { data?: any[] }) {
         <section className="section-padding relative overflow-hidden bg-brand-primary">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
-                <SectionHeading badge="The Journey" title="Innovation Milestones" />
+                <SectionHeading badge={dict.about.timeline.badge} title={dict.about.timeline.title} />
 
                 <div className="relative max-w-5xl mx-auto mt-20">
                     <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-brand-accent/50 via-brand-secondary/50 to-transparent hidden md:block">
@@ -297,7 +292,7 @@ function TimelineSection({ data }: { data?: any[] }) {
                     </div>
 
                     <div className="space-y-16">
-                        {milestones.map((m, i) => (
+                        {milestones.map((m: any, i: number) => (
                             <SectionReveal key={i} direction={i % 2 === 0 ? 'left' : 'right'} delay={i * 0.05}>
                                 <div className={`flex items-center gap-12 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                                     <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
@@ -329,6 +324,7 @@ function TimelineSection({ data }: { data?: any[] }) {
 
 // ============ TECH STACK ============
 function TechStackSection({ data }: { data?: any[] }) {
+    const dict = useDictionary();
     const techIconMap: Record<string, React.ReactNode> = {
         'React / Next.js': <Atom size={24} />,
         'Node.js / Express': <Server size={24} />,
@@ -358,10 +354,10 @@ function TechStackSection({ data }: { data?: any[] }) {
                     <SectionReveal direction="left">
                         <div>
                             <SectionHeading
-                                badge="Our Arsenal"
-                                title="The Tech That Powers Us"
+                                badge={dict.about.techStack.badge}
+                                title={dict.about.techStack.title}
                                 align="left"
-                                description="We utilize a high-performance technology stack designed for enterprise scalability and military-grade security."
+                                description={dict.about.techStack.description}
                             />
                             <div className="space-y-8 mt-10">
                                 {displayTech.map((tech, i) => (

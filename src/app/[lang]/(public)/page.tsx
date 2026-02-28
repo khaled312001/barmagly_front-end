@@ -13,16 +13,18 @@ import { cn, WHATSAPP_URL, COMPANY_LICENSE, COMPANY_ADDRESS } from '@/lib/utils'
 import Link from 'next/link';
 import { MouseFollower } from '@/components/ui/MouseFollower';
 import { publicApi } from '@/lib/api';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 // ============ HERO SECTION ============
 function HeroSection({ data }: { data?: any }) {
+    const dict = useDictionary();
     const {
-        badgeText = "Licensed Swiss Tech Company",
-        titleLine1 = "Barmagly:",
-        titleLine2 = "Swiss Precision, Global Innovation",
-        description = "We architect enterprise-grade digital systems and bespoke software solutions that scale. From intelligent apps to robust business platforms, we turn your vision into high-tech reality.",
-        primaryBtnText = "Start Your Project",
-        secondaryBtnText = "View Our Portfolio"
+        badgeText = dict.hero.badge,
+        titleLine1 = dict.hero.titleLine1,
+        titleLine2 = dict.hero.titleLine2,
+        description = dict.hero.subtitle,
+        primaryBtnText = dict.hero.ctaPrimary,
+        secondaryBtnText = dict.hero.ctaSecondary
     } = data || {};
 
     return (
@@ -215,6 +217,7 @@ import * as LucideIcons from 'lucide-react';
 
 function ServicesSection() {
     const [services, setServices] = React.useState<any[]>([]);
+    const dict = useDictionary();
 
     React.useEffect(() => {
         publicApi.getServices().then(({ data }) => {
@@ -237,7 +240,7 @@ function ServicesSection() {
         <section className="relative overflow-hidden py-32 bg-brand-primary">
             {/* ... header ... */}
             <div className="absolute top-20 left-1/2 -translate-x-1/2 text-[15vw] font-display font-black text-white/[0.02] select-none pointer-events-none tracking-tighter">
-                SERVICES
+                {dict.home.services.title.toUpperCase()}
             </div>
 
             <div className="absolute inset-0 tech-grid opacity-10" />
@@ -245,13 +248,13 @@ function ServicesSection() {
             <div className="section-container relative z-10">
                 <SectionReveal>
                     <div className="text-center mb-24">
-                        <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-4 block">Our Expertise</span>
+                        <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-4 block">{dict.home.services.title}</span>
                         <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
-                            Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">Excellence</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.services.title}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
                         <p className="text-brand-muted max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">
-                            We combine Swiss precision with cutting-edge technology to deliver systems that drive growth and institutionalize innovation.
+                            {dict.home.services.subtitle}
                         </p>
                     </div>
                 </SectionReveal>
@@ -271,35 +274,157 @@ function ServicesSection() {
     );
 }
 
+// ============ POS SYSTEM SECTION ============
+function PosSection() {
+    const dict = useDictionary();
+    return (
+        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
+            <div className="absolute inset-0 tech-grid opacity-5" />
+            <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[150px] pointer-events-none" />
+
+            <div className="section-container relative z-10 flex flex-col lg:flex-row items-center gap-16">
+                <SectionReveal direction="left" className="w-full lg:w-1/2 relative">
+                    <div className="relative z-10">
+                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.pos.badge}</span>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 leading-[1.1] tracking-tight">
+                            {dict.home.pos.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-l from-brand-accent to-brand-secondary">{dict.home.pos.titleHighlight}</span> {dict.home.pos.titleLine2}
+                        </h2>
+                        <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full shadow-neon-cyan rtl:ml-auto ltr:mr-auto" />
+                        <p className="text-brand-muted text-lg leading-relaxed mb-8 font-light opacity-90">
+                            {dict.home.pos.subtitle}
+                        </p>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                            {[
+                                { icon: <Smartphone size={20} />, text: dict.home.pos.features.mobile },
+                                { icon: <Terminal size={20} />, text: dict.home.pos.features.desktop },
+                                { icon: <Globe size={20} />, text: dict.home.pos.features.ecommerce },
+                                { icon: <Box size={20} />, text: dict.home.pos.features.inventory },
+                                { icon: <TrendingUp size={20} />, text: dict.home.pos.features.reports },
+                                { icon: <Users size={20} />, text: dict.home.pos.features.branches },
+                            ].map((feature, idx) => (
+                                <div key={idx} className="flex items-center gap-3">
+                                    <div className="p-2 rounded-lg bg-brand-accent/10 text-brand-accent">
+                                        {feature.icon}
+                                    </div>
+                                    <span className="text-white font-medium text-sm">{feature.text}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex ltr:justify-start rtl:justify-end">
+                            <Link href="/pos">
+                                <Button variant="primary" size="lg" className="px-8 h-14 rounded-xl font-bold font-display tracking-widest gap-3 flex shadow-neon-cyan transition-all hover:scale-105 active:scale-95 text-lg">
+                                    <ArrowRight size={20} className="rtl:rotate-180" /> {dict.home.pos.cta}
+                                </Button>
+                            </Link>
+                        </div>
+                    </div>
+                </SectionReveal>
+
+                <SectionReveal direction="right" className="w-full lg:w-1/2">
+                    <div className="relative group">
+                        <div className="absolute -inset-4 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+                        <div className="glass-card border-white/10 rounded-3xl overflow-hidden relative shadow-2xl p-2 bg-brand-surface/80 backdrop-blur-xl">
+                            {/* Dashboard Mockup Representation */}
+                            <div className="bg-[#0A0A0B] rounded-2xl w-full h-[400px] md:h-[500px] border border-white/5 relative overflow-hidden flex flex-col">
+                                {/* Window Navigation Bar */}
+                                <div className="h-10 border-b border-white/10 flex items-center px-4 gap-2 bg-white/[0.02]">
+                                    <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors cursor-pointer" />
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors cursor-pointer" />
+                                    <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors cursor-pointer" />
+                                    <div className="ml-4 flex-1 flex justify-center">
+                                        <div className="text-xs text-white/30 font-mono tracking-widest">Barmagly POS Dashboard</div>
+                                    </div>
+                                </div>
+                                {/* Mockup Content */}
+                                <div className="flex-1 p-6 flex flex-col gap-6 w-full opacity-80 group-hover:opacity-100 transition-opacity duration-700">
+                                    {/* Stats Row */}
+                                    <div className="grid grid-cols-3 gap-4">
+                                        {[...Array(3)].map((_, i) => (
+                                            <div key={i} className="h-24 rounded-xl bg-white/[0.03] border border-white/5 p-4 flex flex-col justify-between overflow-hidden relative">
+                                                <div className="w-8 h-8 rounded-lg bg-brand-accent/20" />
+                                                <div className="w-20 h-4 bg-white/10 rounded" />
+                                                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-brand-accent/10 rounded-full blur-xl" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {/* Main Chart Area */}
+                                    <div className="flex-1 rounded-xl bg-white/[0.03] border border-white/5 p-4 flex gap-4">
+                                        <div className="w-2/3 h-full rounded-lg bg-brand-secondary/10 relative overflow-hidden flex items-end">
+                                            <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-brand-accent/20 to-transparent" />
+                                            {/* Abstract wave representing analytics */}
+                                            <svg className="absolute bottom-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                                <path d="M0,100 L0,50 Q25,20 50,60 T100,30 L100,100 Z" fill="rgba(0, 212, 255, 0.15)" />
+                                                <path d="M0,50 Q25,20 50,60 T100,30" fill="none" stroke="rgba(0, 212, 255, 0.6)" strokeWidth="2" />
+                                            </svg>
+                                        </div>
+                                        <div className="w-1/3 flex flex-col gap-3">
+                                            {[...Array(4)].map((_, i) => (
+                                                <div key={i} className="h-full rounded-lg bg-white/5 w-full flex items-center p-2 gap-2">
+                                                    <div className="w-6 h-6 rounded bg-white/10" />
+                                                    <div className="flex-1 h-2 bg-white/10 rounded" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Floating elements to show platforms */}
+                        <motion.div
+                            animate={{ y: [0, -15, 0] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -bottom-6 -left-6 glass-card p-4 rounded-full border-brand-accent/30 shadow-neon-cyan bg-brand-primary/80 backdrop-blur-md z-20"
+                        >
+                            <Smartphone size={32} className="text-brand-accent" />
+                        </motion.div>
+                        <motion.div
+                            animate={{ y: [0, 15, 0] }}
+                            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                            className="absolute -top-6 -right-6 glass-card p-4 rounded-full border-brand-secondary/30 shadow-neon-purple bg-brand-primary/80 backdrop-blur-md z-20"
+                        >
+                            <Globe size={32} className="text-brand-secondary" />
+                        </motion.div>
+
+                    </div>
+                </SectionReveal>
+            </div>
+        </section>
+    );
+}
+
 // ============ WHY CHOOSE US ============
 function WhyChooseSection({ data }: { data?: any }) {
+    const dict = useDictionary();
     const {
-        badge = "Core Values",
-        title = "Built on Swiss \nPrecision & Excellence",
-        description = "We combine Swiss engineering discipline with global rapid innovation to deliver software solutions that redefine industry standards in quality, security, and performance.",
-        btnText = "Our Scientific Approach"
+        badge = dict.home.whyChoose.badge,
+        title = dict.home.whyChoose.title,
+        description = dict.home.whyChoose.subtitle,
+        btnText = dict.home.whyChoose.cta
     } = data || {};
 
     const reasons = [
         {
             icon: <Shield size={24} />,
-            title: 'Swiss Licensed',
-            description: 'Officially registered in Switzerland (CHE-154.312.079), ensuring maximum security and regulatory compliance.',
+            title: dict.home.whyChoose.cards.licensed.title,
+            description: dict.home.whyChoose.cards.licensed.desc,
         },
         {
             icon: <Zap size={24} />,
-            title: 'Elite Performance',
-            description: 'We utilize high-end frameworks to build ultra-fast, scalable, and future-proof digital architectures.',
+            title: dict.home.whyChoose.cards.performance.title,
+            description: dict.home.whyChoose.cards.performance.desc,
         },
         {
             icon: <Users size={24} />,
-            title: 'Strategic Partners',
-            description: 'Our team acts as your technology partner, working closely to translate goals into scalable reality.',
+            title: dict.home.whyChoose.cards.partners.title,
+            description: dict.home.whyChoose.cards.partners.desc,
         },
         {
             icon: <Globe size={24} />,
-            title: 'Global Delivery',
-            description: 'Operating from Zurich to the world, delivering quality that meets international standards of excellence.',
+            title: dict.home.whyChoose.cards.global.title,
+            description: dict.home.whyChoose.cards.global.desc,
         },
     ];
 
@@ -354,11 +479,12 @@ function WhyChooseSection({ data }: { data?: any }) {
 
 // ============ COUNTERS SECTION ============
 function CountersSection({ data }: { data?: any }) {
+    const dict = useDictionary();
     const defaultStats = [
-        { label: "High-Tech Systems", value: "150", suffix: "+", icon: <Code2 size={24} /> },
-        { label: "Global Partners", value: "80", suffix: "+", icon: <Users size={24} /> },
-        { label: "Years of Research", value: "5", suffix: "+", icon: <Star size={24} /> },
-        { label: "Success Metric", value: "100", suffix: "%", icon: <CheckCircle2 size={24} /> },
+        { label: dict.home.statistics.projects, value: "150", suffix: "+", icon: <Code2 size={24} /> },
+        { label: dict.home.statistics.clients, value: "80", suffix: "+", icon: <Users size={24} /> },
+        { label: dict.home.statistics.years, value: "5", suffix: "+", icon: <Star size={24} /> },
+        { label: dict.home.statistics.support, value: "100", suffix: "%", icon: <CheckCircle2 size={24} /> },
     ];
 
     // Merge dynamic stats with defaults (preserving icons if possible, or just using defaults if no dynamic data)
@@ -389,6 +515,7 @@ function CountersSection({ data }: { data?: any }) {
 // ============ TESTIMONIALS SECTION ============
 function TestimonialsSection() {
     const [testimonials, setTestimonials] = React.useState<any[]>([]);
+    const dict = useDictionary();
 
     React.useEffect(() => {
         publicApi.getTestimonials().then(({ data }) => setTestimonials(data)).catch(console.error);
@@ -404,11 +531,11 @@ function TestimonialsSection() {
                     <div className="text-center mb-24">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">Endorsements</span>
                         <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
-                            Global <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">Recognition</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.testimonials.title}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
                         <p className="text-brand-muted max-w-2xl mx-auto text-lg font-light opacity-80 italic">
-                            &ldquo;Precision is our standard, innovation is our result.&rdquo;
+                            {dict.home.testimonials.subtitle}
                         </p>
                     </div>
                 </SectionReveal>
@@ -451,6 +578,7 @@ function TestimonialsSection() {
 
 // ============ TECHNOLOGIES SECTION ============
 function TechSection() {
+    const dict = useDictionary();
     const techs = [
         { name: 'React', icon: <Atom size={32} />, color: '#61DAFB' },
         { name: 'Next.js', icon: <Globe size={32} />, color: '#FFFFFF' },
@@ -487,13 +615,13 @@ function TechSection() {
             <div className="section-container relative z-10 px-0 max-w-none">
                 <SectionReveal>
                     <div className="text-center mb-24 section-container pb-0">
-                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">Tech Ecosystem</span>
+                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.tech.badge}</span>
                         <h2 className="text-4xl md:text-7xl font-display font-black text-white mb-6 text-glow tracking-tighter">
-                            Advanced <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary italic">Standards</span>
+                            {dict.home.tech.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary italic">{dict.home.tech.titleHighlight}</span>
                         </h2>
                         <div className="w-32 h-1 bg-brand-accent mx-auto mb-10 rounded-full shadow-neon-cyan" />
                         <p className="text-brand-muted max-w-2xl mx-auto text-lg font-light opacity-80">
-                            We architect high-performance infrastructures using the world&apos;s most sophisticated technology frameworks.
+                            {dict.home.tech.subtitle}
                         </p>
                     </div>
                 </SectionReveal>
@@ -552,10 +680,11 @@ function TechSection() {
 
 // ============ CONTACT FORM SECTION ============
 function ContactFormSection({ data }: { data?: any }) {
+    const dict = useDictionary();
     const {
         badge = "Initiation",
-        title = "Launch Your Project",
-        description = "Our team of Swiss-trained experts is ready to architect your digital future. Let's turn your vision into a strategic technological asset."
+        title = dict.home.contact.title,
+        description = dict.home.contact.subtitle
     } = data || {};
 
     return (
@@ -582,14 +711,14 @@ function ContactFormSection({ data }: { data?: any }) {
                             <div className="absolute inset-0 bg-brand-accent/[0.01] opacity-0 group-hover/form:opacity-100 transition-opacity pointer-events-none" />
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                                <Input label="Professional Name" placeholder="John Doe" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
-                                <Input label="Direct Email" type="email" placeholder="john@example.com" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.name} placeholder="John Doe" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.email} type="email" placeholder="john@example.com" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
                             </div>
 
-                            <Input label="Organization / Enterprise" placeholder="Your company name" className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Input label={dict.home.contact.form.company} placeholder="Your company name" className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
 
                             <Select
-                                label="Strategic Priority"
+                                label={dict.home.contact.form.service}
                                 className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all"
                                 options={[
                                     { value: '', label: 'Select a priority service...' },
@@ -602,10 +731,10 @@ function ContactFormSection({ data }: { data?: any }) {
                                 ]}
                             />
 
-                            <Textarea label="The Vision Blueprint" placeholder="Define your strategic goals, key features, and estimated timeline..." rows={6} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Textarea label={dict.home.contact.form.message} placeholder="Define your strategic goals, key features, and estimated timeline..." rows={6} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
 
                             <Button type="submit" variant="primary" size="lg" fullWidth icon={<ArrowRight size={24} />} className="h-16 text-lg font-bold rounded-xl shadow-neon-cyan transition-all duration-500 hover:scale-[1.02] active:scale-95">
-                                Launch Conversation
+                                {dict.home.contact.form.submit}
                             </Button>
                         </form>
                     </SectionReveal>
@@ -683,6 +812,7 @@ export default function HomePage() {
         <>
             <HeroSection data={data.hero} />
             <ServicesSection />
+            <PosSection />
             <WhyChooseSection data={data.features} />
             <CountersSection data={data.stats} />
             <TestimonialsSection />

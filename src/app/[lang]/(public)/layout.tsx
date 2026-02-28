@@ -1,4 +1,3 @@
-"use client";
 import { SiteProvider } from '@/lib/contexts/SiteContext';
 
 import { Navbar } from '@/components/layout/Navbar';
@@ -7,16 +6,18 @@ import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
 import { MouseGlow } from '@/components/ui/MouseGlow';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { SmoothScroll, ScrollProgress } from '@/components/ui/SmoothScroll';
+import { getDictionary, Locale } from '@/i18n/getDictionary';
+import { DictionaryProvider } from '@/lib/contexts/DictionaryContext';
 
-import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion } from 'framer-motion';
-
-export default function PublicLayout({
+export default async function PublicLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: { lang: string }
 }) {
-    const pathname = usePathname();
+    const lang = (params.lang || 'en') as Locale;
+    const dict = await getDictionary(lang);
 
     return (
         <div className="lg:cursor-none">
@@ -25,11 +26,13 @@ export default function PublicLayout({
             <MouseGlow />
             <MouseGlow />
             <SiteProvider>
-                <Navbar />
-                <SmoothScroll>
-                    {children}
-                    <Footer />
-                </SmoothScroll>
+                <DictionaryProvider dict={dict}>
+                    <Navbar dict={dict.navbar} lang={lang} getStartedText={dict.hero.ctaSecondary} />
+                    <SmoothScroll>
+                        {children}
+                        <Footer dict={dict.footer} lang={lang} />
+                    </SmoothScroll>
+                </DictionaryProvider>
             </SiteProvider>
             <WhatsAppButton />
             <WhatsAppButton />

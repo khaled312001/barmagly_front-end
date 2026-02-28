@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations';
 import { publicApi } from '@/lib/api';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface Project {
     id: string;
@@ -19,9 +20,9 @@ interface Project {
     slug: string;
 }
 
-const allCategory = 'All';
-
 export default function PortfolioPage() {
+    const dict = useDictionary();
+    const allCategory = dict.portfolio.allCategory;
     const [projects, setProjects] = useState<Project[]>([]);
     const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
     const [activeCategory, setActiveCategory] = useState(allCategory);
@@ -88,7 +89,7 @@ export default function PortfolioPage() {
                         <motion.div variants={heroTextReveal} className="mb-8">
                             <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-brand-glass border border-brand-accent/30 text-brand-accent text-sm font-mono tracking-[0.2em] shadow-neon-cyan">
                                 <ArrowUpRight size={18} className="animate-bounce" />
-                                <span className="uppercase">Portfolio of Excellence</span>
+                                <span className="uppercase">{dict.portfolio.hero.badge}</span>
                             </span>
                         </motion.div>
 
@@ -96,12 +97,10 @@ export default function PortfolioPage() {
                             variants={heroTextReveal}
                             className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tighter drop-shadow-2xl"
                         >
-                            Digital <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">Architectures</span>
+                            {dict.portfolio.hero.titleLine1} <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">{dict.portfolio.hero.titleHighlight}</span>
                         </motion.h1>
-                        <motion.p variants={heroTextReveal} className="text-xl md:text-2xl text-brand-muted max-w-3xl mx-auto leading-relaxed font-light">
-                            Explore our ecosystem of high-performance systems and enterprise solutions. Each project represents a unique challenge solved with <span className="text-white font-semibold">Swiss precision</span>.
-                        </motion.p>
+                        <motion.p variants={heroTextReveal} className="text-xl md:text-2xl text-brand-muted max-w-3xl mx-auto leading-relaxed font-light" dangerouslySetInnerHTML={{ __html: dict.portfolio.hero.subtitle }} />
                     </motion.div>
                 </div>
             </section>
@@ -115,9 +114,9 @@ export default function PortfolioPage() {
                         <div className="space-y-2">
                             <h2 className="text-2xl font-display font-black text-white flex items-center gap-3">
                                 <Filter size={24} className="text-brand-accent" />
-                                Index Research
+                                {dict.portfolio.grid.filtersTitle}
                             </h2>
-                            <p className="text-brand-muted text-sm font-light">Categorized by industrial application and technical stack</p>
+                            <p className="text-brand-muted text-sm font-light">{dict.portfolio.grid.filtersDesc}</p>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3">
@@ -168,16 +167,11 @@ export default function PortfolioPage() {
                                     >
                                         <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                         <div className="relative h-full glass-card overflow-hidden hover:border-brand-accent/50 transition-all duration-500 rounded-2xl flex flex-col group/card">
-                                            {/* Image placeholder - in real app use Next.js Image */}
-                                            <div className="h-64 bg-brand-surface/50 relative overflow-hidden">
-                                                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent opacity-80" />
-                                                <div className="absolute inset-0 tech-grid opacity-20 group-hover/card:opacity-40 transition-opacity" />
-
-                                                <div className="absolute bottom-6 left-6">
-                                                    <span className="px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan">
-                                                        {project.category}
-                                                    </span>
-                                                </div>
+                                            {/* Category Badge Header */}
+                                            <div className="px-8 pt-8 pb-4 border-b border-white/5">
+                                                <span className="px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan">
+                                                    {project.category}
+                                                </span>
                                             </div>
 
                                             <div className="p-8 flex-1 flex flex-col">
@@ -195,13 +189,13 @@ export default function PortfolioPage() {
                                                         </span>
                                                     ))}
                                                     {project.technologies.length > 3 && (
-                                                        <span className="px-3 py-1 text-[10px] text-brand-muted font-bold">+{project.technologies.length - 3} MORE</span>
+                                                        <span className="px-3 py-1 text-[10px] text-brand-muted font-bold">+{project.technologies.length - 3} {dict.portfolio.grid.more}</span>
                                                     )}
                                                 </div>
 
                                                 <Link href={`/portfolio/${project.slug}`} className="mt-auto">
-                                                    <Button variant="outline" size="lg" className="w-full group-hover/card:bg-brand-accent group-hover/card:text-brand-primary group-hover/card:border-brand-accent transition-all duration-300 shadow-sm hover:shadow-neon-cyan" icon={<ArrowUpRight size={20} />}>
-                                                        View Case Study
+                                                    <Button variant="outline" size="lg" className="w-full group-hover/card:bg-brand-accent group-hover/card:text-brand-primary group-hover/card:border-brand-accent transition-all duration-300 shadow-sm hover:shadow-neon-cyan" icon={<ArrowUpRight size={20} className="rtl:rotate-270" />}>
+                                                        {dict.portfolio.grid.viewCaseStudy}
                                                     </Button>
                                                 </Link>
                                             </div>
@@ -214,9 +208,9 @@ export default function PortfolioPage() {
 
                     {!loading && filteredProjects.length === 0 && (
                         <div className="text-center py-20">
-                            <p className="text-brand-muted text-lg">No projects found in this category.</p>
+                            <p className="text-brand-muted text-lg">{dict.portfolio.grid.emptyState}</p>
                             <Button variant="ghost" className="mt-4" onClick={() => setActiveCategory(allCategory)}>
-                                View All Projects
+                                {dict.portfolio.grid.viewAll}
                             </Button>
                         </div>
                     )}

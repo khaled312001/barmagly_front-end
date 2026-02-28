@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export function Preloader() {
@@ -34,9 +35,9 @@ export function Preloader() {
                         className="absolute -inset-4 border border-brand-secondary/20 border-b-brand-secondary rounded-3xl opacity-50"
                     />
 
-                    {/* Brand Initial */}
+                    {/* Brand Logo */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-4xl font-display font-bold text-white drop-shadow-neon-cyan">B</span>
+                        <Image src="/logo.png" alt="Barmagly Logo" width={56} height={56} className="rounded-xl object-contain drop-shadow-neon-cyan" priority />
                     </div>
                 </div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import '../globals.css';
 import { ToastProvider } from '@/components/ui/Toast';
 
 export const metadata: Metadata = {
@@ -62,13 +62,18 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: { lang: string };
 }) {
+    const lang = params.lang || 'en';
+    const dir = lang === 'ar' ? 'rtl' : 'ltr';
+
     return (
-        <html lang="en" className="scroll-smooth">
+        <html lang={lang} dir={dir} className="scroll-smooth">
             <head>
                 <script
                     type="application/ld+json"
