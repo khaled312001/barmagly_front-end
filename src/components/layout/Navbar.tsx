@@ -7,12 +7,11 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navbarVariants } from '@/lib/animations';
 import { cn } from '@/lib/utils';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Globe, Home, Users, Cpu, Briefcase, Monitor, FileText, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useUIStore } from '@/store';
 import { WHATSAPP_URL } from '@/lib/utils';
-
-import { Globe } from 'lucide-react';
+import { TopHeader } from './TopHeader';
 
 export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string, getStartedText?: string }) {
     const [scrolled, setScrolled] = useState(false);
@@ -20,12 +19,13 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
     const { isMobileMenuOpen, toggleMobileMenu, setMobileMenu } = useUIStore();
 
     const navLinks = [
-        { href: `/${lang}`, label: dict?.navbar?.home || 'Home' },
-        { href: `/${lang}/about`, label: dict?.navbar?.about || 'About' },
-        { href: `/${lang}/services`, label: dict?.navbar?.services || 'Services' },
-        { href: `/${lang}/portfolio`, label: dict?.navbar?.portfolio || 'Portfolio' },
-        { href: `/${lang}/blog`, label: dict?.navbar?.blog || 'Blog' },
-        { href: `/${lang}/contact`, label: dict?.navbar?.contact || 'Contact' },
+        { href: `/${lang}`, label: dict?.navbar?.home || 'Home', icon: Home },
+        { href: `/${lang}/about`, label: dict?.navbar?.about || 'About', icon: Users },
+        { href: `/${lang}/services`, label: dict?.navbar?.services || 'Services', icon: Cpu },
+        { href: `/${lang}/portfolio`, label: dict?.navbar?.portfolio || 'Portfolio', icon: Briefcase },
+        { href: `/${lang}/pos`, label: dict?.navbar?.pos || 'POS', icon: Monitor },
+        { href: `/${lang}/blog`, label: dict?.navbar?.blog || 'Blog', icon: FileText },
+        { href: `/${lang}/contact`, label: dict?.navbar?.contact || 'Contact', icon: Mail },
     ];
 
     const switchLanguage = (newLang: string) => {
@@ -51,11 +51,15 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
 
     return (
         <>
+            <TopHeader lang={lang} />
             <motion.nav
                 variants={navbarVariants}
                 animate={scrolled ? 'scrolled' : 'top'}
                 transition={{ duration: 0.3 }}
-                className="fixed top-0 left-0 right-0 z-[100] transition-colors duration-300"
+                className={cn(
+                    "fixed left-0 right-0 z-[100] transition-all duration-300",
+                    scrolled ? "top-0" : "top-0 lg:top-[45px]"
+                )}
             >
                 <div className="section-container !py-0">
                     <div className="flex items-center justify-between h-24">
@@ -72,25 +76,35 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
 
                         {/* Desktop Links */}
                         <div className="hidden lg:flex items-center gap-2">
-                            {navLinks.map((link) => {
+                            {navLinks.map((link, i) => {
                                 // Match active logic safely, preventing e.g. /services matching /
                                 const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== `/${lang}`);
+                                const Icon = link.icon;
                                 return (
                                     <Link
                                         key={link.href}
                                         href={link.href}
                                         className={cn(
-                                            'px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 relative',
+                                            'px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 relative group flex items-center gap-2',
                                             isActive
                                                 ? 'text-brand-accent bg-brand-accent/5'
                                                 : 'text-brand-muted hover:text-brand-text hover:bg-white/5'
                                         )}
                                     >
-                                        {link.label}
+                                        <motion.div
+                                            whileHover={{ scale: 1.2, rotate: 5 }}
+                                            className={cn(
+                                                "p-1.5 rounded-lg transition-colors",
+                                                isActive ? "bg-brand-accent/10 text-brand-accent" : "bg-white/5 text-brand-muted group-hover:text-brand-text group-hover:bg-brand-accent/5"
+                                            )}
+                                        >
+                                            <Icon size={16} />
+                                        </motion.div>
+                                        <span>{link.label}</span>
                                         {isActive && (
                                             <motion.div
                                                 layoutId="navbar-indicator"
-                                                className="absolute bottom-1 left-3 right-3 h-0.5 bg-gradient-to-r from-brand-accent to-brand-secondary rounded-full shadow-neon-cyan"
+                                                className="absolute bottom-1 left-4 right-4 h-0.5 bg-gradient-to-r from-brand-accent to-brand-secondary rounded-full shadow-neon-cyan"
                                             />
                                         )}
                                     </Link>
@@ -175,12 +189,18 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
                                                 href={link.href}
                                                 onClick={() => setMobileMenu(false)}
                                                 className={cn(
-                                                    'flex items-center px-6 py-4 rounded-xl text-lg font-semibold transition-all duration-300 relative overflow-hidden',
+                                                    'flex items-center gap-4 px-6 py-4 rounded-xl text-lg font-semibold transition-all duration-300 relative overflow-hidden',
                                                     isActive
                                                         ? 'text-brand-accent bg-brand-accent/10 border border-brand-accent/20'
                                                         : 'text-brand-muted hover:text-brand-text hover:bg-white/5 border border-transparent'
                                                 )}
                                             >
+                                                <div className={cn(
+                                                    "p-2 rounded-lg",
+                                                    isActive ? "bg-brand-accent/20 text-brand-accent" : "bg-white/5 text-brand-muted"
+                                                )}>
+                                                    <link.icon size={20} />
+                                                </div>
                                                 {link.label}
                                                 {isActive && (
                                                     <motion.div
