@@ -16,18 +16,18 @@ export function Footer({ dict, lang }: FooterProps) {
 
     const footerLinks = {
         company: [
-            { label: dict.navbar.about, href: `/${lang}/about` },
-            { label: dict.navbar.services, href: `/${lang}/services` },
-            { label: dict.navbar.portfolio, href: `/${lang}/portfolio` },
-            { label: dict.navbar.blog, href: `/${lang}/blog` },
-            { label: dict.navbar.contact, href: `/${lang}/contact` },
+            { label: dict?.navbar?.about || 'About', href: `/${lang}/about` },
+            { label: dict?.navbar?.services || 'Services', href: `/${lang}/services` },
+            { label: dict?.navbar?.portfolio || 'Portfolio', href: `/${lang}/portfolio` },
+            { label: dict?.navbar?.blog || 'Blog', href: `/${lang}/blog` },
+            { label: dict?.navbar?.contact || 'Contact', href: `/${lang}/contact` },
         ],
         services: [
-            { label: dict.footer.links.web, href: `/${lang}/services/web-development` },
-            { label: dict.footer.links.mobile, href: `/${lang}/services/mobile-application-development` },
-            { label: dict.footer.links.design, href: `/${lang}/services/ui-ux-design` },
-            { label: dict.footer.links.business, href: `/${lang}/services/business-systems` },
-            { label: dict.footer.links.marketing, href: `/${lang}/services/sales-marketing` },
+            { label: dict?.footer?.links?.web || 'Web Development', href: `/${lang}/services/web-development` },
+            { label: dict?.footer?.links?.mobile || 'Mobile Apps', href: `/${lang}/services/mobile-application-development` },
+            { label: dict?.footer?.links?.design || 'UI/UX Design', href: `/${lang}/services/ui-ux-design` },
+            { label: dict?.footer?.links?.business || 'Business Systems', href: `/${lang}/services/business-systems` },
+            { label: dict?.footer?.links?.marketing || 'Sales & Marketing', href: `/${lang}/services/sales-marketing` },
         ],
     };
 
@@ -56,7 +56,7 @@ export function Footer({ dict, lang }: FooterProps) {
                             </span>
                         </Link>
                         <p className="text-brand-muted text-sm leading-relaxed mb-6">
-                            {dict.footer.description}
+                            {dict?.footer?.description || ''}
                         </p>
                         <div className="flex flex-col gap-3 text-sm">
                             <div className="flex items-start gap-2 text-brand-muted">
@@ -76,7 +76,7 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Company Links */}
                     <div>
-                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict.footer.quickLinks}</h4>
+                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict?.footer?.quickLinks || 'Quick Links'}</h4>
                         <ul className="space-y-3">
                             {footerLinks.company.map((link) => (
                                 <li key={link.href}>
@@ -93,7 +93,7 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Services Links */}
                     <div>
-                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict.footer.services}</h4>
+                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict?.footer?.services || 'Services'}</h4>
                         <ul className="space-y-3">
                             {footerLinks.services.map((link) => (
                                 <li key={link.href}>
@@ -116,7 +116,7 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                     <path d="M8 0L10.2 5.8L16 6.3L11.8 10L13.1 16L8 13L2.9 16L4.2 10L0 6.3L5.8 5.8L8 0Z" />
                                 </svg>
-                                {dict.footer.officialLicense}
+                                {dict?.footer?.officialLicense || 'Swiss License'}
                             </div>
                             <p className="text-brand-muted text-xs font-mono">{license}</p>
                         </div>
@@ -128,7 +128,7 @@ export function Footer({ dict, lang }: FooterProps) {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                             </svg>
-                            {dict.footer.chatWhatsapp}
+                            {dict?.footer?.chatWhatsapp || 'WhatsApp'}
                             <ExternalLink size={14} />
                         </Link>
                     </div>
@@ -137,14 +137,14 @@ export function Footer({ dict, lang }: FooterProps) {
                 {/* Bottom Bar */}
                 <div className="mt-16 pt-8 border-t border-brand-glass-border flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-brand-muted text-sm">
-                        © {new Date().getFullYear()} Barmagly. {dict.footer.rights}
+                        © {new Date().getFullYear()} Barmagly. {dict?.footer?.rights || ''}
                     </p>
                     <div className="flex items-center gap-6 text-sm text-brand-muted">
                         <Link href={`/${lang}/privacy`} className="hover:text-brand-accent transition-colors">
-                            {dict.footer.privacyPolicy}
+                            {dict?.footer?.privacyPolicy || 'Privacy'}
                         </Link>
                         <Link href={`/${lang}/terms`} className="hover:text-brand-accent transition-colors">
-                            {dict.footer.termsOfService}
+                            {dict?.footer?.termsOfService || 'Terms'}
                         </Link>
                     </div>
                 </div>

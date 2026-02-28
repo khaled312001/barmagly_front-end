@@ -20,12 +20,12 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
     const { isMobileMenuOpen, toggleMobileMenu, setMobileMenu } = useUIStore();
 
     const navLinks = [
-        { href: `/${lang}`, label: dict.navbar.home },
-        { href: `/${lang}/about`, label: dict.navbar.about },
-        { href: `/${lang}/services`, label: dict.navbar.services },
-        { href: `/${lang}/portfolio`, label: dict.navbar.portfolio },
-        { href: `/${lang}/blog`, label: dict.navbar.blog },
-        { href: `/${lang}/contact`, label: dict.navbar.contact },
+        { href: `/${lang}`, label: dict?.navbar?.home || 'Home' },
+        { href: `/${lang}/about`, label: dict?.navbar?.about || 'About' },
+        { href: `/${lang}/services`, label: dict?.navbar?.services || 'Services' },
+        { href: `/${lang}/portfolio`, label: dict?.navbar?.portfolio || 'Portfolio' },
+        { href: `/${lang}/blog`, label: dict?.navbar?.blog || 'Blog' },
+        { href: `/${lang}/contact`, label: dict?.navbar?.contact || 'Contact' },
     ];
 
     const switchLanguage = (newLang: string) => {
@@ -105,11 +105,11 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
                                 className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-brand-muted hover:text-brand-text hover:bg-white/5 transition-colors border border-transparent"
                             >
                                 <Globe size={16} />
-                                {lang === 'en' ? dict.nav.switchShort : dict.nav.switchShort}
+                                {lang === 'en' ? (dict?.nav?.switchShort || 'العربية') : (dict?.nav?.switchShort || 'EN')}
                             </button>
                             <Link href={WHATSAPP_URL} target="_blank">
                                 <Button variant="neon" size="sm" className="px-6">
-                                    {getStartedText || dict.nav.getInTouch}
+                                    {getStartedText || dict?.nav?.getInTouch || 'Get in Touch'}
                                 </Button>
                             </Link>
                         </div>
@@ -204,11 +204,11 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
                                         className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-xl text-lg font-bold text-brand-muted hover:text-brand-text hover:bg-white/5 transition-colors border border-brand-glass-border"
                                     >
                                         <Globe size={20} />
-                                        {lang === 'en' ? dict.nav.switchLanguage : dict.nav.switchLanguage}
+                                        {lang === 'en' ? (dict?.nav?.switchLanguage || 'العربية') : (dict?.nav?.switchLanguage || 'English')}
                                     </button>
                                     <Link href={WHATSAPP_URL} target="_blank">
                                         <Button variant="neon" size="lg" className="w-full shadow-neon-cyan/20">
-                                            {getStartedText || dict.nav.getInTouch}
+                                            {getStartedText || dict?.nav?.getInTouch || 'Get in Touch'}
                                         </Button>
                                     </Link>
                                 </motion.div>
@@ -216,7 +216,7 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
 
                             <div className="mt-auto pt-8 border-t border-brand-glass-border">
                                 <p className="text-[10px] uppercase tracking-[0.2em] text-center text-brand-muted font-bold opacity-50">
-                                    {dict.nav.craftingExcellence}
+                                    {dict?.nav?.craftingExcellence || 'Crafting Excellence'}
                                 </p>
                             </div>
                         </motion.div>

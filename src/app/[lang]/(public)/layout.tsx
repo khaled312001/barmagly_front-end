@@ -24,7 +24,6 @@ export default async function PublicLayout({
             <ScrollProgress />
             <CustomCursor />
             <MouseGlow />
-            <MouseGlow />
             <SiteProvider>
                 <DictionaryProvider dict={dict}>
                     <Navbar dict={dict} lang={lang} getStartedText={dict.hero.ctaSecondary} />
@@ -34,7 +33,6 @@ export default async function PublicLayout({
                     </SmoothScroll>
                 </DictionaryProvider>
             </SiteProvider>
-            <WhatsAppButton />
             <WhatsAppButton />
         </div>
     );

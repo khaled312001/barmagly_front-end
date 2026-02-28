@@ -300,6 +300,15 @@
             "filtersDesc": "Our projects categorized by the countries we've worked in",
             "more": "MORE",
             "viewCaseStudy": "View Project",
+            "countries": {
+                "CH": "Switzerland",
+                "FR": "France",
+                "AE": "UAE",
+                "SA": "Saudi Arabia",
+                "EG": "Egypt",
+                "IQ": "Iraq",
+                "GLOBAL": "Global"
+            },
             "emptyState": "No projects found in this category.",
             "viewAll": "View All Projects"
         }

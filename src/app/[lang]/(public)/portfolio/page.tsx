@@ -13,59 +13,95 @@ import { useDictionary } from '@/lib/contexts/DictionaryContext';
 interface Project {
     id: string;
     title: string;
-    description: string;
-    category: string;
-    image: string;
-    technologies: string[];
+    titleEn?: string;
     slug: string;
+    description: string;
+    descriptionEn?: string;
+    category: string;
+    categoryEn?: string;
+    image?: string;
+    technologies: string[];
+    isFeatured: boolean;
+    // These are added for display purposes after localization
+    displayTitle?: string;
+    displayDescription?: string;
+    displayCategory?: string;
 }
 
-export default function PortfolioPage() {
+export default function PortfolioPage({ params: { lang } }: { params: { lang: string } }) {
     const dict = useDictionary();
-    const allCategory = dict.portfolio.allCategory;
     const [projects, setProjects] = useState<Project[]>([]);
     const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-    const [activeCategory, setActiveCategory] = useState(allCategory);
-    const [categories, setCategories] = useState<string[]>([allCategory]);
-    const [loading, setLoading] = useState(true);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [activeCategory, setActiveCategory] = useState(dict.portfolio.grid.allCategory);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchPortfolio = async () => {
             try {
                 const { data } = await publicApi.getPortfolio();
-                // Normalize data
-                const mapped = data.map((p: any) => ({
-                    id: p.id,
-                    title: p.title,
-                    description: p.description,
-                    category: p.category, // Assuming category name string
+                // Map localized fields
+                const localizedData: Project[] = data.map((p: any) => ({
+                    ...p,
                     image: p.image || '/images/project-placeholder.jpg',
                     technologies: p.technologies || [],
-                    slug: p.slug
+                    displayTitle: lang === 'en' && p.titleEn ? p.titleEn : p.title,
+                    displayDescription: lang === 'en' && p.descriptionEn ? p.descriptionEn : p.description,
+                    // Use categoryEn (country code) if available, otherwise fallback to the flag emoji string
+                    displayCategory: p.categoryEn ?? p.category
                 }));
-                setProjects(mapped);
-                setFilteredProjects(mapped);
 
-                // Extract unique categories
-                const uniqueCats = Array.from(new Set(mapped.map((p: any) => p.category))).sort() as string[];
-                setCategories([allCategory, ...uniqueCats]);
+                setProjects(localizedData);
+                setFilteredProjects(localizedData);
+
+                // Get unique categories (country codes or raw strings)
+                const uniqueCats: string[] = Array.from(new Set(localizedData.map((p: Project) => p.displayCategory || p.category))).sort();
+                setCategories(uniqueCats);
             } catch (error) {
                 console.error('Failed to fetch portfolio:', error);
             } finally {
-                setLoading(false);
+                setIsLoading(false);
             }
         };
 
-        fetchProjects();
-    }, []);
+        fetchPortfolio();
+    }, [lang]);
 
     useEffect(() => {
-        if (activeCategory === allCategory) {
+        if (activeCategory === dict.portfolio.grid.allCategory) {
             setFilteredProjects(projects);
         } else {
-            setFilteredProjects(projects.filter(p => p.category === activeCategory));
+            setFilteredProjects(projects.filter(p => p.displayCategory === activeCategory));
         }
-    }, [activeCategory, projects]);
+    }, [activeCategory, projects, dict.portfolio.grid.allCategory]);
+
+    // Helper to get flag from category string or code
+    const getFlag = (cat: string) => {
+        if (!cat) return '🌐';
+        if (cat.length === 2 && /^[A-Z]{2}$/.test(cat)) {
+            // It's a country code, convert to emoji
+            return cat.toUpperCase().replace(/./g, char =>
+                String.fromCodePoint(char.charCodeAt(0) + 127397)
+            );
+        }
+        // Fallback to extraction from string (legacy) or mapping
+        if (cat === 'GLOBAL') return '🌐';
+        const match = cat.match(/[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]/);
+        return match ? match[0] : '📍';
+    };
+
+    // Helper to get localized name
+    const getCategoryName = (cat: string) => {
+        if (cat === dict.portfolio.grid.allCategory) return dict.portfolio.grid.allCategory;
+        if (cat.length === 2 && (dict.portfolio.grid as any).countries?.[cat]) {
+            return (dict.portfolio.grid as any).countries[cat];
+        }
+        if (cat === 'GLOBAL' && (dict.portfolio.grid as any).countries?.GLOBAL) {
+            return (dict.portfolio.grid as any).countries.GLOBAL;
+        }
+        // Fallback: remove emoji from string
+        return cat.replace(/[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]\s*/g, '');
+    };
 
     return (
         <>
@@ -120,6 +156,22 @@ export default function PortfolioPage() {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-3">
+                            <button
+                                onClick={() => setActiveCategory(dict.portfolio.grid.allCategory)}
+                                className={`relative px-6 py-2.5 rounded-xl text-xs font-mono tracking-widest uppercase transition-all duration-500 overflow-hidden group ${activeCategory === dict.portfolio.grid.allCategory
+                                    ? 'text-brand-primary'
+                                    : 'text-brand-muted hover:text-white bg-white/5 border border-white/10'
+                                    }`}
+                            >
+                                {activeCategory === dict.portfolio.grid.allCategory && (
+                                    <motion.div
+                                        layoutId="activeFilter"
+                                        className="absolute inset-0 bg-brand-accent shadow-neon-cyan"
+                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                                <span className="relative z-10">{dict.portfolio.grid.allCategory}</span>
+                            </button>
                             {categories.map((cat) => (
                                 <button
                                     key={cat}
@@ -136,14 +188,17 @@ export default function PortfolioPage() {
                                             transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                                         />
                                     )}
-                                    <span className="relative z-10">{cat}</span>
+                                    <div className="relative z-10 flex items-center gap-2">
+                                        <span className="text-base leading-none">{getFlag(cat)}</span>
+                                        <span>{getCategoryName(cat)}</span>
+                                    </div>
                                 </button>
                             ))}
                         </div>
                     </div>
 
                     {/* Grid */}
-                    {loading ? (
+                    {isLoading ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {[1, 2, 3].map((i) => (
                                 <div key={i} className="h-96 rounded-2xl bg-brand-surface/30 animate-pulse" />
@@ -168,18 +223,19 @@ export default function PortfolioPage() {
                                         <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                         <div className="relative h-full glass-card overflow-hidden hover:border-brand-accent/50 transition-all duration-500 rounded-2xl flex flex-col group/card">
                                             {/* Category Badge Header */}
-                                            <div className="px-8 pt-8 pb-4 border-b border-white/5">
-                                                <span className="px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan">
-                                                    {project.category}
+                                            <div className="px-8 pt-8 pb-4 border-b border-white/5 flex items-center justify-between">
+                                                <span className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan/50 transition-transform duration-300 group-hover/card:scale-105">
+                                                    <span className="text-base leading-none">{getFlag(project.displayCategory || project.category)}</span>
+                                                    <span>{getCategoryName(project.displayCategory || project.category)}</span>
                                                 </span>
                                             </div>
 
                                             <div className="p-8 flex-1 flex flex-col">
-                                                <h3 className="text-2xl font-display font-bold text-brand-text mb-4 group-hover/card:text-brand-accent transition-colors">
-                                                    {project.title}
+                                                <h3 className="text-2xl font-display font-bold text-brand-text mb-4 group-hover/card:text-brand-accent transition-colors leading-tight">
+                                                    {project.displayTitle}
                                                 </h3>
-                                                <p className="text-brand-muted text-sm leading-relaxed mb-8 flex-1">
-                                                    {project.description}
+                                                <p className="text-brand-muted text-sm leading-relaxed mb-8 flex-1 opacity-80 group-hover/card:opacity-100 transition-opacity">
+                                                    {project.displayDescription}
                                                 </p>
 
                                                 <div className="flex flex-wrap gap-2 mb-8">
@@ -189,12 +245,19 @@ export default function PortfolioPage() {
                                                         </span>
                                                     ))}
                                                     {project.technologies.length > 3 && (
-                                                        <span className="px-3 py-1 text-[10px] text-brand-muted font-bold">+{project.technologies.length - 3} {dict.portfolio.grid.more}</span>
+                                                        <span className="px-3 py-1 text-[10px] text-brand-muted font-bold">
+                                                            +{project.technologies.length - 3} {dict.portfolio.grid.more}
+                                                        </span>
                                                     )}
                                                 </div>
 
-                                                <Link href={`/portfolio/${project.slug}`} className="mt-auto">
-                                                    <Button variant="outline" size="lg" className="w-full group-hover/card:bg-brand-accent group-hover/card:text-brand-primary group-hover/card:border-brand-accent transition-all duration-300 shadow-sm hover:shadow-neon-cyan" icon={<ArrowUpRight size={20} className="rtl:rotate-270" />}>
+                                                <Link href={`/${lang}/portfolio/${project.slug}`} className="mt-auto">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="lg"
+                                                        className="w-full group-hover/card:bg-brand-accent group-hover/card:text-brand-primary group-hover/card:border-brand-accent transition-all duration-300 shadow-sm hover:shadow-neon-cyan"
+                                                        icon={<ArrowUpRight size={20} className="rtl:rotate-270" />}
+                                                    >
                                                         {dict.portfolio.grid.viewCaseStudy}
                                                     </Button>
                                                 </Link>
@@ -206,10 +269,18 @@ export default function PortfolioPage() {
                         </motion.div>
                     )}
 
-                    {!loading && filteredProjects.length === 0 && (
-                        <div className="text-center py-20">
-                            <p className="text-brand-muted text-lg">{dict.portfolio.grid.emptyState}</p>
-                            <Button variant="ghost" className="mt-4" onClick={() => setActiveCategory(allCategory)}>
+                    {!isLoading && filteredProjects.length === 0 && (
+                        <div className="text-center py-20 flex flex-col items-center justify-center">
+                            <div className="w-20 h-20 rounded-full bg-white/5 mb-6 flex items-center justify-center text-brand-muted opacity-50">
+                                <Filter size={40} />
+                            </div>
+                            <p className="text-brand-muted text-lg font-light mb-8">{dict.portfolio.grid.emptyState}</p>
+                            <Button
+                                variant="ghost"
+                                size="lg"
+                                className="border border-white/10 hover:bg-white/5"
+                                onClick={() => setActiveCategory(dict.portfolio.grid.allCategory)}
+                            >
                                 {dict.portfolio.grid.viewAll}
                             </Button>
                         </div>
