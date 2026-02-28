@@ -22,16 +22,18 @@ const DynamicIcon = ({ name, size = 48, className = "" }: { name: string; size?:
 
 interface ServiceDetailClientProps {
     service: any;
+    lang: string;
 }
 
-export default function ServiceDetailClient({ service }: ServiceDetailClientProps) {
+export default function ServiceDetailClient({ service, lang }: ServiceDetailClientProps) {
     if (!service) {
+        // ... (no changes to error state for now, but lang could be used for "Back to Services" text if dict is used)
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-primary text-center px-6">
                 <div className="max-w-md">
                     <h2 className="text-4xl font-display font-bold text-white mb-6">Service Not Found</h2>
                     <p className="text-brand-muted mb-10">System could not locate the requested service architecture. Please return to the command center.</p>
-                    <Link href="/services">
+                    <Link href={`/${lang}/services`}>
                         <Button variant="primary" icon={<ArrowLeft size={20} />}>
                             Back to Services
                         </Button>
@@ -39,6 +41,25 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                 </div>
             </div>
         );
+    }
+
+    const title = lang === 'en' && service.titleEn ? service.titleEn : service.title;
+    const description = lang === 'en' && service.descriptionEn ? service.descriptionEn : service.description;
+
+    let features: string[] = [];
+    const featuresStr = (lang === 'en' && service.featuresEn) ? service.featuresEn : service.features;
+    if (featuresStr) {
+        if (Array.isArray(featuresStr)) {
+            features = featuresStr;
+        } else {
+            try {
+                const parsed = JSON.parse(featuresStr);
+                features = Array.isArray(parsed) ? parsed : [parsed.toString()];
+            } catch (e) {
+                // If not valid JSON, treat as comma-separated string
+                features = featuresStr.split(',').map((s: string) => s.trim()).filter(Boolean);
+            }
+        }
     }
 
     return (
@@ -63,7 +84,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                             className="flex-1 text-center lg:text-left"
                         >
                             <motion.div variants={heroTextReveal} className="mb-6">
-                                <Link href="/services" className="inline-flex items-center gap-2 text-brand-accent font-mono text-sm hover:gap-3 transition-all group">
+                                <Link href={`/${lang}/services`} className="inline-flex items-center gap-2 text-brand-accent font-mono text-sm hover:gap-3 transition-all group">
                                     <ArrowLeft size={16} />
                                     <span>SYSTEM_SERVICES</span>
                                 </Link>
@@ -74,8 +95,8 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                                     <DynamicIcon name={service.icon} size={48} />
                                 </div>
                                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-tight">
-                                    {service.title.split(' ').map((word: string, i: number) => (
-                                        i === service.title.split(' ').length - 1 ?
+                                    {title.split(' ').map((word: string, i: number) => (
+                                        i === title.split(' ').length - 1 ?
                                             <span key={i} className="gradient-text"> {word}</span> :
                                             <span key={i}>{word} </span>
                                     ))}
@@ -83,16 +104,16 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                             </motion.div>
 
                             <motion.p variants={heroTextReveal} className="text-xl text-brand-muted max-w-2xl leading-relaxed mb-12">
-                                {service.description}
+                                {description}
                             </motion.p>
 
                             <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center gap-6">
-                                <Link href={`${WHATSAPP_URL}?text=I'm interested in ${service.title}`} target="_blank">
+                                <Link href={`${WHATSAPP_URL}?text=I'm interested in ${title}`} target="_blank">
                                     <Button size="lg" variant="primary" icon={<MessageCircle size={20} />}>
                                         Inquire Now
                                     </Button>
                                 </Link>
-                                <Link href="/contact">
+                                <Link href={`/${lang}/contact`}>
                                     <Button size="lg" variant="neon" icon={<ArrowRight size={20} />}>
                                         Custom Roadmap
                                     </Button>
@@ -112,7 +133,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                                     <div className="relative w-full h-full">
                                         <Image
                                             src={service.image}
-                                            alt={service.title}
+                                            alt={title}
                                             fill
                                             className="object-cover rounded-[2rem]"
                                         />
@@ -169,7 +190,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
                     </SectionReveal>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {service.features && service.features.map((feature: string, i: number) => (
+                        {features.map((feature: string, i: number) => (
                             <SectionReveal key={i} delay={i * 0.1}>
                                 <div className="glass-card p-8 group hover:bg-white/[0.02] h-full flex flex-col items-start min-h-[220px]">
                                     <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-primary transition-all duration-500">

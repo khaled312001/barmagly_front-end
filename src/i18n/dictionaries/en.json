@@ -44,11 +44,11 @@
         "officialLicense": "Official Swiss License",
         "chatWhatsapp": "Chat on WhatsApp",
         "links": {
-            "web": "Web Development",
-            "mobile": "Mobile Apps",
-            "design": "UI/UX Design",
-            "business": "Business Systems",
-            "marketing": "Sales & Marketing"
+            "web": "Web Development & Design",
+            "mobile": "Mobile Application Development",
+            "design": "UI/UX & Brand Identity",
+            "business": "POS & Business Systems",
+            "marketing": "Sales & Marketing Solutions"
         }
     },
     "home": {

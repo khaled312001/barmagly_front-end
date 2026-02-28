@@ -9,6 +9,7 @@ import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations';
 import { WHATSAPP_URL } from '@/lib/utils';
 import { MessageCircle, ArrowRight, CheckCircle2, Search, Layout, Cpu, ShieldCheck } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
@@ -221,6 +222,8 @@ function RoadmapSection() {
 }
 
 export default function ServicesPage() {
+    const params = useParams();
+    const lang = params?.lang as string;
     const [services, setServices] = React.useState<ServiceDetail[]>([]);
     const dict = useDictionary();
 
@@ -229,22 +232,42 @@ export default function ServicesPage() {
             // Flatten services from categories
             const allServices = data.flatMap((cat: any) => cat.services || []).map((s: any) => {
                 let features: string[] = [];
-                try {
-                    features = JSON.parse(s.features || '[]');
-                } catch (e) {
-                    features = [];
+                const featuresStr = (lang === 'en' && s.featuresEn) ? s.featuresEn : s.features;
+                if (featuresStr) {
+                    if (Array.isArray(featuresStr)) {
+                        features = featuresStr;
+                    } else {
+                        try {
+                            const parsed = JSON.parse(featuresStr);
+                            features = Array.isArray(parsed) ? parsed : [parsed.toString()];
+                        } catch (e) {
+                            // If not valid JSON, treat as comma-separated string
+                            features = featuresStr.split(',').map((s: string) => s.trim()).filter(Boolean);
+                        }
+                    }
                 }
                 return {
                     id: s.slug || '',
-                    title: s.title,
-                    description: s.description,
+                    title: lang === 'en' && s.titleEn ? s.titleEn : s.title,
+                    description: lang === 'en' && s.descriptionEn ? s.descriptionEn : s.description,
                     icon: <DynamicIcon name={s.icon || 'Code2'} size={32} />,
-                    features: features
+                    features: features,
+                    slug: s.slug
                 };
-            });
+            })
+                // Temporal filter to hide old services until DB is seeded
+                .filter((s: any) => ![
+                    'software-development-switzerland',
+                    'tech-consulting-sweden',
+                    'enterprise-solutions-saudi-arabia',
+                    'mobile-app-innovation-uae',
+                    'system-repair-legacy-maintenance',
+                    'maintenance'
+                ].includes(s.slug));
+
             setServices(allServices);
         });
-    }, []);
+    }, [lang]);
 
     const displayServices = services;
 

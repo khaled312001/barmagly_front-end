@@ -29,6 +29,18 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
         );
     }
 
+    const technologies = React.useMemo(() => {
+        if (!project?.technologies) return [];
+        if (Array.isArray(project.technologies)) return project.technologies;
+        try {
+            const parsed = JSON.parse(project.technologies);
+            return Array.isArray(parsed) ? parsed : [parsed.toString()];
+        } catch (e) {
+            // If not valid JSON, treat as comma-separated string
+            return project.technologies.split(',').map((s: string) => s.trim()).filter(Boolean);
+        }
+    }, [project?.technologies]);
+
     return (
         <main className="min-h-screen bg-brand-primary overflow-hidden">
             {/* Background Effects */}
@@ -114,7 +126,7 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
                                 <div className="glass-card p-8 sticky top-32">
                                     <h3 className="text-lg font-bold text-white mb-6 uppercase tracking-widest border-b border-white/10 pb-4">Tech Stack</h3>
                                     <div className="flex flex-wrap gap-2">
-                                        {project.technologies && JSON.parse(project.technologies).map((tech: string) => (
+                                        {technologies.map((tech: string) => (
                                             <span key={tech} className="px-3 py-1.5 text-xs font-mono bg-white/5 border border-white/10 rounded text-brand-accent">
                                                 {tech}
                                             </span>

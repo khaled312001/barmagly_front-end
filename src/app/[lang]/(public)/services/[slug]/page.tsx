@@ -5,7 +5,7 @@ import ServiceDetailClient from './ServiceDetailClient';
 import { publicApi } from '@/lib/api';
 
 interface PageProps {
-    params: { slug: string };
+    params: { slug: string; lang: string };
 }
 
 async function getServiceData(slug: string) {
@@ -19,6 +19,7 @@ async function getServiceData(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const service = await getServiceData(params.slug);
+    const { lang } = params;
 
     if (!service) {
         return {
@@ -26,12 +27,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         };
     }
 
+    const title = lang === 'en' && service.titleEn ? service.titleEn : service.title;
+    const description = lang === 'en' && service.descriptionEn ? service.descriptionEn : service.description;
+
     return {
-        title: `${service.title} | Barmagly Swiss Tech`,
-        description: service.description,
+        title: `${title} | Barmagly Swiss Tech`,
+        description: description,
         openGraph: {
-            title: service.title,
-            description: service.description,
+            title: title,
+            description: description,
             type: 'website',
             images: service.image ? [{ url: service.image }] : undefined,
         },
@@ -40,17 +44,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ServiceDetailPage({ params }: PageProps) {
     const service = await getServiceData(params.slug);
+    const { lang } = params;
 
     if (!service) {
         notFound();
     }
 
+    const title = lang === 'en' && service.titleEn ? service.titleEn : service.title;
+    const description = lang === 'en' && service.descriptionEn ? service.descriptionEn : service.description;
+
     // JSON-LD Structured Data
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Service',
-        name: service.title,
-        description: service.description,
+        name: title,
+        description: description,
         provider: {
             '@type': 'Organization',
             name: 'Barmagly',
@@ -62,7 +70,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
             priceCurrency: 'USD',
             availability: 'https://schema.org/InStock'
         },
-        serviceType: service.category?.name || 'Software Development'
+        serviceType: (lang === 'en' && service.category?.nameEn) ? service.category.nameEn : service.category?.name || 'Software Development'
     };
 
     return (
@@ -71,7 +79,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <ServiceDetailClient service={service} />
+            <ServiceDetailClient service={service} lang={lang} />
         </>
     );
 }

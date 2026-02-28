@@ -12,6 +12,7 @@ import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations'
 import { cn, WHATSAPP_URL, COMPANY_LICENSE, COMPANY_ADDRESS } from '@/lib/utils';
 import Link from 'next/link';
 import { MouseFollower } from '@/components/ui/MouseFollower';
+import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
@@ -216,6 +217,8 @@ const ServiceIcon = ({ name, size = 32 }: { name: string; size?: number }) => {
 import * as LucideIcons from 'lucide-react';
 
 function ServicesSection() {
+    const params = useParams();
+    const lang = params?.lang as string;
     const [services, setServices] = React.useState<any[]>([]);
     const dict = useDictionary();
 
@@ -223,15 +226,26 @@ function ServicesSection() {
         publicApi.getServices().then(({ data }) => {
             // Flatten services from all categories for the homepage showcase
             const allServices = data.flatMap((cat: any) => (cat.services || []).map((s: any) => ({
-                title: s.title,
-                description: s.description,
+                title: lang === 'en' && s.titleEn ? s.titleEn : s.title,
+                description: lang === 'en' && s.descriptionEn ? s.descriptionEn : s.description,
                 icon: <ServiceIcon name={s.icon || 'Code2'} size={32} />,
                 color: cat.id % 2 === 0 ? 'cyan' : 'purple', // Alternate colors for variety
                 href: `/services/${s.slug}`,
-            })));
+                slug: s.slug
+            })))
+                // Temporal filter to hide old services until DB is seeded
+                .filter((s: any) => ![
+                    'software-development-switzerland',
+                    'tech-consulting-sweden',
+                    'enterprise-solutions-saudi-arabia',
+                    'mobile-app-innovation-uae',
+                    'system-repair-legacy-maintenance',
+                    'maintenance'
+                ].includes(s.slug));
+
             setServices(allServices);
         }).catch(err => console.error(err));
-    }, []);
+    }, [lang]);
 
     const displayServices = services;
 
