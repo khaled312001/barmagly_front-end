@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, User, Tag, Layers, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Calendar, User, Tag, Layers, CheckCircle2, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, heroTextReveal } from '@/lib/animations';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface PortfolioDetailClientProps {
     project: any;
@@ -15,6 +16,7 @@ interface PortfolioDetailClientProps {
 }
 
 export default function PortfolioDetailClient({ project, lang }: PortfolioDetailClientProps) {
+    const dict = useDictionary();
     const technologies = React.useMemo(() => {
         if (!project?.technologies) return [];
         if (Array.isArray(project.technologies)) return project.technologies;
@@ -97,6 +99,20 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                                 </h4>
                                 <p className="text-white font-medium">{project.duration || 'Ongoing'}</p>
                             </div>
+                            {project.content && project.content.startsWith('http') && (
+                                <div>
+                                    <a href={project.content} target="_blank" rel="noopener noreferrer">
+                                        <Button
+                                            variant="primary"
+                                            size="lg"
+                                            className="shadow-neon-cyan"
+                                            icon={<ExternalLink size={18} />}
+                                        >
+                                            {(dict.portfolio?.grid as any)?.visitProject || 'Visit Live Project'}
+                                        </Button>
+                                    </a>
+                                </div>
+                            )}
                         </motion.div>
                     </motion.div>
                 </div>

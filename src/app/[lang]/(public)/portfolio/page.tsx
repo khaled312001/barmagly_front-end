@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowUpRight, Filter } from 'lucide-react';
+import { ArrowUpRight, ExternalLink, Filter, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations';
@@ -22,11 +22,15 @@ interface Project {
     image?: string;
     technologies: string[];
     isFeatured: boolean;
+    projectType?: string;
+    content?: string;
     // These are added for display purposes after localization
     displayTitle?: string;
     displayDescription?: string;
     displayCategory?: string;
 }
+
+const PROJECT_TYPES = ['website', 'app', 'pos'];
 
 export default function PortfolioPage({ params: { lang } }: { params: { lang: string } }) {
     const dict = useDictionary();
@@ -34,6 +38,7 @@ export default function PortfolioPage({ params: { lang } }: { params: { lang: st
     const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [activeCategory, setActiveCategory] = useState(dict.portfolio.grid.allCategory);
+    const [activeType, setActiveType] = useState('all');
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -68,12 +73,20 @@ export default function PortfolioPage({ params: { lang } }: { params: { lang: st
     }, [lang]);
 
     useEffect(() => {
-        if (activeCategory === dict.portfolio.grid.allCategory) {
-            setFilteredProjects(projects);
-        } else {
-            setFilteredProjects(projects.filter(p => p.displayCategory === activeCategory));
+        let result = projects;
+
+        // Filter by country
+        if (activeCategory !== dict.portfolio.grid.allCategory) {
+            result = result.filter(p => p.displayCategory === activeCategory);
         }
-    }, [activeCategory, projects, dict.portfolio.grid.allCategory]);
+
+        // Filter by type
+        if (activeType !== 'all') {
+            result = result.filter(p => p.projectType === activeType);
+        }
+
+        setFilteredProjects(result);
+    }, [activeCategory, activeType, projects, dict.portfolio.grid.allCategory]);
 
     // Helper to get flag from category string or code
     const getFlag = (cat: string) => {
@@ -195,6 +208,49 @@ export default function PortfolioPage({ params: { lang } }: { params: { lang: st
                                 </button>
                             ))}
                         </div>
+
+                        {/* Type Filters */}
+                        <div className="flex flex-wrap items-center gap-3">
+                            <div className="flex items-center gap-2 text-brand-muted mr-2">
+                                <Layers size={16} className="text-brand-accent" />
+                                <span className="text-xs font-mono uppercase tracking-wider">{(dict.portfolio.grid as any).typeFiltersTitle}</span>
+                            </div>
+                            <button
+                                onClick={() => setActiveType('all')}
+                                className={`relative px-5 py-2 rounded-lg text-xs font-mono tracking-widest uppercase transition-all duration-500 overflow-hidden ${activeType === 'all'
+                                    ? 'text-brand-primary'
+                                    : 'text-brand-muted hover:text-white bg-white/5 border border-white/10'
+                                    }`}
+                            >
+                                {activeType === 'all' && (
+                                    <motion.div
+                                        layoutId="activeTypeFilter"
+                                        className="absolute inset-0 bg-brand-secondary shadow-neon-cyan"
+                                        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                                <span className="relative z-10">{(dict.portfolio.grid as any).allTypes}</span>
+                            </button>
+                            {PROJECT_TYPES.map((type) => (
+                                <button
+                                    key={type}
+                                    onClick={() => setActiveType(type)}
+                                    className={`relative px-5 py-2 rounded-lg text-xs font-mono tracking-widest uppercase transition-all duration-500 overflow-hidden ${activeType === type
+                                        ? 'text-brand-primary'
+                                        : 'text-brand-muted hover:text-white bg-white/5 border border-white/10'
+                                        }`}
+                                >
+                                    {activeType === type && (
+                                        <motion.div
+                                            layoutId="activeTypeFilter"
+                                            className="absolute inset-0 bg-brand-secondary shadow-neon-cyan"
+                                            transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                                        />
+                                    )}
+                                    <span className="relative z-10">{(dict.portfolio.grid as any).types?.[type] || type}</span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     {/* Grid */}
@@ -261,6 +317,18 @@ export default function PortfolioPage({ params: { lang } }: { params: { lang: st
                                                         {dict.portfolio.grid.viewCaseStudy}
                                                     </Button>
                                                 </Link>
+                                                {project.content && project.content.startsWith('http') && (
+                                                    <a href={project.content} target="_blank" rel="noopener noreferrer" className="mt-3 block">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="lg"
+                                                            className="w-full border border-white/10 hover:border-brand-accent/50 hover:bg-brand-accent/10 transition-all duration-300"
+                                                            icon={<ExternalLink size={18} />}
+                                                        >
+                                                            {(dict.portfolio.grid as any).visitProject}
+                                                        </Button>
+                                                    </a>
+                                                )}
                                             </div>
                                         </div>
                                     </motion.div>
@@ -279,7 +347,7 @@ export default function PortfolioPage({ params: { lang } }: { params: { lang: st
                                 variant="ghost"
                                 size="lg"
                                 className="border border-white/10 hover:bg-white/5"
-                                onClick={() => setActiveCategory(dict.portfolio.grid.allCategory)}
+                                onClick={() => { setActiveCategory(dict.portfolio.grid.allCategory); setActiveType('all'); }}
                             >
                                 {dict.portfolio.grid.viewAll}
                             </Button>

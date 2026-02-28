@@ -299,8 +299,17 @@
         "grid": {
             "filtersTitle": "تصفية حسب الدولة",
             "filtersDesc": "مشاريعنا مصنفة حسب الدول التي عملنا فيها",
+            "typeFiltersTitle": "تصفية حسب النوع",
+            "allCategory": "الكل",
+            "allTypes": "الكل",
+            "types": {
+                "website": "موقع",
+                "app": "تطبيق",
+                "pos": "POS"
+            },
             "more": "المزيد",
             "viewCaseStudy": "تصفح العمل",
+            "visitProject": "زيارة المشروع",
             "countries": {
                 "CH": "سويسرا",
                 "FR": "فرنسا",

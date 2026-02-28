@@ -299,8 +299,17 @@
         "grid": {
             "filtersTitle": "Filter by Country",
             "filtersDesc": "Our projects categorized by the countries we've worked in",
+            "typeFiltersTitle": "Filter by Type",
+            "allCategory": "All",
+            "allTypes": "All",
+            "types": {
+                "website": "Website",
+                "app": "App",
+                "pos": "POS"
+            },
             "more": "MORE",
             "viewCaseStudy": "View Project",
+            "visitProject": "Visit Live Project",
             "countries": {
                 "CH": "Switzerland",
                 "FR": "France",
