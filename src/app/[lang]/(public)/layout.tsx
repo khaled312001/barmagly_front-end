@@ -27,7 +27,7 @@ export default async function PublicLayout({
             <MouseGlow />
             <SiteProvider>
                 <DictionaryProvider dict={dict}>
-                    <Navbar dict={dict.navbar} lang={lang} getStartedText={dict.hero.ctaSecondary} />
+                    <Navbar dict={{ ...dict.navbar, nav: dict.nav }} lang={lang} getStartedText={dict.hero.ctaSecondary} />
                     <SmoothScroll>
                         {children}
                         <Footer dict={dict.footer} lang={lang} />

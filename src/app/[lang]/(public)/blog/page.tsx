@@ -175,54 +175,69 @@ export default function BlogPage() {
                                                 initial={{ opacity: 0, scale: 0.98 }}
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 exit={{ opacity: 0, scale: 0.98 }}
-                                                className="glass-card p-12 hover-glow group transition-all duration-700 rounded-[2.5rem] border-white/5 hover:border-brand-accent/30 relative overflow-hidden bg-brand-dark/40"
+                                                className="glass-card hover-glow group transition-all duration-700 rounded-[2.5rem] border-white/5 hover:border-brand-accent/30 relative overflow-hidden bg-brand-dark/40"
                                             >
-                                                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-brand-accent/10 transition-colors duration-700" />
-                                                <div className="absolute inset-0 tech-grid opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700" />
-
-                                                <div className="flex flex-wrap items-center gap-6 mb-8 relative z-10 font-mono tracking-tighter">
-                                                    {post.category && (
-                                                        <span className="px-5 py-2 text-[10px] font-bold uppercase bg-brand-glass border border-brand-accent/30 text-brand-accent rounded-full shadow-neon-cyan">
-                                                            {post.category.name}
-                                                        </span>
-                                                    )}
-                                                    {post.publishedAt && (
-                                                        <span className="flex items-center gap-2 text-brand-muted/60 text-xs">
-                                                            <Calendar size={14} className="text-brand-accent/50" />
-                                                            {formatDate(post.publishedAt)}
-                                                        </span>
-                                                    )}
-                                                    {post.readTime && (
-                                                        <span className="flex items-center gap-2 text-brand-muted/60 text-xs">
-                                                            <Clock size={14} className="text-brand-accent/50" />
-                                                            {post.readTime}
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                <Link href={`/blog/${post.slug}`} className="block group">
-                                                    <h2 className="text-3xl md:text-4xl font-display font-black text-white mb-6 group-hover:text-brand-accent transition-all duration-500 relative z-10 leading-tight tracking-tight">
-                                                        {post.title}
-                                                    </h2>
-                                                </Link>
-
-                                                <p className="text-brand-muted leading-relaxed mb-10 line-clamp-2 text-lg relative z-10 font-light max-w-2xl">
-                                                    {post.excerpt}
-                                                </p>
-
-                                                <div className="flex items-center justify-between mt-auto pt-10 border-t border-white/5 relative z-10">
-                                                    <div className="flex flex-wrap gap-3">
-                                                        {post.tags.slice(0, 3).map((tag) => (
-                                                            <span key={tag.slug} className="text-[10px] font-mono text-brand-muted/40 uppercase tracking-widest px-3 py-1 bg-white/5 rounded-md border border-white/5 group-hover:border-brand-accent/10 group-hover:text-brand-muted/60 transition-colors">
-                                                                #{tag.name}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                    <Link href={`/blog/${post.slug}`}>
-                                                        <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50 shadow-sm hover:shadow-neon-cyan px-8" icon={<ArrowRight size={18} />}>
-                                                            Analyze Intel
-                                                        </Button>
+                                                {/* Featured Image */}
+                                                {post.image && (
+                                                    <Link href={`/blog/${post.slug}`} className="block">
+                                                        <div className="relative w-full h-56 md:h-64 overflow-hidden rounded-t-[2.5rem]">
+                                                            <img
+                                                                src={post.image}
+                                                                alt={post.title}
+                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                            />
+                                                            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent" />
+                                                        </div>
                                                     </Link>
+                                                )}
+                                                <div className="p-10 md:p-12 relative">
+                                                    <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-3xl -mr-32 -mt-32 group-hover:bg-brand-accent/10 transition-colors duration-700" />
+                                                    <div className="absolute inset-0 tech-grid opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700" />
+
+                                                    <div className="flex flex-wrap items-center gap-6 mb-8 relative z-10 font-mono tracking-tighter">
+                                                        {post.category && (
+                                                            <span className="px-5 py-2 text-[10px] font-bold uppercase bg-brand-glass border border-brand-accent/30 text-brand-accent rounded-full shadow-neon-cyan">
+                                                                {post.category.name}
+                                                            </span>
+                                                        )}
+                                                        {post.publishedAt && (
+                                                            <span className="flex items-center gap-2 text-brand-muted/60 text-xs">
+                                                                <Calendar size={14} className="text-brand-accent/50" />
+                                                                {formatDate(post.publishedAt)}
+                                                            </span>
+                                                        )}
+                                                        {post.readTime && (
+                                                            <span className="flex items-center gap-2 text-brand-muted/60 text-xs">
+                                                                <Clock size={14} className="text-brand-accent/50" />
+                                                                {post.readTime}
+                                                            </span>
+                                                        )}
+                                                    </div>
+
+                                                    <Link href={`/blog/${post.slug}`} className="block group">
+                                                        <h2 className="text-3xl md:text-4xl font-display font-black text-white mb-6 group-hover:text-brand-accent transition-all duration-500 relative z-10 leading-tight tracking-tight">
+                                                            {post.title}
+                                                        </h2>
+                                                    </Link>
+
+                                                    <p className="text-brand-muted leading-relaxed mb-10 line-clamp-2 text-lg relative z-10 font-light max-w-2xl">
+                                                        {post.excerpt}
+                                                    </p>
+
+                                                    <div className="flex items-center justify-between mt-auto pt-10 border-t border-white/5 relative z-10">
+                                                        <div className="flex flex-wrap gap-3">
+                                                            {post.tags.slice(0, 3).map((tag) => (
+                                                                <span key={tag.slug} className="text-[10px] font-mono text-brand-muted/40 uppercase tracking-widest px-3 py-1 bg-white/5 rounded-md border border-white/5 group-hover:border-brand-accent/10 group-hover:text-brand-muted/60 transition-colors">
+                                                                    #{tag.name}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                        <Link href={`/blog/${post.slug}`}>
+                                                            <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50 shadow-sm hover:shadow-neon-cyan px-8" icon={<ArrowRight size={18} />}>
+                                                                Read Article
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </motion.article>
                                         ))}
@@ -231,9 +246,9 @@ export default function BlogPage() {
                                     {!loading && filteredPosts.length === 0 && (
                                         <div className="text-center py-24 glass-card border-dashed border-white/10">
                                             <Search size={48} className="mx-auto text-brand-muted/20 mb-6" />
-                                            <p className="text-brand-muted text-xl font-light">No classified data found matching your query.</p>
+                                            <p className="text-brand-muted text-xl font-light">No articles found matching your search.</p>
                                             <Button variant="ghost" className="mt-8 text-brand-accent hover:bg-brand-accent/10" onClick={() => { setActiveCategory(allCategory); setSearchQuery(''); }}>
-                                                Reset Search Parameters
+                                                Clear Search
                                             </Button>
                                         </div>
                                     )}
@@ -246,7 +261,7 @@ export default function BlogPage() {
                             {/* Search Desktop */}
                             <div className="hidden lg:block glass-card p-10 bg-brand-dark/40 border-white/5 relative group overflow-hidden">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-brand-accent/20 group-focus-within:bg-brand-accent transition-colors shadow-neon-cyan" />
-                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Index Search</h3>
+                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Search</h3>
                                 <div className="relative">
                                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-muted/40" size={18} />
                                     <input
@@ -261,7 +276,7 @@ export default function BlogPage() {
 
                             {/* Categories */}
                             <div className="glass-card p-10 bg-brand-dark/40 border-white/5">
-                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Classifications</h3>
+                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Categories</h3>
                                 <ul className="space-y-3">
                                     {categories.map((cat) => (
                                         <li key={cat}>
@@ -288,8 +303,8 @@ export default function BlogPage() {
                             {/* Newsletter CTA */}
                             <div className="glass-card p-10 bg-gradient-to-br from-brand-dark to-brand-accent/5 border-brand-accent/10 relative overflow-hidden group">
                                 <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-brand-accent/5 rounded-full blur-[80px] group-hover:bg-brand-accent/10 transition-colors" />
-                                <h3 className="text-2xl font-display font-black text-white mb-4 leading-tight">Join the <br /><span className="text-brand-accent">Inner Circle</span></h3>
-                                <p className="text-brand-muted text-sm mb-8 leading-relaxed font-light">Receive bimonthly briefings on digital transformation and system architecture.</p>
+                                <h3 className="text-2xl font-display font-black text-white mb-4 leading-tight">Stay <br /><span className="text-brand-accent">Updated</span></h3>
+                                <p className="text-brand-muted text-sm mb-8 leading-relaxed font-light">Subscribe to our newsletter for the latest insights on technology & digital innovation.</p>
                                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                                     <input
                                         type="email"
@@ -297,7 +312,7 @@ export default function BlogPage() {
                                         className="w-full px-5 py-4 bg-brand-primary/50 border border-white/5 rounded-2xl text-sm text-brand-text placeholder:text-brand-muted/20 focus:outline-none focus:border-brand-accent/40 transition-all font-mono"
                                     />
                                     <Button variant="primary" size="xl" className="w-full shadow-neon-cyan font-display tracking-widest text-xs uppercase" icon={<ArrowRight size={16} />}>
-                                        Authenticate
+                                        Subscribe
                                     </Button>
                                 </form>
                             </div>
