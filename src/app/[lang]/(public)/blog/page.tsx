@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, Clock, ArrowRight, Tag, Search } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
@@ -186,10 +187,11 @@ export default function BlogPage() {
                                                 {post.image && (
                                                     <Link href={`/blog/${post.slug}`} className="block">
                                                         <div className="relative w-full h-56 md:h-64 overflow-hidden rounded-t-[2.5rem]">
-                                                            <img
+                                                            <Image
                                                                 src={post.image}
                                                                 alt={post.title}
-                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                                                fill
+                                                                className="object-cover group-hover:scale-105 transition-transform duration-700"
                                                             />
                                                             <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent" />
                                                         </div>

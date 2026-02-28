@@ -255,16 +255,6 @@ export default function ServicesPage() {
                     slug: s.slug
                 };
             })
-                // Temporal filter to hide old services until DB is seeded
-                .filter((s: any) => ![
-                    'software-development-switzerland',
-                    'tech-consulting-sweden',
-                    'enterprise-solutions-saudi-arabia',
-                    'mobile-app-innovation-uae',
-                    'system-repair-legacy-maintenance',
-                    'maintenance'
-                ].includes(s.slug));
-
             setServices(allServices);
         });
     }, [lang]);

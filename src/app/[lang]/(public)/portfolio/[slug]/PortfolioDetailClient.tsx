@@ -14,6 +14,18 @@ interface PortfolioDetailClientProps {
 }
 
 export default function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
+    const technologies = React.useMemo(() => {
+        if (!project?.technologies) return [];
+        if (Array.isArray(project.technologies)) return project.technologies;
+        try {
+            const parsed = JSON.parse(project.technologies);
+            return Array.isArray(parsed) ? parsed : [parsed.toString()];
+        } catch (e) {
+            // If not valid JSON, treat as comma-separated string
+            return project.technologies.split(',').map((s: string) => s.trim()).filter(Boolean);
+        }
+    }, [project?.technologies]);
+
     if (!project) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-primary text-center px-6">
@@ -28,18 +40,6 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
             </div>
         );
     }
-
-    const technologies = React.useMemo(() => {
-        if (!project?.technologies) return [];
-        if (Array.isArray(project.technologies)) return project.technologies;
-        try {
-            const parsed = JSON.parse(project.technologies);
-            return Array.isArray(parsed) ? parsed : [parsed.toString()];
-        } catch (e) {
-            // If not valid JSON, treat as comma-separated string
-            return project.technologies.split(',').map((s: string) => s.trim()).filter(Boolean);
-        }
-    }, [project?.technologies]);
 
     return (
         <main className="min-h-screen bg-brand-primary overflow-hidden">
