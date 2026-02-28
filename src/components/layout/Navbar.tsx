@@ -20,12 +20,12 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
     const { isMobileMenuOpen, toggleMobileMenu, setMobileMenu } = useUIStore();
 
     const navLinks = [
-        { href: `/${lang}`, label: dict.home },
-        { href: `/${lang}/about`, label: dict.about },
-        { href: `/${lang}/services`, label: dict.services },
-        { href: `/${lang}/portfolio`, label: dict.portfolio },
-        { href: `/${lang}/blog`, label: dict.blog },
-        { href: `/${lang}/contact`, label: dict.contact },
+        { href: `/${lang}`, label: dict.navbar.home },
+        { href: `/${lang}/about`, label: dict.navbar.about },
+        { href: `/${lang}/services`, label: dict.navbar.services },
+        { href: `/${lang}/portfolio`, label: dict.navbar.portfolio },
+        { href: `/${lang}/blog`, label: dict.navbar.blog },
+        { href: `/${lang}/contact`, label: dict.navbar.contact },
     ];
 
     const switchLanguage = (newLang: string) => {

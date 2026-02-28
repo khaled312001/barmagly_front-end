@@ -16,11 +16,11 @@ export function Footer({ dict, lang }: FooterProps) {
 
     const footerLinks = {
         company: [
-            { label: dict.about, href: `/${lang}/about` },
-            { label: dict.services, href: `/${lang}/services` },
-            { label: dict.portfolio, href: `/${lang}/portfolio` },
-            { label: dict.blog, href: `/${lang}/blog` },
-            { label: dict.contact, href: `/${lang}/contact` },
+            { label: dict.navbar.about, href: `/${lang}/about` },
+            { label: dict.navbar.services, href: `/${lang}/services` },
+            { label: dict.navbar.portfolio, href: `/${lang}/portfolio` },
+            { label: dict.navbar.blog, href: `/${lang}/blog` },
+            { label: dict.navbar.contact, href: `/${lang}/contact` },
         ],
         services: [
             { label: dict.footer.links.web, href: `/${lang}/services/web-development` },
@@ -56,7 +56,7 @@ export function Footer({ dict, lang }: FooterProps) {
                             </span>
                         </Link>
                         <p className="text-brand-muted text-sm leading-relaxed mb-6">
-                            {dict.description}
+                            {dict.footer.description}
                         </p>
                         <div className="flex flex-col gap-3 text-sm">
                             <div className="flex items-start gap-2 text-brand-muted">
@@ -76,7 +76,7 @@ export function Footer({ dict, lang }: FooterProps) {
 
                     {/* Company Links */}
                     <div>
-                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict.quickLinks}</h4>
+                        <h4 className="text-brand-text font-display font-semibold mb-6">{dict.footer.quickLinks}</h4>
                         <ul className="space-y-3">
                             {footerLinks.company.map((link) => (
                                 <li key={link.href}>
@@ -137,14 +137,14 @@ export function Footer({ dict, lang }: FooterProps) {
                 {/* Bottom Bar */}
                 <div className="mt-16 pt-8 border-t border-brand-glass-border flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-brand-muted text-sm">
-                        © {new Date().getFullYear()} Barmagly. {dict.rights}
+                        © {new Date().getFullYear()} Barmagly. {dict.footer.rights}
                     </p>
                     <div className="flex items-center gap-6 text-sm text-brand-muted">
                         <Link href={`/${lang}/privacy`} className="hover:text-brand-accent transition-colors">
-                            {dict.privacyPolicy}
+                            {dict.footer.privacyPolicy}
                         </Link>
                         <Link href={`/${lang}/terms`} className="hover:text-brand-accent transition-colors">
-                            {dict.termsOfService}
+                            {dict.footer.termsOfService}
                         </Link>
                     </div>
                 </div>
