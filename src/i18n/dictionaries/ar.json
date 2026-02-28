@@ -432,6 +432,45 @@
             "liveOps": "العمليات الحية: مقر زيورخ"
         }
     },
+    "blog": {
+        "hero": {
+            "badge": "أحدث الرؤى والأخبار",
+            "titleLine1": "الرؤى و",
+            "titleHighlight": "المعرفة",
+            "subtitle": "ابق على اطلاع دائم بأحدث التقنيات، وأنظمة الأعمال، والابتكار الرقمي."
+        },
+        "list": {
+            "searchPlaceholder": "ابحث في المقالات...",
+            "readArticle": "اقرأ المقال",
+            "noArticles": "لم يتم العثور على مقالات تطابق بحثك.",
+            "clearSearch": "مسح البحث",
+            "searchHeading": "بحث",
+            "searchSidebarPlaceholder": "أدخل الكلمات المفتاحية...",
+            "categoriesHeading": "التصنيفات",
+            "newsletterTitle1": "ابق",
+            "newsletterTitle2": "محدثاً",
+            "newsletterDesc": "اشترك في نشرتنا الإخبارية للحصول على أحدث الرؤى حول التكنولوجيا والابتكار الرقمي.",
+            "newsletterPlaceholder": "البريد_الإلكتروني@مثال.com",
+            "subscribeBtn": "اشترك",
+            "allCategories": "الكل"
+        },
+        "detail": {
+            "notFound": "المقال غير موجود",
+            "notFoundDesc": "المقال الذي تبحث عنه غير موجود أو تمت إزالته.",
+            "backToArticles": "العودة إلى المقالات",
+            "publishedOn": "نشر في",
+            "share": "مشاركة",
+            "shareTwitter": "شارك على تويتر",
+            "shareLinkedin": "شارك على لينكد إن",
+            "copyLink": "نسخ الرابط",
+            "copied": "تم النسخ!",
+            "relatedTopics": "مواضيع ذات صلة",
+            "ctaTitle": "هل أنت مستعد لبناء مشروعك القادم؟",
+            "ctaDesc": "تقدم برمجلي حلول برمجية على مستوى المؤسسات بدقة سويسرية. من تطبيقات الويب والجوال إلى أنظمة نقاط البيع والمنصات المخصصة — نحن نحول رؤيتك إلى واقع.",
+            "contactTeam": "تواصل مع فريقنا",
+            "viewServices": "عرض خدماتنا"
+        }
+    },
     "nav": {
         "getInTouch": "تواصل معنا",
         "craftingExcellence": "نصنع التميز الرقمي",

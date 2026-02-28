@@ -432,6 +432,45 @@
             "liveOps": "Live Operations: Zürich HQ"
         }
     },
+    "blog": {
+        "hero": {
+            "badge": "LATEST INSIGHTS & NEWS",
+            "titleLine1": "Insights &",
+            "titleHighlight": "Knowledge",
+            "subtitle": "Stay up to date with the latest in technology, business systems, and digital innovation."
+        },
+        "list": {
+            "searchPlaceholder": "Search articles...",
+            "readArticle": "Read Article",
+            "noArticles": "No articles found matching your search.",
+            "clearSearch": "Clear Search",
+            "searchHeading": "Search",
+            "searchSidebarPlaceholder": "Enter keywords...",
+            "categoriesHeading": "Categories",
+            "newsletterTitle1": "Stay",
+            "newsletterTitle2": "Updated",
+            "newsletterDesc": "Subscribe to our newsletter for the latest insights on technology & digital innovation.",
+            "newsletterPlaceholder": "secure_email@provider.com",
+            "subscribeBtn": "Subscribe",
+            "allCategories": "All"
+        },
+        "detail": {
+            "notFound": "Article Not Found",
+            "notFoundDesc": "The article you're looking for doesn't exist or has been removed.",
+            "backToArticles": "Back to Articles",
+            "publishedOn": "Published on",
+            "share": "Share",
+            "shareTwitter": "Share on Twitter",
+            "shareLinkedin": "Share on LinkedIn",
+            "copyLink": "Copy link",
+            "copied": "Copied!",
+            "relatedTopics": "Related Topics",
+            "ctaTitle": "Ready to Build Your Next Project?",
+            "ctaDesc": "Barmagly delivers enterprise-grade software solutions with Swiss precision. From web and mobile apps to POS systems and custom platforms — we turn your vision into reality.",
+            "contactTeam": "Contact Our Team",
+            "viewServices": "View Our Services"
+        }
+    },
     "nav": {
         "getInTouch": "Get in Touch",
         "craftingExcellence": "Crafting Digital Excellence",

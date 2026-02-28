@@ -7,12 +7,15 @@ import { motion } from 'framer-motion';
 import { Calendar, Clock, ArrowLeft, Tag, Share2, User, Twitter, Linkedin, Link2, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { formatDate } from '@/lib/utils';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface BlogDetailClientProps {
     post: any;
 }
 
 export default function BlogDetailClient({ post }: BlogDetailClientProps) {
+    const dict = useDictionary();
+    const blogDict = dict.blog;
     const [copied, setCopied] = React.useState(false);
 
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -37,11 +40,11 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                 <div className="w-20 h-20 rounded-full bg-brand-accent/10 flex items-center justify-center mb-8">
                     <span className="text-4xl">📄</span>
                 </div>
-                <h1 className="text-3xl font-display font-bold text-white mb-4">Article Not Found</h1>
-                <p className="text-brand-muted mb-8 max-w-md">The article you're looking for doesn't exist or has been removed.</p>
+                <h1 className="text-3xl font-display font-bold text-white mb-4">{blogDict.detail.notFound}</h1>
+                <p className="text-brand-muted mb-8 max-w-md">{blogDict.detail.notFoundDesc}</p>
                 <Link href="/blog">
-                    <Button variant="primary" icon={<ArrowLeft size={18} />}>
-                        Back to Articles
+                    <Button variant="primary" icon={<ArrowLeft size={18} className="rtl:rotate-180" />} className="rtl:flex-row flex-row-reverse gap-2">
+                        {blogDict.detail.backToArticles}
                     </Button>
                 </Link>
             </div>
@@ -70,11 +73,11 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                         className="flex items-center gap-2 text-sm text-brand-muted/60 mb-8"
                     >
                         <Link href="/blog" className="hover:text-brand-accent transition-colors">Blog</Link>
-                        <ChevronRight size={14} />
+                        <ChevronRight size={14} className="rtl:rotate-180" />
                         {post.category && (
                             <>
                                 <span className="text-brand-accent/80">{post.category.name}</span>
-                                <ChevronRight size={14} />
+                                <ChevronRight size={14} className="rtl:rotate-180" />
                             </>
                         )}
                         <span className="text-brand-muted/40 truncate max-w-[200px]">{post.title}</span>
@@ -141,36 +144,36 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                             </div>
                             <div>
                                 <p className="text-base font-semibold text-white">{post.author?.name || 'Barmagly Team'}</p>
-                                <p className="text-xs text-brand-muted/60">Published on {formatDate(post.publishedAt)}</p>
+                                <p className="text-xs text-brand-muted/60">{blogDict.detail.publishedOn} {formatDate(post.publishedAt)}</p>
                             </div>
                         </div>
 
                         {/* Share Buttons */}
                         <div className="flex items-center gap-3">
-                            <span className="text-xs text-brand-muted/40 uppercase tracking-wider mr-2 hidden sm:block">Share</span>
+                            <span className="text-xs text-brand-muted/40 uppercase tracking-wider mx-2 hidden sm:block">{blogDict.detail.share}</span>
                             <button
                                 onClick={handleShareTwitter}
                                 className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
-                                title="Share on Twitter"
+                                title={blogDict.detail.shareTwitter}
                             >
                                 <Twitter size={16} />
                             </button>
                             <button
                                 onClick={handleShareLinkedin}
                                 className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
-                                title="Share on LinkedIn"
+                                title={blogDict.detail.shareLinkedin}
                             >
                                 <Linkedin size={16} />
                             </button>
                             <button
                                 onClick={handleCopyLink}
                                 className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all relative"
-                                title="Copy link"
+                                title={blogDict.detail.copyLink}
                             >
                                 <Link2 size={16} />
                                 {copied && (
                                     <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-brand-accent text-brand-primary text-[10px] font-bold rounded whitespace-nowrap">
-                                        Copied!
+                                        {blogDict.detail.copied}
                                     </span>
                                 )}
                             </button>
@@ -217,7 +220,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                     >
                         <h4 className="text-sm font-mono text-brand-muted/60 uppercase tracking-widest mb-5 flex items-center gap-2">
                             <Tag size={14} className="text-brand-accent/50" />
-                            Related Topics
+                            {blogDict.detail.relatedTopics}
                         </h4>
                         <div className="flex flex-wrap gap-3">
                             {post.tags.map((tag: any) => (
@@ -242,20 +245,20 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                     <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-brand-accent/5 rounded-full blur-[60px]" />
                     <div className="relative z-10">
                         <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
-                            Ready to Build Your Next Project?
+                            {blogDict.detail.ctaTitle}
                         </h3>
                         <p className="text-brand-muted mb-8 max-w-2xl leading-relaxed">
-                            Barmagly delivers enterprise-grade software solutions with Swiss precision. From web and mobile apps to POS systems and custom platforms — we turn your vision into reality.
+                            {blogDict.detail.ctaDesc}
                         </p>
                         <div className="flex flex-wrap gap-4">
                             <Link href="/contact">
                                 <Button variant="primary" size="lg" className="shadow-neon-cyan">
-                                    Contact Our Team
+                                    {blogDict.detail.contactTeam}
                                 </Button>
                             </Link>
                             <Link href="/services">
                                 <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50">
-                                    View Our Services
+                                    {blogDict.detail.viewServices}
                                 </Button>
                             </Link>
                         </div>
@@ -268,8 +271,8 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                         href="/blog"
                         className="inline-flex items-center gap-2 text-brand-muted hover:text-brand-accent transition-colors group text-sm font-mono uppercase tracking-wider"
                     >
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        Back to All Articles
+                        <ArrowLeft size={16} className="rtl:rotate-180 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform" />
+                        {blogDict.detail.backToArticles}
                     </Link>
                 </div>
             </article>

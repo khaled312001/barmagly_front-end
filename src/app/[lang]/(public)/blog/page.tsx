@@ -9,6 +9,7 @@ import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations';
 import { formatDate } from '@/lib/utils';
 import { publicApi } from '@/lib/api';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface BlogPost {
     id: string;
@@ -22,13 +23,17 @@ interface BlogPost {
     image: string | null;
 }
 
-const allCategory = 'All';
+// allCategory string will now be localized from dictionary but we can keep a constant for logical checks
+const allCategoryValue = 'ALL_CATEGORIES_LOGICAL_VALUE';
 
 export default function BlogPage() {
+    const dict = useDictionary();
+    const blogDict = dict.blog;
+
     const [posts, setPosts] = useState<BlogPost[]>([]);
     const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([]);
-    const [activeCategory, setActiveCategory] = useState(allCategory);
-    const [categories, setCategories] = useState<string[]>([allCategory]);
+    const [activeCategory, setActiveCategory] = useState(allCategoryValue);
+    const [categories, setCategories] = useState<string[]>([allCategoryValue]);
     const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -56,7 +61,7 @@ export default function BlogPage() {
                 const uniqueCats = Array.from(new Set(
                     mapped.map((p: any) => p.category?.name).filter(Boolean)
                 )).sort() as string[];
-                setCategories([allCategory, ...uniqueCats]);
+                setCategories([allCategoryValue, ...uniqueCats]);
             } catch (error) {
                 console.error('Failed to fetch blog posts:', error);
             } finally {
@@ -71,7 +76,7 @@ export default function BlogPage() {
         let result = posts;
 
         // Filter by category
-        if (activeCategory !== allCategory) {
+        if (activeCategory !== allCategoryValue) {
             result = result.filter(p => p.category?.name === activeCategory);
         }
 
@@ -116,9 +121,9 @@ export default function BlogPage() {
                         className="max-w-4xl mx-auto text-center lg:text-left lg:mx-0"
                     >
                         <motion.div variants={heroTextReveal} className="mb-8">
-                            <span className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-brand-glass border border-brand-accent/30 text-brand-accent text-sm font-mono tracking-wider shadow-neon-cyan">
+                            <span className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-brand-glass border border-brand-accent/30 text-brand-accent text-sm font-mono tracking-wider shadow-neon-cyan uppercase">
                                 <Search size={16} />
-                                LATEST INSIGHTS & NEWS
+                                {blogDict.hero.badge}
                             </span>
                         </motion.div>
 
@@ -127,10 +132,10 @@ export default function BlogPage() {
                             className="text-5xl md:text-6xl lg:text-8xl font-display font-bold text-white mb-6 drop-shadow-2xl"
                             style={{ textShadow: '0 0 40px rgba(0, 212, 255, 0.4)' }}
                         >
-                            Insights & <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">Knowledge</span>
+                            {blogDict.hero.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{blogDict.hero.titleHighlight}</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-lg md:text-xl text-brand-muted max-w-2xl leading-relaxed">
-                            Stay up to date with the latest in technology, business systems, and digital innovation.
+                            {blogDict.hero.subtitle}
                         </motion.p>
                     </motion.div>
                 </div>
@@ -148,7 +153,7 @@ export default function BlogPage() {
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted" size={18} />
                                     <input
                                         type="text"
-                                        placeholder="Search articles..."
+                                        placeholder={blogDict.list.searchPlaceholder}
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         className="w-full pl-10 pr-4 py-2 bg-brand-surface/50 border border-brand-glass-border rounded-xl text-sm text-brand-text focus:outline-none focus:border-brand-accent/50"
@@ -233,8 +238,8 @@ export default function BlogPage() {
                                                             ))}
                                                         </div>
                                                         <Link href={`/blog/${post.slug}`}>
-                                                            <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50 shadow-sm hover:shadow-neon-cyan px-8" icon={<ArrowRight size={18} />}>
-                                                                Read Article
+                                                            <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50 shadow-sm hover:shadow-neon-cyan px-8 rtl:flex-row flex-row-reverse gap-2" icon={<ArrowRight size={18} className="rtl:rotate-180" />}>
+                                                                {blogDict.list.readArticle}
                                                             </Button>
                                                         </Link>
                                                     </div>
@@ -246,9 +251,9 @@ export default function BlogPage() {
                                     {!loading && filteredPosts.length === 0 && (
                                         <div className="text-center py-24 glass-card border-dashed border-white/10">
                                             <Search size={48} className="mx-auto text-brand-muted/20 mb-6" />
-                                            <p className="text-brand-muted text-xl font-light">No articles found matching your search.</p>
-                                            <Button variant="ghost" className="mt-8 text-brand-accent hover:bg-brand-accent/10" onClick={() => { setActiveCategory(allCategory); setSearchQuery(''); }}>
-                                                Clear Search
+                                            <p className="text-brand-muted text-xl font-light">{blogDict.list.noArticles}</p>
+                                            <Button variant="ghost" className="mt-8 text-brand-accent hover:bg-brand-accent/10" onClick={() => { setActiveCategory(allCategoryValue); setSearchQuery(''); }}>
+                                                {blogDict.list.clearSearch}
                                             </Button>
                                         </div>
                                     )}
@@ -261,22 +266,22 @@ export default function BlogPage() {
                             {/* Search Desktop */}
                             <div className="hidden lg:block glass-card p-10 bg-brand-dark/40 border-white/5 relative group overflow-hidden">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-brand-accent/20 group-focus-within:bg-brand-accent transition-colors shadow-neon-cyan" />
-                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Search</h3>
+                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">{blogDict.list.searchHeading}</h3>
                                 <div className="relative">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-muted/40" size={18} />
+                                    <Search className="absolute left-4 rtl:right-4 rtl:left-auto top-1/2 -translate-y-1/2 text-brand-muted/40" size={18} />
                                     <input
                                         type="text"
-                                        placeholder="Enter keywords..."
+                                        placeholder={blogDict.list.searchSidebarPlaceholder}
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-4 bg-brand-primary/40 border border-white/5 rounded-2xl text-sm text-brand-text placeholder:text-brand-muted/30 focus:outline-none focus:border-brand-accent/50 transition-all font-mono"
+                                        className="w-full pl-12 rtl:pr-12 rtl:pl-4 pr-4 py-4 bg-brand-primary/40 border border-white/5 rounded-2xl text-sm text-brand-text placeholder:text-brand-muted/30 focus:outline-none focus:border-brand-accent/50 transition-all font-mono"
                                     />
                                 </div>
                             </div>
 
                             {/* Categories */}
                             <div className="glass-card p-10 bg-brand-dark/40 border-white/5">
-                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">Categories</h3>
+                                <h3 className="text-xl font-display font-black text-white mb-6 uppercase tracking-wider">{blogDict.list.categoriesHeading}</h3>
                                 <ul className="space-y-3">
                                     {categories.map((cat) => (
                                         <li key={cat}>
@@ -290,9 +295,9 @@ export default function BlogPage() {
                                                 {activeCategory === cat && (
                                                     <motion.div layoutId="activeBlogCat" className="absolute inset-0 bg-brand-accent" />
                                                 )}
-                                                <span className="relative z-10">{cat}</span>
+                                                <span className="relative z-10">{cat === allCategoryValue ? blogDict.list.allCategories : cat}</span>
                                                 <span className={`relative z-10 text-[10px] px-2.5 py-1 rounded-full border ${activeCategory === cat ? 'bg-brand-primary/20 border-brand-primary/30 text-brand-primary' : 'bg-brand-surface border-white/10 text-brand-muted/40 group-hover/cat:border-white/20'}`}>
-                                                    {cat === allCategory ? posts.length : posts.filter(p => p.category?.name === cat).length}
+                                                    {cat === allCategoryValue ? posts.length : posts.filter(p => p.category?.name === cat).length}
                                                 </span>
                                             </button>
                                         </li>
@@ -303,16 +308,16 @@ export default function BlogPage() {
                             {/* Newsletter CTA */}
                             <div className="glass-card p-10 bg-gradient-to-br from-brand-dark to-brand-accent/5 border-brand-accent/10 relative overflow-hidden group">
                                 <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-brand-accent/5 rounded-full blur-[80px] group-hover:bg-brand-accent/10 transition-colors" />
-                                <h3 className="text-2xl font-display font-black text-white mb-4 leading-tight">Stay <br /><span className="text-brand-accent">Updated</span></h3>
-                                <p className="text-brand-muted text-sm mb-8 leading-relaxed font-light">Subscribe to our newsletter for the latest insights on technology & digital innovation.</p>
+                                <h3 className="text-2xl font-display font-black text-white mb-4 leading-tight">{blogDict.list.newsletterTitle1} <br /><span className="text-brand-accent">{blogDict.list.newsletterTitle2}</span></h3>
+                                <p className="text-brand-muted text-sm mb-8 leading-relaxed font-light">{blogDict.list.newsletterDesc}</p>
                                 <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                                     <input
                                         type="email"
-                                        placeholder="secure_email@provider.com"
+                                        placeholder={blogDict.list.newsletterPlaceholder}
                                         className="w-full px-5 py-4 bg-brand-primary/50 border border-white/5 rounded-2xl text-sm text-brand-text placeholder:text-brand-muted/20 focus:outline-none focus:border-brand-accent/40 transition-all font-mono"
                                     />
-                                    <Button variant="primary" size="xl" className="w-full shadow-neon-cyan font-display tracking-widest text-xs uppercase" icon={<ArrowRight size={16} />}>
-                                        Subscribe
+                                    <Button variant="primary" size="xl" className="w-full shadow-neon-cyan font-display tracking-widest text-xs uppercase rtl:flex-row flex-row-reverse gap-2" icon={<ArrowRight size={16} className="rtl:rotate-180" />}>
+                                        {blogDict.list.subscribeBtn}
                                     </Button>
                                 </form>
                             </div>
