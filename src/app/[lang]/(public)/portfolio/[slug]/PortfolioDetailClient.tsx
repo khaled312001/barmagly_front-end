@@ -11,9 +11,10 @@ import Image from 'next/image';
 
 interface PortfolioDetailClientProps {
     project: any;
+    lang: string;
 }
 
-export default function PortfolioDetailClient({ project }: PortfolioDetailClientProps) {
+export default function PortfolioDetailClient({ project, lang }: PortfolioDetailClientProps) {
     const technologies = React.useMemo(() => {
         if (!project?.technologies) return [];
         if (Array.isArray(project.technologies)) return project.technologies;
@@ -41,6 +42,10 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
         );
     }
 
+    const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;
+    const description = lang === 'en' && project.descriptionEn ? project.descriptionEn : project.description;
+    const category = lang === 'en' && project.categoryEn ? project.categoryEn : project.category;
+
     return (
         <main className="min-h-screen bg-brand-primary overflow-hidden">
             {/* Background Effects */}
@@ -66,11 +71,11 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
                         </motion.div>
 
                         <motion.h1 variants={heroTextReveal} className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-8 leading-tight">
-                            {project.title}
+                            {title}
                         </motion.h1>
 
                         <motion.p variants={heroTextReveal} className="text-xl text-brand-muted leading-relaxed font-light mb-12">
-                            {project.description}
+                            {description}
                         </motion.p>
 
                         <motion.div variants={heroTextReveal} className="grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-white/10 py-8">
@@ -78,7 +83,7 @@ export default function PortfolioDetailClient({ project }: PortfolioDetailClient
                                 <h4 className="text-brand-accent font-mono text-xs uppercase mb-2 flex items-center gap-2">
                                     <Tag size={14} /> Category
                                 </h4>
-                                <p className="text-white font-medium">{project.category}</p>
+                                <p className="text-white font-medium">{category}</p>
                             </div>
                             <div>
                                 <h4 className="text-brand-accent font-mono text-xs uppercase mb-2 flex items-center gap-2">

@@ -5,7 +5,7 @@ import PortfolioDetailClient from './PortfolioDetailClient';
 import { publicApi } from '@/lib/api';
 
 interface PageProps {
-    params: { slug: string };
+    params: { slug: string; lang: string };
 }
 
 async function getProjectData(slug: string) {
@@ -19,6 +19,7 @@ async function getProjectData(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const project = await getProjectData(params.slug);
+    const { lang } = params;
 
     if (!project) {
         return {
@@ -26,12 +27,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         };
     }
 
+    const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;
+    const description = lang === 'en' && project.descriptionEn ? project.descriptionEn : project.description;
+
     return {
-        title: `${project.title} | Barmagly Portfolio`,
-        description: project.description,
+        title: `${title} | Barmagly Portfolio`,
+        description: description,
         openGraph: {
-            title: project.title,
-            description: project.description,
+            title: title,
+            description: description,
             type: 'article',
             images: project.image ? [{ url: project.image }] : undefined,
         },
@@ -39,18 +43,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-    const project = await getProjectData(params.slug);
+    const { slug, lang } = params;
+    const project = await getProjectData(slug);
 
     if (!project) {
         notFound();
     }
 
+    const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;
+    const description = lang === 'en' && project.descriptionEn ? project.descriptionEn : project.description;
+
     // JSON-LD Structured Data
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'CreativeWork',
-        name: project.title,
-        description: project.description,
+        name: title,
+        description: description,
         creator: {
             '@type': 'Organization',
             name: 'Barmagly',
@@ -66,7 +74,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <PortfolioDetailClient project={project} />
+            <PortfolioDetailClient project={project} lang={lang} />
         </>
     );
 }
