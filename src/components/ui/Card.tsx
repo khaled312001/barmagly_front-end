@@ -52,6 +52,7 @@ interface ServiceCardProps {
     onClick?: () => void;
     className?: string;
     color?: 'cyan' | 'purple';
+    exploreText?: string;
 }
 
 export function ServiceCard({
@@ -61,7 +62,8 @@ export function ServiceCard({
     href,
     onClick,
     className,
-    color = 'cyan'
+    color = 'cyan',
+    exploreText = 'Explore Details'
 }: ServiceCardProps) {
     const content = (
         <div onClick={onClick} className="flex flex-col items-start gap-6 h-full">
@@ -85,7 +87,7 @@ export function ServiceCard({
 
             <div className="flex items-center gap-3 mt-auto pt-6 group/btn w-full">
                 <span className="text-brand-accent font-mono font-bold text-xs uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all duration-500">
-                    Explore Details
+                    {exploreText}
                 </span>
                 <div className={cn(
                     "w-10 h-10 rounded-xl bg-brand-accent/5 border border-brand-accent/10 flex items-center justify-center transition-all duration-500 ml-auto",

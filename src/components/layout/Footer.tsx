@@ -26,7 +26,7 @@ export function Footer({ dict, lang }: FooterProps) {
             { label: dict?.footer?.links?.web || 'Web Development', href: `/${lang}/services/web-development` },
             { label: dict?.footer?.links?.mobile || 'Mobile Apps', href: `/${lang}/services/mobile-application-development` },
             { label: dict?.footer?.links?.design || 'UI/UX Design', href: `/${lang}/services/ui-ux-design` },
-            { label: dict?.footer?.links?.business || 'Business Systems', href: `/${lang}/services/business-systems` },
+            { label: dict?.footer?.links?.business || 'Business Systems', href: `/${lang}/services/pos-business-systems` },
             { label: dict?.footer?.links?.marketing || 'Sales & Marketing', href: `/${lang}/services/sales-marketing` },
         ],
     };

@@ -234,7 +234,8 @@ function ServicesSection() {
                 icon: <ServiceIcon name={s.icon || 'Code2'} size={32} />,
                 color: cat.id % 2 === 0 ? 'cyan' : 'purple', // Alternate colors for variety
                 href: `/services/${s.slug}`,
-                slug: s.slug
+                slug: s.slug,
+                exploreText: dict.hero.explore || 'Explore Details'
             })))
                 // Temporal filter to hide old services until DB is seeded
                 .filter((s: any) => ![
@@ -651,7 +652,7 @@ function TechSection() {
                     <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-brand-primary to-transparent z-10 pointer-events-none" />
 
                     <motion.div
-                        className="flex whitespace-nowrap gap-10 w-max px-4"
+                        className="flex whitespace-nowrap w-max"
                         animate={{
                             x: [0, "-50%"]
                         }}
@@ -669,7 +670,7 @@ function TechSection() {
                         {marqueeItems.map((tech, i) => (
                             <div
                                 key={i}
-                                className="group/card relative flex items-center gap-6 px-10 py-8 glass-card border-white/5 bg-white/[0.01] hover:bg-white/[0.05] transition-all duration-700 cursor-pointer overflow-hidden rounded-2xl min-w-[280px]"
+                                className="group/card relative flex items-center gap-6 px-10 py-8 glass-card border-white/5 bg-white/[0.01] hover:bg-white/[0.05] transition-all duration-700 cursor-pointer overflow-hidden rounded-2xl min-w-[280px] mx-5 my-2"
                             >
                                 <div
                                     className="absolute inset-0 opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 pointer-events-none"

@@ -13,6 +13,7 @@ import { staggerContainer, heroTextReveal } from '@/lib/animations';
 import { WHATSAPP_URL } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 // Helper to render icon dynamically
 const DynamicIcon = ({ name, size = 48, className = "" }: { name: string; size?: number; className?: string }) => {
@@ -26,16 +27,17 @@ interface ServiceDetailClientProps {
 }
 
 export default function ServiceDetailClient({ service, lang }: ServiceDetailClientProps) {
+    const dict = useDictionary();
+
     if (!service) {
-        // ... (no changes to error state for now, but lang could be used for "Back to Services" text if dict is used)
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-primary text-center px-6">
                 <div className="max-w-md">
-                    <h2 className="text-4xl font-display font-bold text-white mb-6">Service Not Found</h2>
-                    <p className="text-brand-muted mb-10">System could not locate the requested service architecture. Please return to the command center.</p>
+                    <h2 className="text-4xl font-display font-bold text-white mb-6">{dict.serviceDetail.serviceNotFound}</h2>
+                    <p className="text-brand-muted mb-10">{dict.serviceDetail.notFoundDesc}</p>
                     <Link href={`/${lang}/services`}>
                         <Button variant="primary" icon={<ArrowLeft size={20} />}>
-                            Back to Services
+                            {dict.serviceDetail.backToServices}
                         </Button>
                     </Link>
                 </div>
@@ -86,7 +88,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                             <motion.div variants={heroTextReveal} className="mb-6">
                                 <Link href={`/${lang}/services`} className="inline-flex items-center gap-2 text-brand-accent font-mono text-sm hover:gap-3 transition-all group">
                                     <ArrowLeft size={16} />
-                                    <span>SYSTEM_SERVICES</span>
+                                    <span>{dict.serviceDetail.systemServices}</span>
                                 </Link>
                             </motion.div>
 
@@ -110,12 +112,12 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                             <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center gap-6">
                                 <Link href={`${WHATSAPP_URL}?text=I'm interested in ${title}`} target="_blank">
                                     <Button size="lg" variant="primary" icon={<MessageCircle size={20} />}>
-                                        Inquire Now
+                                        {dict.serviceDetail.inquireNow}
                                     </Button>
                                 </Link>
                                 <Link href={`/${lang}/contact`}>
                                     <Button size="lg" variant="neon" icon={<ArrowRight size={20} />}>
-                                        Custom Roadmap
+                                        {dict.serviceDetail.customRoadmap}
                                     </Button>
                                 </Link>
                             </motion.div>
@@ -145,7 +147,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                             <DynamicIcon name={service.icon} size={160} className="text-brand-accent/40 relative z-10" />
                                         </div>
                                         <div className="text-center">
-                                            <h3 className="text-brand-accent font-mono text-xl tracking-[0.5em] uppercase">Architecture</h3>
+                                            <h3 className="text-brand-accent font-mono text-xl tracking-[0.5em] uppercase">{dict.serviceDetail.architecture}</h3>
                                             <div className="mt-4 flex gap-3 justify-center">
                                                 <div className="w-2 h-2 rounded-full bg-brand-accent animate-ping" />
                                                 <div className="w-2 h-2 rounded-full bg-brand-secondary animate-ping delay-75" />
@@ -162,16 +164,16 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                 transition={{ duration: 4, repeat: Infinity }}
                                 className="absolute -top-10 -right-10 glass-card p-6 border-brand-accent/30 shadow-neon-cyan z-20"
                             >
-                                <p className="text-brand-accent font-mono text-xs uppercase mb-1">Status</p>
-                                <p className="text-white font-bold">READY_TO_DEPLOY</p>
+                                <p className="text-brand-accent font-mono text-xs uppercase mb-1">{dict.serviceDetail.status}</p>
+                                <p className="text-white font-bold">{dict.serviceDetail.readyToDeploy}</p>
                             </motion.div>
                             <motion.div
                                 animate={{ y: [0, 20, 0] }}
                                 transition={{ duration: 5, repeat: Infinity, delay: 1 }}
                                 className="absolute -bottom-10 -left-10 glass-card p-6 border-brand-secondary/30 shadow-neon-purple z-20"
                             >
-                                <p className="text-brand-secondary font-mono text-xs uppercase mb-1">Efficiency</p>
-                                <p className="text-white font-bold">100% OPTIMIZED</p>
+                                <p className="text-brand-secondary font-mono text-xs uppercase mb-1">{dict.serviceDetail.efficiency}</p>
+                                <p className="text-white font-bold">{dict.serviceDetail.fullyOptimized}</p>
                             </motion.div>
                         </motion.div>
                     </div>
@@ -183,9 +185,9 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                 <div className="section-container">
                     <SectionReveal>
                         <div className="text-center mb-20">
-                            <span className="text-brand-accent font-mono text-sm tracking-[0.3em] uppercase mb-4 block">Capabilities</span>
-                            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">Strategic <span className="gradient-text">Implementation</span></h2>
-                            <p className="text-brand-muted max-w-2xl mx-auto">Our methodology ensures every layer of the system is engineered for maximum reliability and future-proof scalability.</p>
+                            <span className="text-brand-accent font-mono text-sm tracking-[0.3em] uppercase mb-4 block">{dict.serviceDetail.capabilities}</span>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">{dict.serviceDetail.strategicImplementation.split(' ')[0]} <span className="gradient-text">{dict.serviceDetail.strategicImplementation.split(' ')[1]}</span></h2>
+                            <p className="text-brand-muted max-w-2xl mx-auto">{dict.home.services.subtitle}</p>
                         </div>
                     </SectionReveal>
 
@@ -212,8 +214,8 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <SectionReveal direction="left">
                             <div className="max-w-xl">
-                                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-8">Integrated <span className="text-brand-secondary">Tech Stack</span></h3>
-                                <p className="text-brand-muted text-lg mb-10">We utilize a high-performance ecosystem to build the core logic and interface layers of this service, ensuring compatibility with global standards.</p>
+                                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-8">{dict.serviceDetail.integratedTechStack.split(' ').slice(0, -1).join(' ')} <span className="text-brand-secondary">{dict.serviceDetail.integratedTechStack.split(' ').slice(-1)}</span></h3>
+                                <p className="text-brand-muted text-lg mb-10">{dict.home.whyChoose.subtitle}</p>
 
                                 <div className="grid grid-cols-2 gap-6">
                                     {[
@@ -265,17 +267,17 @@ const initialize = () => {
                         <div className="glass-card p-12 md:p-20 text-center relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
                             <div className="relative z-10">
-                                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-8">Ready to Build This <span className="gradient-text">Architecture?</span></h2>
-                                <p className="text-brand-muted text-lg max-w-2xl mx-auto mb-12">Connect with our Swiss-trained architects to transform this service module into a scalable reality for your enterprise.</p>
+                                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-8">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(0, -1).join(' ')} <span className="gradient-text">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(-1)}</span></h2>
+                                <p className="text-brand-muted text-lg max-w-2xl mx-auto mb-12">{dict.serviceDetail.readyToBuildSubtitle}</p>
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                                     <Link href="/contact">
                                         <Button size="lg" variant="primary" icon={<ArrowRight size={24} />}>
-                                            Launch Discussion
+                                            {dict.serviceDetail.launchDiscussion}
                                         </Button>
                                     </Link>
                                     <Link href={WHATSAPP_URL} target="_blank">
                                         <Button size="lg" variant="outline" icon={<MessageCircle size={20} />}>
-                                            WhatsApp Protocol
+                                            {dict.serviceDetail.whatsappProtocol}
                                         </Button>
                                     </Link>
                                 </div>

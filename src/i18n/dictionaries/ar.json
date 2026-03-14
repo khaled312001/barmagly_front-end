@@ -513,5 +513,39 @@
         "craftingExcellence": "نصنع التميز الرقمي",
         "switchLanguage": "Switch to English (EN)",
         "switchShort": "EN"
+    },
+    "serviceDetail": {
+        "systemServices": "خدمات_النظام",
+        "inquireNow": "استفسر الآن",
+        "customRoadmap": "خارطة طريق مخصصة",
+        "capabilities": "القدرات",
+        "strategicImplementation": "التنفيذ الاستراتيجي",
+        "efficiency": "الكفاءة",
+        "status": "الحالة",
+        "readyToDeploy": "جاهز_للتنفيذ",
+        "fullyOptimized": "100% محسن",
+        "integratedTechStack": "منظومة تقنية متكاملة",
+        "backToServices": "العودة للخدمات",
+        "readyToBuildTitle": "جاهز لبناء هذه الأنظمة؟",
+        "readyToBuildSubtitle": "تواصل مع خبرائنا لتحويل هذه الرؤية التقنية إلى واقع ملموس لمؤسستك.",
+        "whatsappProtocol": "بروتوكول واتساب",
+        "launchDiscussion": "ابدأ النقاش",
+        "architecture": "الهيكل التقني",
+        "serviceNotFound": "الخدمة غير موجودة",
+        "notFoundDesc": "لم يتمكن النظام من تحديد موقع الخدمة المطلوبة. يرجى العودة إلى مركز العمليات."
+    },
+    "portfolioDetail": {
+        "projectNotFound": "المشروع غير موجود",
+        "backToPortfolio": "العودة إلى معرض الأعمال",
+        "caseStudyIndex": "فهرس_دراسة_الحالة",
+        "category": "التصنيف",
+        "client": "العميل",
+        "confidential": "سري",
+        "duration": "المدة",
+        "ongoing": "جاري",
+        "challengeSolution": "التحدي والحل",
+        "contentComingSoon": "سيتم إضافة محتوى دراسة الحالة بالتفصيل قريباً.",
+        "keyResults": "النتائج الرئيسية",
+        "techStack": "المنظومة التقنية"
     }
 }

@@ -513,5 +513,39 @@
         "craftingExcellence": "Crafting Digital Excellence",
         "switchLanguage": "Switch to Arabic (العربية)",
         "switchShort": "العربية"
+    },
+    "serviceDetail": {
+        "systemServices": "SYSTEM_SERVICES",
+        "inquireNow": "Inquire Now",
+        "customRoadmap": "Custom Roadmap",
+        "capabilities": "Capabilities",
+        "strategicImplementation": "Strategic Implementation",
+        "efficiency": "Efficiency",
+        "status": "Status",
+        "readyToDeploy": "READY_TO_DEPLOY",
+        "fullyOptimized": "100% OPTIMIZED",
+        "integratedTechStack": "Integrated Tech Stack",
+        "backToServices": "Back to Services",
+        "readyToBuildTitle": "Ready to Build This Architecture?",
+        "readyToBuildSubtitle": "Connect with our Swiss-trained architects to transform this service module into a scalable reality for your enterprise.",
+        "whatsappProtocol": "WhatsApp Protocol",
+        "launchDiscussion": "Launch Discussion",
+        "architecture": "Architecture",
+        "serviceNotFound": "Service Not Found",
+        "notFoundDesc": "System could not locate the requested service architecture. Please return to the command center."
+    },
+    "portfolioDetail": {
+        "projectNotFound": "Project Not Found",
+        "backToPortfolio": "Back to Portfolio",
+        "caseStudyIndex": "CASE_STUDY_INDEX",
+        "category": "Category",
+        "client": "Client",
+        "confidential": "Confidential",
+        "duration": "Duration",
+        "ongoing": "Ongoing",
+        "challengeSolution": "The Challenge & Solution",
+        "contentComingSoon": "Detailed case study content coming soon.",
+        "keyResults": "Key Results",
+        "techStack": "Tech Stack"
     }
 }
