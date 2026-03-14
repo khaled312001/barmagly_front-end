@@ -50,7 +50,7 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
 
     return (
         <>
-            <TopHeader lang={lang} dict={dict} />
+            <TopHeader lang={lang} dict={dict} scrolled={scrolled} />
             <motion.nav
                 variants={navbarVariants}
                 animate={scrolled ? 'scrolled' : 'top'}

@@ -7,8 +7,7 @@ import { motion } from 'framer-motion';
 import { Phone, Facebook, Linkedin, Globe } from 'lucide-react';
 import { cn, WHATSAPP_NUMBER, WHATSAPP_URL, FACEBOOK_URL, LINKEDIN_URL } from '@/lib/utils';
 
-export function TopHeader({ lang, dict }: { lang: string, dict: any }) {
-    const [scrolled, setScrolled] = React.useState(false);
+export function TopHeader({ lang, dict, scrolled = false }: { lang: string, dict: any, scrolled?: boolean }) {
     const pathname = usePathname();
 
     const switchLanguage = (newLang: string) => {
