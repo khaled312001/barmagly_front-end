@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import { Calendar, Clock, ArrowRight, Tag, Search } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
@@ -28,6 +29,8 @@ interface BlogPost {
 const allCategoryValue = 'ALL_CATEGORIES_LOGICAL_VALUE';
 
 export default function BlogPage() {
+    const params = useParams();
+    const lang = params?.lang as string || 'ar';
     const dict = useDictionary();
     const blogDict = dict.blog;
 
@@ -47,10 +50,16 @@ export default function BlogPage() {
                 const mapped = postsData.map((p: any) => ({
                     id: p.id,
                     slug: p.slug,
-                    title: p.title,
-                    excerpt: p.excerpt,
-                    category: p.category,
-                    tags: p.tags || [],
+                    title: lang === 'en' && p.titleEn ? p.titleEn : p.title,
+                    excerpt: lang === 'en' && p.excerptEn ? p.excerptEn : p.excerpt,
+                    category: p.category ? {
+                        ...p.category,
+                        name: lang === 'en' && p.category.nameEn ? p.category.nameEn : p.category.name
+                    } : null,
+                    tags: (p.tags || []).map((t: any) => ({
+                        ...t,
+                        name: lang === 'en' && t.nameEn ? t.nameEn : t.name
+                    })),
                     publishedAt: p.publishedAt,
                     readTime: p.readTime,
                     image: p.image

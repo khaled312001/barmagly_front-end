@@ -270,16 +270,18 @@ const initialize = () => {
                                 <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-8">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(0, -1).join(' ')} <span className="gradient-text">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(-1)}</span></h2>
                                 <p className="text-brand-muted text-lg max-w-2xl mx-auto mb-12">{dict.serviceDetail.readyToBuildSubtitle}</p>
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                                    <Link href="/contact">
-                                        <Button size="lg" variant="primary" icon={<ArrowRight size={24} />}>
-                                            {dict.serviceDetail.launchDiscussion}
-                                        </Button>
-                                    </Link>
-                                    <Link href={WHATSAPP_URL} target="_blank">
-                                        <Button size="lg" variant="outline" icon={<MessageCircle size={20} />}>
-                                            {dict.serviceDetail.whatsappProtocol}
-                                        </Button>
-                                    </Link>
+                                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                                        <Link href={`/${lang}/contact`}>
+                                            <Button size="lg" variant="primary" icon={<ArrowRight size={24} />}>
+                                                {dict.serviceDetail.launchDiscussion}
+                                            </Button>
+                                        </Link>
+                                        <Link href={WHATSAPP_URL} target="_blank">
+                                            <Button size="lg" variant="outline" icon={<MessageCircle size={20} />}>
+                                                {dict.serviceDetail.whatsappProtocol}
+                                            </Button>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

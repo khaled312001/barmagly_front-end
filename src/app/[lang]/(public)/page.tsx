@@ -233,7 +233,7 @@ function ServicesSection() {
                 description: lang === 'en' && s.descriptionEn ? s.descriptionEn : s.description,
                 icon: <ServiceIcon name={s.icon || 'Code2'} size={32} />,
                 color: cat.id % 2 === 0 ? 'cyan' : 'purple', // Alternate colors for variety
-                href: `/services/${s.slug}`,
+                href: `/${lang}/services/${s.slug}`,
                 slug: s.slug,
                 exploreText: dict.hero.explore || 'Explore Details'
             })))

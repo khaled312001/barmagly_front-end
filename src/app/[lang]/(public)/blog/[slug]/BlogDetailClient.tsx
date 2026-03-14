@@ -11,9 +11,10 @@ import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface BlogDetailClientProps {
     post: any;
+    lang: string;
 }
 
-export default function BlogDetailClient({ post }: BlogDetailClientProps) {
+export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) {
     const dict = useDictionary();
     const blogDict = dict.blog;
     const [copied, setCopied] = React.useState(false);
@@ -42,7 +43,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                 </div>
                 <h1 className="text-3xl font-display font-bold text-white mb-4">{blogDict.detail.notFound}</h1>
                 <p className="text-brand-muted mb-8 max-w-md">{blogDict.detail.notFoundDesc}</p>
-                <Link href="/blog">
+                <Link href={`/${lang}/blog`}>
                     <Button variant="primary" icon={<ArrowLeft size={18} className="rtl:rotate-180" />} className="rtl:flex-row flex-row-reverse gap-2">
                         {blogDict.detail.backToArticles}
                     </Button>
@@ -50,6 +51,11 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
             </div>
         );
     }
+
+    const title = lang === 'en' && post.titleEn ? post.titleEn : post.title;
+    const excerpt = lang === 'en' && post.excerptEn ? post.excerptEn : post.excerpt;
+    const content = lang === 'en' && post.contentEn ? post.contentEn : post.content;
+    const categoryName = post.category ? (lang === 'en' && post.category.nameEn ? post.category.nameEn : post.category.name) : '';
 
     return (
         <main className="min-h-screen bg-brand-primary">
@@ -72,15 +78,15 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                         transition={{ duration: 0.5 }}
                         className="flex items-center gap-2 text-sm text-brand-muted/60 mb-8"
                     >
-                        <Link href="/blog" className="hover:text-brand-accent transition-colors">Blog</Link>
+                        <Link href={`/${lang}/blog`} className="hover:text-brand-accent transition-colors">Blog</Link>
                         <ChevronRight size={14} className="rtl:rotate-180" />
                         {post.category && (
                             <>
-                                <span className="text-brand-accent/80">{post.category.name}</span>
+                                <span className="text-brand-accent/80">{categoryName}</span>
                                 <ChevronRight size={14} className="rtl:rotate-180" />
                             </>
                         )}
-                        <span className="text-brand-muted/40 truncate max-w-[200px]">{post.title}</span>
+                        <span className="text-brand-muted/40 truncate max-w-[200px]">{title}</span>
                     </motion.div>
 
                     {/* Category & Meta */}
@@ -92,7 +98,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                     >
                         {post.category && (
                             <span className="px-4 py-1.5 text-xs font-bold font-mono tracking-wider bg-brand-accent/10 text-brand-accent rounded-full border border-brand-accent/20 uppercase">
-                                {post.category.name}
+                                {categoryName}
                             </span>
                         )}
                         {post.publishedAt && (
@@ -116,18 +122,18 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 leading-tight"
                     >
-                        {post.title}
+                        {title}
                     </motion.h1>
 
                     {/* Excerpt */}
-                    {post.excerpt && (
+                    {excerpt && (
                         <motion.p
                             initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.3 }}
                             className="text-lg md:text-xl text-brand-muted/80 leading-relaxed mb-10 max-w-3xl font-light"
                         >
-                            {post.excerpt}
+                            {excerpt}
                         </motion.p>
                     )}
 
@@ -207,7 +213,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                         prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-white/10 prose-td:text-brand-muted prose-td:text-sm
                     "
                 >
-                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
                 </motion.div>
 
                 {/* Tags Section */}
@@ -251,12 +257,12 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                             {blogDict.detail.ctaDesc}
                         </p>
                         <div className="flex flex-wrap gap-4">
-                            <Link href="/contact">
+                            <Link href={`/${lang}/contact`}>
                                 <Button variant="primary" size="lg" className="shadow-neon-cyan">
                                     {blogDict.detail.contactTeam}
                                 </Button>
                             </Link>
-                            <Link href="/services">
+                            <Link href={`/${lang}/services`}>
                                 <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50">
                                     {blogDict.detail.viewServices}
                                 </Button>
@@ -268,7 +274,7 @@ export default function BlogDetailClient({ post }: BlogDetailClientProps) {
                 {/* Back to Blog */}
                 <div className="mt-12 text-center">
                     <Link
-                        href="/blog"
+                        href={`/${lang}/blog`}
                         className="inline-flex items-center gap-2 text-brand-muted hover:text-brand-accent transition-colors group text-sm font-mono uppercase tracking-wider"
                     >
                         <ArrowLeft size={16} className="rtl:rotate-180 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform" />
