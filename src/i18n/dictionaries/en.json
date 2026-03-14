@@ -25,7 +25,18 @@
         "titleLine2": "Swiss Precision, Global Innovation",
         "subtitle": "Engineering enterprise-grade software solutions with unparalleled quality and security.",
         "ctaPrimary": "Explore Our Work",
-        "ctaSecondary": "Talk to an Expert"
+        "ctaSecondary": "Talk to an Expert",
+        "explore": "Explore",
+        "trust": {
+            "programming": "High-End Programming",
+            "techStack": "Tech Stack",
+            "marketing": "Strategic Marketing",
+            "growth": "Growth",
+            "sales": "Sales Optimization",
+            "revenue": "Revenue",
+            "reliability": "Swiss Reliability",
+            "quality": "Quality"
+        }
     },
     "footer": {
         "description": "Barmagly is a Swiss-licensed software development company specializing in enterprise-grade web, mobile, and business solutions.",
@@ -69,6 +80,7 @@
             "support": "Support & Maintenance"
         },
         "testimonials": {
+            "badge": "Endorsements",
             "title": "Client Success",
             "subtitle": "What our partners say about working with Barmagly."
         },
@@ -77,6 +89,7 @@
             "subtitle": "Latest updates from the tech world and our company."
         },
         "contact": {
+            "badge": "Initiation",
             "title": "Let's Build Together",
             "subtitle": "Ready to transform your ideas into reality? Let's discuss your project.",
             "form": {
@@ -328,9 +341,8 @@
             "badge": "Barmagly POS System",
             "titleLine1": "Point of",
             "titleHighlight": "Sale System (POS)",
-            "subtitle": "The smartest and fastest solution to manage your business. Whether you manage a huge mall, restaurant chain, pharmacies, or retail stores, we give you full power and control in one place.",
-            "btnPrimary": "Get It Now",
-            "btnOutline": "Explore Features"
+            "btnPrimary": "Start Free Trial",
+            "btnOutline": "See Features ↓"
         },
         "features": {
             "badge": "Core Features",
@@ -379,7 +391,7 @@
             "titleLine1": "An integrated system to take your business to the",
             "titleHighlight": "Next Level",
             "subtitle": "Write your success story with a system that supports unlimited growth. Contact us now for a free consultation and customized quote for your enterprise, and enjoy the most powerful sales management technologies in the market.",
-            "button": "Contact Us"
+            "button": "Start Free Trial"
         }
     },
     "contact": {
@@ -436,6 +448,10 @@
             "submit": "Establish Connection"
         },
         "info": {
+            "location": "Location",
+            "license": "Swiss License",
+            "whatsapp": "WhatsApp",
+            "emailUs": "Email Us",
             "hqTitle": "Zürich HQ",
             "hqVerified": "Global Coordinates Verified",
             "techTitle": "Technical Intel",
@@ -492,6 +508,8 @@
     },
     "nav": {
         "getInTouch": "Get in Touch",
+        "followUs": "Follow Us",
+        "callUs": "Call Us",
         "craftingExcellence": "Crafting Digital Excellence",
         "switchLanguage": "Switch to Arabic (العربية)",
         "switchShort": "العربية"

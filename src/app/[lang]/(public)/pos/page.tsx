@@ -56,12 +56,12 @@ export default function PosPage() {
                         </motion.p>
 
                         <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-xl">
-                            <Link href="/contact" className="w-full sm:w-1/2">
+                            <a href="https://pos.barmagly.tech/" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
                                 <Button size="xl" variant="primary" icon={<ArrowRight size={22} className="rtl:rotate-180" />} className="w-full h-16 text-lg font-bold rounded-xl shadow-neon-cyan transition-all duration-500 hover:scale-105 active:scale-95 flex-row-reverse rtl:flex-row gap-3 font-display">
                                     {posDict.hero.btnPrimary}
                                 </Button>
-                            </Link>
-                            <a href="#features" className="w-full sm:w-1/2">
+                            </a>
+                            <a href="https://pos.barmagly.tech/#features" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
                                 <Button size="xl" variant="neon" className="w-full h-16 text-lg font-bold rounded-xl border-white/20 hover:border-brand-secondary/50 transition-all duration-500 hover:scale-105 active:scale-95 font-display">
                                     {posDict.hero.btnOutline}
                                 </Button>
@@ -230,12 +230,12 @@ export default function PosPage() {
                         </p>
 
                         <div className="relative inline-block w-full max-w-xs sm:max-w-none sm:w-auto">
-                            <Link href="/contact" className="w-full sm:w-auto">
+                            <a href="https://pos.barmagly.tech/" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto block sm:inline-block">
                                 <Button size="xl" variant="neon" className="w-full sm:w-auto h-16 px-12 rounded-xl font-bold font-display text-lg shadow-[0_0_30px_rgba(0,212,255,0.4)] hover:shadow-[0_0_50px_rgba(0,212,255,0.6)] transition-all duration-500 hover:scale-105 active:scale-95 border-brand-accent/50 group overflow-hidden">
                                     <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-brand-accent/0 via-white/20 to-brand-accent/0 -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
                                     {posDict.cta.button}
                                 </Button>
-                            </Link>
+                            </a>
                         </div>
                     </SectionReveal>
                 </div>

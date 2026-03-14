@@ -19,6 +19,9 @@ import { useDictionary } from '@/lib/contexts/DictionaryContext';
 // ============ HERO SECTION ============
 function HeroSection({ data }: { data?: any }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
     const {
         badgeText = dict.hero.badge,
         titleLine1 = dict.hero.titleLine1,
@@ -26,7 +29,7 @@ function HeroSection({ data }: { data?: any }) {
         description = dict.hero.subtitle,
         primaryBtnText = dict.hero.ctaPrimary,
         secondaryBtnText = dict.hero.ctaSecondary
-    } = data || {};
+    } = (!isAr ? data : {}) || {};
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-primary">
@@ -168,10 +171,10 @@ function HeroSection({ data }: { data?: any }) {
                         className="mt-20 grid grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-6 sm:gap-12 w-full px-4"
                     >
                         {[
-                            { icon: <Terminal size={20} />, text: 'High-End Programming', sub: 'Tech Stack' },
-                            { icon: <Target size={20} />, text: 'Strategic Marketing', sub: 'Growth' },
-                            { icon: <TrendingUp size={20} />, text: 'Sales Optimization', sub: 'Revenue' },
-                            { icon: <Shield size={20} />, text: 'Swiss Reliability', sub: 'Quality' },
+                            { icon: <Terminal size={20} />, text: dict.hero.trust.programming, sub: dict.hero.trust.techStack },
+                            { icon: <Target size={20} />, text: dict.hero.trust.marketing, sub: dict.hero.trust.growth },
+                            { icon: <TrendingUp size={20} />, text: dict.hero.trust.sales, sub: dict.hero.trust.revenue },
+                            { icon: <Shield size={20} />, text: dict.hero.trust.reliability, sub: dict.hero.trust.quality },
                         ].map((item, i) => (
                             <motion.div key={i} variants={staggerItem} className="flex flex-col items-center gap-3 group">
                                 <span className="p-3.5 rounded-2xl bg-brand-surface border border-white/5 text-brand-accent shadow-neon-cyan group-hover:scale-110 transition-transform duration-300">
@@ -194,7 +197,7 @@ function HeroSection({ data }: { data?: any }) {
                 transition={{ delay: 2, duration: 1 }}
                 className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-brand-accent/40"
             >
-                <span className="text-[10px] uppercase tracking-[0.4em] font-mono">Explore</span>
+                <span className="text-[10px] uppercase tracking-[0.4em] font-mono">{dict.hero.explore}</span>
                 <div className="w-px h-12 bg-gradient-to-b from-brand-accent/50 to-transparent relative overflow-hidden">
                     <motion.div
                         animate={{ y: [0, 48] }}
@@ -412,12 +415,15 @@ function PosSection() {
 // ============ WHY CHOOSE US ============
 function WhyChooseSection({ data }: { data?: any }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
     const {
         badge = dict.home.whyChoose.badge,
         title = dict.home.whyChoose.title,
         description = dict.home.whyChoose.subtitle,
         btnText = dict.home.whyChoose.cta
-    } = data || {};
+    } = (!isAr ? data : {}) || {};
 
     const reasons = [
         {
@@ -543,7 +549,7 @@ function TestimonialsSection() {
             <div className="section-container relative z-10">
                 <SectionReveal>
                     <div className="text-center mb-24">
-                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">Endorsements</span>
+                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.testimonials.badge}</span>
                         <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.testimonials.title}</span>
                         </h2>
@@ -695,11 +701,14 @@ function TechSection() {
 // ============ CONTACT FORM SECTION ============
 function ContactFormSection({ data }: { data?: any }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
     const {
-        badge = "Initiation",
+        badge = dict.home.contact.badge,
         title = dict.home.contact.title,
         description = dict.home.contact.subtitle
-    } = data || {};
+    } = (!isAr ? data : {}) || {};
 
     return (
         <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
@@ -725,27 +734,27 @@ function ContactFormSection({ data }: { data?: any }) {
                             <div className="absolute inset-0 bg-brand-accent/[0.01] opacity-0 group-hover/form:opacity-100 transition-opacity pointer-events-none" />
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                                <Input label={dict.home.contact.form.name} placeholder="John Doe" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
-                                <Input label={dict.home.contact.form.email} type="email" placeholder="john@example.com" required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.name} placeholder={dict.contact.form.fields.name.placeholder} required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.email} type="email" placeholder={dict.contact.form.fields.email.placeholder} required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
                             </div>
 
-                            <Input label={dict.home.contact.form.company} placeholder="Your company name" className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Input label={dict.home.contact.form.company} placeholder={dict.contact.form.fields.company.placeholder} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
 
                             <Select
                                 label={dict.home.contact.form.service}
                                 className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all"
                                 options={[
-                                    { value: '', label: 'Select a priority service...' },
-                                    { value: 'web', label: 'Enterprise Web Application' },
-                                    { value: 'mobile', label: 'Cross-Platform Mobile App' },
-                                    { value: 'design', label: 'Strategic UI/UX Design' },
-                                    { value: 'business', label: 'ERP / POS Business System' },
-                                    { value: 'marketing', label: 'Digital Growth Strategy' },
-                                    { value: 'other', label: 'Other Technology Innovation' },
+                                    { value: '', label: dict.contact.form.fields.service.options.default },
+                                    { value: 'web', label: dict.contact.form.fields.service.options.web },
+                                    { value: 'mobile', label: dict.contact.form.fields.service.options.mobile },
+                                    { value: 'design', label: dict.contact.form.fields.service.options.design },
+                                    { value: 'business', label: dict.contact.form.fields.service.options.business },
+                                    { value: 'marketing', label: dict.contact.form.fields.service.options.marketing },
+                                    { value: 'other', label: dict.contact.form.fields.service.options.other },
                                 ]}
                             />
 
-                            <Textarea label={dict.home.contact.form.message} placeholder="Define your strategic goals, key features, and estimated timeline..." rows={6} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Textarea label={dict.home.contact.form.message} placeholder={dict.contact.form.fields.message.placeholder} rows={6} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
 
                             <Button type="submit" variant="primary" size="lg" fullWidth icon={<ArrowRight size={24} />} className="h-16 text-lg font-bold rounded-xl shadow-neon-cyan transition-all duration-500 hover:scale-[1.02] active:scale-95">
                                 {dict.home.contact.form.submit}
@@ -770,17 +779,17 @@ function ContactFormSection({ data }: { data?: any }) {
                                 />
                                 <div className="absolute inset-0 pointer-events-none border border-brand-accent/10 group-hover/map:border-brand-accent/30 transition-colors" />
                                 <div className="absolute top-6 left-6 px-4 py-2 bg-brand-primary/80 backdrop-blur-md border border-white/10 rounded-lg text-brand-accent text-xs font-mono uppercase tracking-widest shadow-xl">
-                                    Zurich HQ
+                                    {dict.contact.info.hqTitle}
                                 </div>
                             </div>
 
                             {/* Contact Details Grid */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 {[
-                                    { icon: <Globe size={20} />, title: 'Location', content: COMPANY_ADDRESS, color: 'cyan' },
-                                    { icon: <Shield size={20} />, title: 'Swiss License', content: COMPANY_LICENSE, color: 'purple' },
-                                    { icon: <Smartphone size={20} />, title: 'WhatsApp', content: '+41 77 941 21 26', color: 'cyan' },
-                                    { icon: <Mail size={20} />, title: 'Email Us', content: 'info@barmagly.tech', color: 'purple' },
+                                    { icon: <Globe size={20} />, title: dict.contact.info.location, content: COMPANY_ADDRESS, color: 'cyan' },
+                                    { icon: <Shield size={20} />, title: dict.contact.info.license, content: COMPANY_LICENSE, color: 'purple' },
+                                    { icon: <Smartphone size={20} />, title: dict.contact.info.whatsapp, content: '+41 77 941 21 26', color: 'cyan' },
+                                    { icon: <Mail size={20} />, title: dict.contact.info.emailUs, content: 'info@barmagly.tech', color: 'purple' },
                                 ].map((item, i) => (
                                     <div key={i} className="glass-card p-6 border-white/5 hover:border-brand-accent/20 transition-all group/info hover:bg-white/[0.01]">
                                         <div className="flex items-center gap-4 mb-4">

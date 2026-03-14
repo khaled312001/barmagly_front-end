@@ -237,13 +237,13 @@ export function Navbar({ dict, lang, getStartedText }: { dict: any, lang: string
                                         <Phone size={20} />
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="text-[10px] uppercase tracking-widest text-brand-muted/50 font-bold">Call Us</span>
+                                        <span className="text-[10px] uppercase tracking-widest text-brand-muted/50 font-bold">{dict?.nav?.callUs || 'Call Us'}</span>
                                         <span className="text-sm font-bold tracking-wider">{WHATSAPP_NUMBER}</span>
                                     </div>
                                 </Link>
 
                                 <div className="flex flex-col gap-4">
-                                    <span className="text-[10px] uppercase tracking-widest text-brand-muted/50 font-bold">Follow Us</span>
+                                    <span className="text-[10px] uppercase tracking-widest text-brand-muted/50 font-bold">{dict?.nav?.followUs || 'Follow Us'}</span>
                                     <div className="flex items-center gap-3">
                                         <Link
                                             href={FACEBOOK_URL}

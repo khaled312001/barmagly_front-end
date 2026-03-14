@@ -42,7 +42,7 @@ export function TopHeader({ lang, dict }: { lang: string, dict: any }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <span className="text-brand-muted/50 uppercase text-[10px]">Follow Us</span>
+                    <span className="text-brand-muted/50 uppercase text-[10px]">{dict?.nav?.followUs || 'Follow Us'}</span>
                     <div className="flex items-center gap-3">
                         <Link
                             href={FACEBOOK_URL}

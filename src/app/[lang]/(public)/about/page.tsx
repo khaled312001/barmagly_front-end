@@ -9,6 +9,7 @@ import { COMPANY_LICENSE, COMPANY_ADDRESS } from '@/lib/utils';
 import type { Metadata } from 'next';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
+import { useParams } from 'next/navigation';
 
 // ============ HERO ============
 function AboutHero() {
@@ -208,6 +209,9 @@ function MissionVisionSection() {
 // ============ VALUES ============
 function ValuesSection({ data }: { data?: any[] }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
     const iconMap: Record<string, React.ReactNode> = {
         'Excellence': <Award size={28} />,
         'التميز': <Award size={28} />,
@@ -224,11 +228,9 @@ function ValuesSection({ data }: { data?: any[] }) {
     };
 
     const defaultValues: any[] = dict.about.values.default;
+    const valuesData = (!isAr ? data : null) || defaultValues;
 
-    const displayValues = data ? data.map(v => ({
-        ...v,
-        icon: iconMap[v.title] || <Award size={28} />
-    })) : defaultValues.map(v => ({
+    const displayValues = valuesData.map((v: any) => ({
         ...v,
         icon: iconMap[v.title] || <Award size={28} />
     }));
@@ -272,9 +274,11 @@ function ValuesSection({ data }: { data?: any[] }) {
 // ============ TIMELINE ============
 function TimelineSection({ data }: { data?: any[] }) {
     const dict = useDictionary();
-    const defaultMilestones = dict.about.timeline.default;
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
 
-    const milestones = data || defaultMilestones;
+    const defaultMilestones = dict.about.timeline.default;
+    const milestones = (!isAr ? data : null) || defaultMilestones;
 
     return (
         <section className="section-padding relative overflow-hidden bg-brand-primary">
@@ -325,6 +329,8 @@ function TimelineSection({ data }: { data?: any[] }) {
 // ============ TECH STACK ============
 function TechStackSection({ data }: { data?: any[] }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
     const techIconMap: Record<string, React.ReactNode> = {
         'React / Next.js': <Atom size={24} />,
         'Node.js / Express': <Server size={24} />,
@@ -341,7 +347,7 @@ function TechStackSection({ data }: { data?: any[] }) {
         { name: 'Cloud & DevOps', level: 90, icon: <Cloud size={24} /> },
     ];
 
-    const displayTech = data ? data.map(t => ({
+    const displayTech = (!isAr && data) ? data.map(t => ({
         ...t,
         icon: techIconMap[t.name] || <Zap size={24} />
     })) : defaultTech;

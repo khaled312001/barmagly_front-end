@@ -259,7 +259,7 @@ export default function ContactPage() {
                                     allowFullScreen
                                     loading="lazy"
                                     referrerPolicy="no-referrer-when-downgrade"
-                                    title="Barmagly Office Location"
+                                    title={dict.contact.map.title}
                                 />
                                 <div className="absolute top-8 right-8 p-4 glass-card bg-brand-primary/80 backdrop-blur-xl border-brand-accent/30 text-brand-accent shadow-neon-cyan max-w-xs">
                                     <div className="flex items-center gap-3">
