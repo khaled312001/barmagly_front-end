@@ -647,7 +647,7 @@ function TechSection() {
                     </div>
                 </SectionReveal>
 
-                <div className="relative w-full overflow-hidden py-10 group">
+                <div className="relative w-full overflow-hidden py-10 group" dir="ltr">
                     <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-brand-primary to-transparent z-10 pointer-events-none" />
                     <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-brand-primary to-transparent z-10 pointer-events-none" />
 
