@@ -199,7 +199,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                         <CheckCircle2 size={24} />
                                     </div>
                                     <h4 className="text-xl font-display font-bold text-white mb-4 group-hover:text-brand-accent transition-colors">{feature}</h4>
-                                    <p className="text-brand-muted text-sm leading-relaxed">System-critical component designed for robust integration and seamless performance across all endpoints.</p>
+                                    <p className="text-brand-muted text-sm leading-relaxed">{dict.serviceDetail.featureDescription}</p>
                                 </div>
                             </SectionReveal>
                         ))}
@@ -219,10 +219,10 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
 
                                 <div className="grid grid-cols-2 gap-6">
                                     {[
-                                        { icon: <Database size={20} />, label: 'Data Integrity' },
-                                        { icon: <Shield size={20} />, label: 'Advanced Security' },
-                                        { icon: <Cloud size={20} />, label: 'Cloud-Native' },
-                                        { icon: <Zap size={20} />, label: 'Ultra-Low Latency' }
+                                        { icon: <Database size={20} />, label: dict.serviceDetail.techStackIntegrity },
+                                        { icon: <Shield size={20} />, label: dict.serviceDetail.techStackSecurity },
+                                        { icon: <Cloud size={20} />, label: dict.serviceDetail.techStackCloud },
+                                        { icon: <Zap size={20} />, label: dict.serviceDetail.techStackLatency }
                                     ].map((item, i) => (
                                         <div key={i} className="flex items-center gap-3 text-brand-muted bg-white/5 p-4 rounded-xl border border-white/5">
                                             <span className="text-brand-accent">{item.icon}</span>
@@ -235,7 +235,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
 
                         <SectionReveal direction="right">
                             <div className="glass-card p-10 border-brand-accent/10 bg-brand-glass relative">
-                                <div className="absolute top-0 right-0 p-4 font-mono text-[10px] text-brand-accent/30 pointer-events-none">CODE_FRAGMENT_882</div>
+                                <div className="absolute top-0 right-0 p-4 font-mono text-[10px] text-brand-accent/30 pointer-events-none">{dict.serviceDetail.codeFragment}</div>
                                 <pre className="font-mono text-sm text-brand-accent/70 overflow-hidden leading-relaxed">
                                     <code>{`/**
  * Service Configuration

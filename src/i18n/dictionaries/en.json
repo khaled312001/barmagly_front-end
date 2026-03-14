@@ -532,7 +532,13 @@
         "launchDiscussion": "Launch Discussion",
         "architecture": "Architecture",
         "serviceNotFound": "Service Not Found",
-        "notFoundDesc": "System could not locate the requested service architecture. Please return to the command center."
+        "notFoundDesc": "The requested service could not be located in the system. Please return to the operations center.",
+        "featureDescription": "System-critical component designed for robust integration and seamless performance across all endpoints.",
+        "techStackIntegrity": "Data Integrity",
+        "techStackSecurity": "Advanced Security",
+        "techStackCloud": "Cloud-Native",
+        "techStackLatency": "Ultra-Low Latency",
+        "codeFragment": "CODE_FRAGMENT_882"
     },
     "portfolioDetail": {
         "projectNotFound": "Project Not Found",

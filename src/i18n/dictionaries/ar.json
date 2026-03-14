@@ -532,7 +532,13 @@
         "launchDiscussion": "ابدأ النقاش",
         "architecture": "الهيكل التقني",
         "serviceNotFound": "الخدمة غير موجودة",
-        "notFoundDesc": "لم يتمكن النظام من تحديد موقع الخدمة المطلوبة. يرجى العودة إلى مركز العمليات."
+        "notFoundDesc": "لم يتمكن النظام من تحديد موقع الخدمة المطلوبة. يرجى العودة إلى مركز العمليات.",
+        "featureDescription": "مكون حيوي للنظام مصمم للتكامل القوي والأداء السلس عبر جميع بروتوكولات التشغيل.",
+        "techStackIntegrity": "سلامة البيانات",
+        "techStackSecurity": "أمن متقدم",
+        "techStackCloud": "سحابة أصلية",
+        "techStackLatency": "استجابة فورية",
+        "codeFragment": "قصاصة_برمجية_882"
     },
     "portfolioDetail": {
         "projectNotFound": "المشروع غير موجود",
