@@ -29,7 +29,7 @@ function HeroSection({ data }: { data?: any }) {
         description = dict.hero.subtitle,
         primaryBtnText = dict.hero.ctaPrimary,
         secondaryBtnText = dict.hero.ctaSecondary
-    } = (!isAr ? data : {}) || {};
+    } = (isAr ? data : {}) || {};
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-primary">
@@ -425,7 +425,7 @@ function WhyChooseSection({ data }: { data?: any }) {
         title = dict.home.whyChoose.title,
         description = dict.home.whyChoose.subtitle,
         btnText = dict.home.whyChoose.cta
-    } = (!isAr ? data : {}) || {};
+    } = (isAr ? data : {}) || {};
 
     const reasons = [
         {
@@ -502,6 +502,9 @@ function WhyChooseSection({ data }: { data?: any }) {
 // ============ COUNTERS SECTION ============
 function CountersSection({ data }: { data?: any }) {
     const dict = useDictionary();
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
     const defaultStats = [
         { label: dict.home.statistics.projects, value: "150", suffix: "+", icon: <Code2 size={24} /> },
         { label: dict.home.statistics.clients, value: "80", suffix: "+", icon: <Users size={24} /> },
@@ -510,8 +513,8 @@ function CountersSection({ data }: { data?: any }) {
     ];
 
     // Merge dynamic stats with defaults (preserving icons if possible, or just using defaults if no dynamic data)
-    // If we have dynamic stats, we use them.
-    const stats: any[] = data?.stats && data.stats.length > 0 ? data.stats : defaultStats;
+    // If we have dynamic stats and we are in Arabic mode, we use them.
+    const stats: any[] = (isAr && data && data.length > 0) ? data : defaultStats;
 
     return (
         <section className="relative overflow-hidden py-24 bg-brand-primary border-y border-white/5">
@@ -711,7 +714,7 @@ function ContactFormSection({ data }: { data?: any }) {
         badge = dict.home.contact.badge,
         title = dict.home.contact.title,
         description = dict.home.contact.subtitle
-    } = (!isAr ? data : {}) || {};
+    } = (isAr ? data : {}) || {};
 
     return (
         <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
