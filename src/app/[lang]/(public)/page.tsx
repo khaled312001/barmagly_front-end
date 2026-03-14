@@ -653,6 +653,7 @@ function TechSection() {
 
                     <motion.div
                         className="flex whitespace-nowrap w-max"
+                        dir="ltr"
                         animate={{
                             x: [0, "-50%"]
                         }}
