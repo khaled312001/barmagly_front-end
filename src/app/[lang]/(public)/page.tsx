@@ -539,12 +539,22 @@ function CountersSection({ data }: { data?: any }) {
 
 // ============ TESTIMONIALS SECTION ============
 function TestimonialsSection() {
+    const params = useParams();
+    const lang = params?.lang as string;
     const [testimonials, setTestimonials] = React.useState<any[]>([]);
     const dict = useDictionary();
 
     React.useEffect(() => {
-        publicApi.getTestimonials().then(({ data }) => setTestimonials(data)).catch(console.error);
-    }, []);
+        publicApi.getTestimonials().then(({ data }) => {
+            const mapped = data.map((t: any) => ({
+                ...t,
+                name: lang === 'en' && t.nameEn ? t.nameEn : t.name,
+                role: lang === 'en' && t.roleEn ? t.roleEn : t.role,
+                content: lang === 'en' && t.contentEn ? t.contentEn : t.content
+            }));
+            setTestimonials(mapped);
+        }).catch(console.error);
+    }, [lang]);
 
     const displayTestimonials = testimonials;
 
