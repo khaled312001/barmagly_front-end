@@ -153,12 +153,12 @@ function HeroSection({ data }: { data?: any }) {
 
                     {/* CTAs */}
                     <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-xl px-4">
-                        <Link href="/contact" className="w-full sm:w-1/2">
+                        <Link href={`/${params.lang}/portfolio`} className="w-full sm:w-1/2">
                             <Button size="xl" variant="primary" icon={<ArrowRight size={22} />} className="w-full h-16 text-lg font-bold rounded-xl group shadow-neon-cyan transition-all duration-500 hover:scale-105 active:scale-95">
                                 {primaryBtnText}
                             </Button>
                         </Link>
-                        <Link href="/portfolio" className="w-full sm:w-1/2">
+                        <Link href={`/${params.lang}/contact`} className="w-full sm:w-1/2">
                             <Button size="xl" variant="neon" className="w-full h-16 text-lg font-bold rounded-xl border-white/20 hover:border-brand-secondary/50 transition-all duration-500 hover:scale-105 active:scale-95">
                                 {secondaryBtnText}
                             </Button>
@@ -295,6 +295,7 @@ function ServicesSection() {
 // ============ POS SYSTEM SECTION ============
 function PosSection() {
     const dict = useDictionary();
+    const params = useParams();
     return (
         <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
             <div className="absolute inset-0 tech-grid opacity-5" />
@@ -331,7 +332,7 @@ function PosSection() {
                         </div>
 
                         <div className="flex ltr:justify-start rtl:justify-end">
-                            <Link href="/pos">
+                            <Link href={`/${params.lang}/pos`}>
                                 <Button variant="primary" size="lg" className="px-8 h-14 rounded-xl font-bold font-display tracking-widest gap-3 flex shadow-neon-cyan transition-all hover:scale-105 active:scale-95 text-lg">
                                     <ArrowRight size={20} className="rtl:rotate-180" /> {dict.home.pos.cta}
                                 </Button>
@@ -464,7 +465,7 @@ function WhyChooseSection({ data }: { data?: any }) {
                                 {description}
                             </p>
 
-                            <Link href="/about">
+                            <Link href={`/${params.lang}/about`}>
                                 <Button variant="primary" size="lg" icon={<ArrowRight size={20} />} className="px-10 h-16 rounded-xl font-bold">
                                     {btnText}
                                 </Button>
