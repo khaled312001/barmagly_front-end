@@ -169,6 +169,54 @@ export default function PrivacyPage() {
                             </div>
                         </SectionReveal>
 
+                        {/* Barmagly POS Web App */}
+                        <SectionReveal>
+                            <div className="glass-card p-10 border-brand-secondary/20 bg-brand-secondary/5 relative">
+                                <div className="absolute top-0 left-0 w-1 h-full bg-brand-secondary" />
+                                <div className="flex flex-col md:flex-row items-start gap-8">
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-secondary/10 border border-brand-secondary/30 text-brand-secondary text-xs font-mono tracking-widest uppercase">
+                                                <Settings size={14} />
+                                                POS Web Platform
+                                            </span>
+                                        </div>
+                                        <h2 className="text-2xl font-display font-black text-white mb-4">Barmagly POS — Web Dashboard</h2>
+                                        <p className="text-brand-muted leading-relaxed mb-4">
+                                            In addition to the mobile app, Barmagly POS offers a full web-based dashboard at{' '}
+                                            <a
+                                                href="https://pos.barmagly.tech/"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-brand-accent underline underline-offset-4 hover:text-white transition-colors"
+                                            >
+                                                pos.barmagly.tech
+                                            </a>
+                                            . The web platform gives business owners and managers access to the full POS system from any browser.
+                                        </p>
+                                        <ul className="space-y-2 text-brand-muted text-sm">
+                                            {[
+                                                'Manage products, categories, and pricing',
+                                                'View real-time sales reports and analytics',
+                                                'Manage employees, roles, and permissions',
+                                                'Handle online orders and delivery management',
+                                                'Configure multi-branch settings',
+                                                'Export and backup business data',
+                                            ].map((item, i) => (
+                                                <li key={i} className="flex items-start gap-2">
+                                                    <span className="text-brand-secondary mt-0.5">•</span>
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <p className="text-brand-muted leading-relaxed mt-6 text-sm">
+                                            The same privacy practices described in this policy apply to the web platform. All data entered via the web dashboard is encrypted in transit and stored securely under your business account.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </SectionReveal>
+
                         {/* Contact */}
                         <SectionReveal>
                             <div className="glass-card p-12 border-brand-accent/20 bg-brand-accent/5 relative group">
@@ -179,7 +227,7 @@ export default function PrivacyPage() {
                                 </p>
                                 <div className="flex flex-col gap-3">
                                     <p className="text-brand-accent font-mono font-black text-xl tracking-tighter shadow-neon-cyan inline-block p-4 bg-white/5 rounded-xl border border-brand-accent/30">
-                                        legal@barmagly.com
+                                        info@barmagly.com
                                     </p>
                                     <p className="text-brand-muted text-sm mt-2">Barmagly — Swiss Licensed Software Company (CHE-154.312.079)</p>
                                 </div>
