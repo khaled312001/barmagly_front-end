@@ -149,10 +149,10 @@ export default function PrivacyPage() {
                             ))}
                         </div>
 
-                        {/* Children's Privacy */}
+                        {/* Children&apos;s Privacy */}
                         <SectionReveal>
                             <div className="glass-card p-10 border-white/5">
-                                <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Children's Privacy</h2>
+                                <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Children&apos;s Privacy</h2>
                                 <p className="text-brand-muted leading-relaxed">
                                     Barmagly POS is a business application intended for use by adults (18+). We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us immediately.
                                 </p>
