@@ -48,7 +48,7 @@ export default function PrivacyPage() {
         {
             icon: <FileText size={20} />,
             title: 'Your Rights',
-            content: 'You have the right to access, correct, export, or delete your data at any time. To exercise these rights, contact us through the app\'s support channel or at the email below.'
+            content: 'You have the right to access, correct, export, or delete your data at any time. To exercise these rights, contact us through the app&apos;s support channel or at the email below.'
         },
     ];
 
