@@ -343,6 +343,15 @@
             },
             "emptyState": "No projects found in this category.",
             "viewAll": "View All Projects"
+        },
+        "detail": {
+            "overview": "Project Overview",
+            "challenge": "The Challenge",
+            "challengeText": "Creating a highly scalable and secure enterprise solution using modern tech stacks.",
+            "solution": "The Solution",
+            "solutionText": "Leveraging Swiss precision and distributed architecture to ensure maximum reliability.",
+            "backToPortfolio": "Back to Portfolio",
+            "startSimilarProject": "Start a Similar Project"
         }
     },
     "posPage": {
