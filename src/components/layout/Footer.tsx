@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { WHATSAPP_URL, COMPANY_ADDRESS, COMPANY_LICENSE } from '@/lib/utils';
+import { WHATSAPP_URL, COMPANY_ADDRESS, COMPANY_LICENSE, OFFICE_PHONE } from '@/lib/utils';
 import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 
@@ -64,8 +64,8 @@ export function Footer({ dict, lang }: FooterProps) {
                                 <span>{address}</span>
                             </div>
                             <div className="flex items-center gap-2 text-brand-muted">
-                                <Phone size={16} className="text-brand-accent shrink-0" />
-                                <span>{phone}</span>
+                                <Phone size={16} className="text-brand-accent/70 shrink-0" />
+                                <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="hover:text-brand-accent transition-colors duration-300" dir="ltr">{OFFICE_PHONE}</a>
                             </div>
                             <div className="flex items-center gap-2 text-brand-muted">
                                 <Mail size={16} className="text-brand-accent shrink-0" />

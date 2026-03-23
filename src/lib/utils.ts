@@ -28,6 +28,7 @@ export function truncate(text: string, length: number): string {
 
 export const WHATSAPP_NUMBER = '+41779412126';
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER.replace(/\+/g, '')}`;
+export const OFFICE_PHONE = '044 586 1803';
 export const FACEBOOK_URL = 'https://www.facebook.com/BarmaglyOfficial/';
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/102957997';
 export const COMPANY_ADDRESS = 'Hardstrasse 201, 8005 Zürich, Switzerland';

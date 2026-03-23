@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Input, Textarea, Select } from '@/components/ui/FormElements';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, heroTextReveal } from '@/lib/animations';
-import { WHATSAPP_URL, COMPANY_ADDRESS } from '@/lib/utils';
+import { WHATSAPP_URL, COMPANY_ADDRESS, OFFICE_PHONE } from '@/lib/utils';
 import { publicApi } from '@/lib/api';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
@@ -212,6 +212,20 @@ export default function ContactPage() {
                                         <div className="rtl:text-right ltr:text-left">
                                             <h3 className="text-lg font-display font-black text-white mb-1">{contactDict.info.emailTitle}</h3>
                                             <p className="text-brand-accent text-sm font-mono">{email}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </SectionReveal>
+
+                            <SectionReveal direction="right" delay={0.25}>
+                                <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-white/5 group-hover:border-brand-accent/20 transition-all duration-500">
+                                    <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-6">
+                                        <div className="p-4 rounded-xl bg-brand-accent/10 text-brand-accent border border-brand-accent/20 flex-shrink-0">
+                                            <Phone size={24} />
+                                        </div>
+                                        <div className="rtl:text-right ltr:text-left">
+                                            <h3 className="text-lg font-display font-black text-white mb-1">{contactDict.info.officePhone || 'Office Phone'}</h3>
+                                            <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="text-brand-accent text-sm font-mono hover:text-brand-accent/80 transition-colors" dir="ltr">{OFFICE_PHONE}</a>
                                         </div>
                                     </div>
                                 </div>
