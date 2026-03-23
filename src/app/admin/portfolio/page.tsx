@@ -5,7 +5,6 @@ import { Plus, Edit, Trash2, Save, X, Star, ExternalLink, MoreVertical, LayoutGr
 import { adminApi } from '@/lib/api';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea } from '@/components/ui/FormElements';
-import { ImageUpload } from '@/components/ui/ImageUpload';
 import { useToast } from '@/components/ui/Toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import { staggerContainer, staggerItem } from '@/lib/animations';
@@ -28,7 +27,7 @@ export default function AdminPortfolioPage() {
     const [showForm, setShowForm] = useState(false);
     const [editing, setEditing] = useState<string | null>(null);
     const [form, setForm] = useState({
-        title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false, image: '',
+        title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false,
     });
     const { showToast } = useToast();
 
@@ -51,7 +50,7 @@ export default function AdminPortfolioPage() {
                 showToast('Project created successfully', 'success');
             }
             setShowForm(false); setEditing(null);
-            setForm({ title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false, image: '' });
+            setForm({ title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false });
             fetchItems();
         } catch (e) {
             console.error(e);
@@ -80,7 +79,7 @@ export default function AdminPortfolioPage() {
                 </div>
                 <Button variant="primary" size="sm" icon={<Plus size={16} />} onClick={() => {
                     setShowForm(true); setEditing(null);
-                    setForm({ title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false, image: '' });
+                    setForm({ title: '', description: '', content: '', category: '', client: '', duration: '', technologies: '', results: '', isFeatured: false });
                 }}>Add Project</Button>
             </div>
 
@@ -93,7 +92,6 @@ export default function AdminPortfolioPage() {
                         <Input label="Client" value={form.client} onChange={(e) => setForm({ ...form, client: e.target.value })} />
                         <Input label="Duration" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} placeholder="3 months" />
                     </div>
-                    <ImageUpload value={form.image} onChange={(url) => setForm({ ...form, image: url })} />
                     <Textarea label="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
                     <Textarea label="Content / Case Study" rows={6} value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} />
                     <Input label="Technologies (comma separated)" value={form.technologies} onChange={(e) => setForm({ ...form, technologies: e.target.value })} placeholder="React, Node.js, PostgreSQL" />
@@ -131,8 +129,7 @@ export default function AdminPortfolioPage() {
                                         duration: (item as any).duration || '',
                                         technologies: item.technologies.join(', '),
                                         results: (item as any).results || '',
-                                        isFeatured: item.isFeatured,
-                                        image: item.image || ''
+                                        isFeatured: item.isFeatured
                                     });
                                     setShowForm(true);
                                 }} className="p-1.5 rounded-lg hover:bg-brand-accent/10 text-brand-muted hover:text-brand-accent opacity-0 group-hover:opacity-100 transition-all">

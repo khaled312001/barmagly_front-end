@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/Button';
 import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem } from '@/lib/animations';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
@@ -132,27 +131,7 @@ export default function PortfolioPage() {
                         <SectionReveal>
                             <div className="group relative glass-card p-2 rounded-[2.5rem] overflow-hidden bg-brand-dark/50 border-white/5 shadow-2xl">
                                 <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/10 to-transparent pointer-events-none" />
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden rounded-[2.2rem]">
-                                    {/* Project Preview Image */}
-                                    <div className="relative h-[400px] lg:h-auto overflow-hidden group/img">
-                                        <Image
-                                            src={featuredProject.image || "/images/blog/project-placeholder.jpg"}
-                                            alt={featuredProject.displayTitle || ""}
-                                            fill
-                                            className="object-cover transition-transform duration-1000 group-hover/img:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-transparent to-transparent opacity-60" />
-                                        <div className="absolute bottom-10 left-10">
-                                            <div className="flex gap-3 mb-4">
-                                                {featuredProject.technologies.slice(0, 3).map(tech => (
-                                                    <span key={tech} className="px-4 py-1.5 glass-card bg-brand-primary/80 backdrop-blur-xl border-white/10 text-brand-accent text-[10px] font-bold uppercase tracking-widest rounded-lg">
-                                                        {tech}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                <div className="overflow-hidden rounded-[2.2rem]">
                                     {/* Project Details */}
                                     <div className="p-12 lg:p-20 flex flex-col justify-center bg-brand-surface relative overflow-hidden">
                                         <div className="absolute top-0 right-0 p-10 font-display font-black text-[120px] leading-none text-white/[0.03] select-none pointer-events-none">
