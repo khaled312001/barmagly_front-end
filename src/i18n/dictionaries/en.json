@@ -303,6 +303,15 @@
     },
     "portfolio": {
         "allCategory": "All",
+        "filters": {
+            "all": "All",
+            "search": "Search projects..."
+        },
+        "featured": {
+            "badge": "Featured Project",
+            "viewProject": "View Project",
+            "visitSite": "Visit Site"
+        },
         "hero": {
             "badge": "Our Portfolio",
             "titleLine1": "6 Years of",

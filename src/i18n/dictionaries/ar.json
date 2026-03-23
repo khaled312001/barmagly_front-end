@@ -303,6 +303,15 @@
     },
     "portfolio": {
         "allCategory": "الكل",
+        "filters": {
+            "all": "الكل",
+            "search": "ابحث عن مشروع..."
+        },
+        "featured": {
+            "badge": "مشروع مميز",
+            "viewProject": "عرض المشروع",
+            "visitSite": "زيارة الموقع"
+        },
         "hero": {
             "badge": "سابقة أعمالنا",
             "titleLine1": "خبرة 6 سنوات في",
