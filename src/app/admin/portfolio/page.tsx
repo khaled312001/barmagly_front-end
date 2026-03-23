@@ -125,26 +125,6 @@ export default function AdminPortfolioPage() {
                                     setForm({
                                         title: item.title,
                                         description: item.description,
-                                        content: '', // content might be heavy, skipping in list view or need fetch single? Assuming fetchItems includes it? No, getPortfolio doesn't return content potentially? Check backend. Backend GET /portfolio returns all fields.
-                                        // Wait, backend admin.ts getPortfolio returns projects with included images. but mapping just technologies.
-                                        // Content is in Project model.
-                                        // So it IS returned.
-                                        category: item.category,
-                                        client: '', // client not in Project interface above? Wait, schema has client. Interface incomplete?
-                                        // Update: Interface Project above DOES NOT have client, duration, content, results.
-                                        // I need to update Interface Project too, line 12.
-                                        duration: '',
-                                        technologies: item.technologies.join(', '),
-                                        results: '',
-                                        isFeatured: item.isFeatured,
-                                        image: item.image || ''
-                                    });
-                                    // Actually, I should fetch the full project details or ensure `items` has everything.
-                                    // I'll update form with item fields assuming they exist in `item`.
-                                    // I need to fix `Project` interface first.
-                                    setForm({
-                                        title: item.title,
-                                        description: item.description,
                                         content: (item as any).content || '',
                                         category: item.category,
                                         client: (item as any).client || '',
@@ -152,7 +132,7 @@ export default function AdminPortfolioPage() {
                                         technologies: item.technologies.join(', '),
                                         results: (item as any).results || '',
                                         isFeatured: item.isFeatured,
-                                        image: (item as any).image || ''
+                                        image: item.image || ''
                                     });
                                     setShowForm(true);
                                 }} className="p-1.5 rounded-lg hover:bg-brand-accent/10 text-brand-muted hover:text-brand-accent opacity-0 group-hover:opacity-100 transition-all">
