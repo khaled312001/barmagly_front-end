@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import { MapPin, Phone, Mail, Clock, ArrowRight, MessageCircle, CheckCircle, AlertCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea, Select } from '@/components/ui/FormElements';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, heroTextReveal } from '@/lib/animations';
-import { WHATSAPP_URL, COMPANY_ADDRESS, OFFICE_PHONE } from '@/lib/utils';
+import { COMPANY_ADDRESS, OFFICE_PHONE } from '@/lib/utils';
 import { publicApi } from '@/lib/api';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
@@ -19,7 +18,6 @@ export default function ContactPage() {
     const { settings } = useSiteSettings();
     const address = settings?.address || COMPANY_ADDRESS;
     const email = settings?.email || 'info@barmagly.ch';
-    const whatsapp = settings?.whatsappNumber ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}` : WHATSAPP_URL;
 
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [errorMessage, setErrorMessage] = useState('');
@@ -188,20 +186,6 @@ export default function ContactPage() {
                                 </div>
                             </SectionReveal>
 
-                            <SectionReveal direction="right" delay={0.1}>
-                                <div className="glass-card p-8 hover-glow bg-brand-dark/40 border-white/5 relative group hover:border-brand-secondary/30 transition-all duration-500">
-                                    <div className="p-4 rounded-xl bg-brand-secondary/10 border border-brand-secondary/20 text-brand-secondary w-fit mb-6 group-hover:shadow-neon-purple transition-all duration-500">
-                                        <MessageCircle size={24} />
-                                    </div>
-                                    <h3 className="text-xl font-display font-black text-white mb-3">{contactDict.info.techTitle}</h3>
-                                    <p className="text-brand-muted text-sm font-light mb-8 italic">{contactDict.info.techDesc}</p>
-                                    <Link href={whatsapp} target="_blank">
-                                        <Button variant="outline" size="lg" icon={<MessageCircle size={18} />} className="w-full border-white/10 hover:border-brand-secondary/30 flex-row-reverse rtl:flex-row gap-2">
-                                            {contactDict.info.techBtn}
-                                        </Button>
-                                    </Link>
-                                </div>
-                            </SectionReveal>
 
                             <SectionReveal direction="right" delay={0.2}>
                                 <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-white/5 group-hover:border-brand-accent/20 transition-all duration-500">
