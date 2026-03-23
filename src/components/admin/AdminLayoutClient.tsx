@@ -66,7 +66,8 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
             }
         };
         checkAuth();
-    }, [router, setUser, setLoading, logout, pathname]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pathname]);
 
     const handleLogout = () => {
         logout();
