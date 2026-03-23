@@ -15,7 +15,6 @@ import {
 import { Button } from '@/components/ui/Button';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
 
 interface PortfolioDetailClientProps {
@@ -91,29 +90,6 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                             </div>
                         </motion.div>
                     </div>
-                </div>
-            </section>
-
-            {/* Main Featured Image */}
-            <section className="relative px-6">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8 }}
-                        className="relative aspect-[21/9] rounded-[3rem] overflow-hidden glass-card p-2 border-white/5 shadow-2xl"
-                    >
-                        <div className="relative w-full h-full rounded-[2.8rem] overflow-hidden">
-                            <Image
-                                src={project.image || "/images/blog/project-placeholder.jpg"}
-                                alt={title}
-                                fill
-                                className="object-cover"
-                                priority
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/40 to-transparent" />
-                        </div>
-                    </motion.div>
                 </div>
             </section>
 
