@@ -95,7 +95,7 @@ export default function PortfolioPage() {
         return matchesFilter && matchesSearch;
     });
 
-    const featuredProject = projects.find(p => p.slug === 'swiss-banking-platform') || projects[0];
+    const featuredProject = projects.find(p => p.isFeatured) || null;
 
     return (
         <main className="min-h-screen bg-brand-primary">
@@ -119,9 +119,7 @@ export default function PortfolioPage() {
                             {portfolioDict.hero.titleLine1} <br />
                             <span className="gradient-text italic opacity-90">{portfolioDict.hero.titleHighlight}</span>
                         </motion.h1>
-                        <motion.p variants={staggerItem} className="text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed font-light">
-                            {portfolioDict.hero.subtitle}
-                        </motion.p>
+                        <motion.p variants={staggerItem} className="text-xl text-brand-muted max-w-2xl mx-auto leading-relaxed font-light" dangerouslySetInnerHTML={{ __html: portfolioDict.hero.subtitle }} />
                     </motion.div>
                 </div>
             </section>
