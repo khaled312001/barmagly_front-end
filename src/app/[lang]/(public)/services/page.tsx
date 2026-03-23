@@ -7,7 +7,6 @@ import * as LucideIcons from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { SectionReveal, SectionHeading } from '@/components/ui/SectionReveal';
 import { staggerContainer, staggerItem, heroTextReveal } from '@/lib/animations';
-import { WHATSAPP_URL } from '@/lib/utils';
 import { MessageCircle, ArrowRight, CheckCircle2, Search, Layout, Cpu, ShieldCheck } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
@@ -127,7 +126,7 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
                                         {dict.services.serviceSection.explorationHub}
                                     </Button>
                                 </Link>
-                                <Link href={`${WHATSAPP_URL}?text=Hi, I'm interested in ${service.title}`} target="_blank">
+                                <Link href={`/${lang}/contact`}>
                                     <Button variant="outline" size="lg" icon={<MessageCircle size={20} />} className="border-white/10 hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
                                         {dict.services.serviceSection.expertConsult}
                                     </Button>
@@ -293,7 +292,7 @@ export default function ServicesPage() {
                                         {dict.services.cta.launchSolution}
                                     </Button>
                                 </Link>
-                                <Link href={WHATSAPP_URL} target="_blank" className="w-full sm:w-auto">
+                                <Link href={`/${lang}/contact`} className="w-full sm:w-auto">
                                     <Button size="xl" variant="outline" icon={<MessageCircle size={24} />} className="w-full sm:min-w-[240px] border-white/10 hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
                                         {dict.services.cta.whatsappIntel}
                                     </Button>

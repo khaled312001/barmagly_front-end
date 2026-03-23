@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { WHATSAPP_URL } from '@/lib/utils';
-
 export function WhatsAppButton() {
+    return null; // temporarily hidden
+
     return (
         <motion.a
-            href={WHATSAPP_URL}
+            href="#"
             target="_blank"
             rel="noopener noreferrer"
             initial={{ scale: 0, opacity: 0 }}

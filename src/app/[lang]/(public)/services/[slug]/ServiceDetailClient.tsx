@@ -10,7 +10,6 @@ import {
 import { Button } from '@/components/ui/Button';
 import { SectionReveal } from '@/components/ui/SectionReveal';
 import { staggerContainer, heroTextReveal } from '@/lib/animations';
-import { WHATSAPP_URL } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
@@ -110,7 +109,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                             </motion.p>
 
                             <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center gap-6">
-                                <Link href={`${WHATSAPP_URL}?text=I'm interested in ${title}`} target="_blank">
+                                <Link href={`/${lang}/contact`}>
                                     <Button size="lg" variant="primary" icon={<MessageCircle size={20} />}>
                                         {dict.serviceDetail.inquireNow}
                                     </Button>
@@ -276,7 +275,7 @@ const initialize = () => {
                                                 {dict.serviceDetail.launchDiscussion}
                                             </Button>
                                         </Link>
-                                        <Link href={WHATSAPP_URL} target="_blank">
+                                        <Link href={`/${lang}/contact`}>
                                             <Button size="lg" variant="outline" icon={<MessageCircle size={20} />}>
                                                 {dict.serviceDetail.whatsappProtocol}
                                             </Button>
