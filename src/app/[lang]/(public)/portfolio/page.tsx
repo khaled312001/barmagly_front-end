@@ -26,6 +26,7 @@ interface Project {
     image?: string;
     technologies: string[];
     content?: string;
+    isFeatured?: boolean;
     // Client-side display fields
     displayTitle?: string;
     displayDescription?: string;
