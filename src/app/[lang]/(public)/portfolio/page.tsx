@@ -77,23 +77,42 @@ export default function PortfolioPage() {
 
     const localizeCategory = React.useCallback((cat: string, displayCat?: string): string => {
         if (!cat) return cat;
-        const types = (portfolioDict.grid as any).types as Record<string, string>;
-        const countries = (portfolioDict.grid as any).countries as Record<string, string>;
-        // Direct type match (website → موقع)
-        const typeMatch = types[cat.toLowerCase()];
-        if (typeMatch) return typeMatch;
-        // Direct country code match (CH → سويسرا CH)
-        const directCountry = countries[cat.toUpperCase()];
-        if (directCountry) return `${directCountry} ${cat.toUpperCase()}`;
-        // Extract code from mixed strings like "مصر EG" or "Egypt EG" → EG → سويسرا EG
+        const isAr = lang === 'ar';
+
+        const COUNTRIES: Record<string, { en: string; ar: string }> = {
+            CH: { en: 'Switzerland', ar: 'سويسرا' },
+            FR: { en: 'France', ar: 'فرنسا' },
+            AE: { en: 'UAE', ar: 'الإمارات' },
+            SA: { en: 'Saudi Arabia', ar: 'السعودية' },
+            EG: { en: 'Egypt', ar: 'مصر' },
+            IQ: { en: 'Iraq', ar: 'العراق' },
+            GLOBAL: { en: 'Global', ar: 'عالمي' },
+        };
+        const TYPES: Record<string, { en: string; ar: string }> = {
+            website: { en: 'Website', ar: 'موقع' },
+            app: { en: 'App', ar: 'تطبيق' },
+            pos: { en: 'POS', ar: 'POS' },
+            saas: { en: 'SaaS', ar: 'منصات مستقلة' },
+        };
+
+        // Direct type match
+        const typeEntry = TYPES[cat.toLowerCase()];
+        if (typeEntry) return isAr ? typeEntry.ar : typeEntry.en;
+
+        // Direct country code match (e.g. "CH", "EG")
+        const directEntry = COUNTRIES[cat.toUpperCase()];
+        if (directEntry) return `${isAr ? directEntry.ar : directEntry.en} ${cat.toUpperCase()}`;
+
+        // Extract code from mixed strings like "مصر EG" or "Egypt EG"
         const codeMatch = cat.match(/([A-Z]{2,6})\s*$/);
         if (codeMatch) {
             const code = codeMatch[1];
-            const countryName = countries[code];
-            if (countryName) return `${countryName} ${code}`;
+            const entry = COUNTRIES[code];
+            if (entry) return `${isAr ? entry.ar : entry.en} ${code}`;
         }
+
         return displayCat && displayCat !== cat ? displayCat : cat;
-    }, [portfolioDict]);
+    }, [lang]);
 
     const categoryDisplayMap = React.useMemo(() => {
         const map = new Map<string, string>();
@@ -103,7 +122,7 @@ export default function PortfolioPage() {
             }
         });
         return map;
-    }, [projects, localizeCategory]);
+    }, [projects, localizeCategory, lang]);
 
     // CH first, then alphabetical by known order
     const CATEGORY_ORDER = ['CH', 'FR', 'AE', 'SA', 'EG', 'IQ', 'GLOBAL'];
