@@ -75,15 +75,31 @@ export default function PortfolioPage() {
         }).catch(err => console.error(err));
     }, [lang]);
 
+    const localizeCategory = React.useCallback((cat: string, displayCat?: string): string => {
+        if (!cat) return cat;
+        // If displayCategory is already different from raw category (i.e. already localized), use it
+        if (displayCat && displayCat !== cat) return displayCat;
+        // Try to translate using dictionary types (website → موقع, app → تطبيق)
+        const types = (portfolioDict.grid as any).types as Record<string, string>;
+        const typeMatch = types[cat.toLowerCase()];
+        if (typeMatch) return typeMatch;
+        // Try to translate using dictionary country codes (CH → سويسرا CH)
+        const countries = (portfolioDict.grid as any).countries as Record<string, string>;
+        const countryMatch = countries[cat.toUpperCase()];
+        if (countryMatch) return `${countryMatch} ${cat.toUpperCase()}`;
+        // Return as-is (already in correct language or unknown)
+        return displayCat || cat;
+    }, [portfolioDict]);
+
     const categoryDisplayMap = React.useMemo(() => {
         const map = new Map<string, string>();
         projects.forEach(p => {
             if (p.category && !map.has(p.category)) {
-                map.set(p.category, p.displayCategory || p.category);
+                map.set(p.category, localizeCategory(p.category, p.displayCategory));
             }
         });
         return map;
-    }, [projects]);
+    }, [projects, localizeCategory]);
 
     const categories = ['all', ...Array.from(categoryDisplayMap.keys())];
 
@@ -224,7 +240,7 @@ export default function PortfolioPage() {
                                             <div className="px-8 pt-8 pb-4 border-b border-white/5 flex items-center justify-between">
                                                 <span className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan/50 transition-transform duration-300 group-hover/card:scale-105">
                                                     <span className="text-base leading-none">{getFlag(project.category)}</span>
-                                                    <span>{project.displayCategory || project.category}</span>
+                                                    <span>{localizeCategory(project.category, project.displayCategory)}</span>
                                                 </span>
                                             </div>
 
