@@ -22,14 +22,13 @@ function HeroSection({ data }: { data?: any }) {
     const params = useParams();
     const isAr = params?.lang === 'ar';
 
-    const {
-        badgeText = dict.hero.badge,
-        titleLine1 = dict.hero.titleLine1,
-        titleLine2 = dict.hero.titleLine2,
-        description = dict.hero.subtitle,
-        primaryBtnText = dict.hero.ctaPrimary,
-        secondaryBtnText = dict.hero.ctaSecondary
-    } = (isAr ? data : {}) || {};
+    const apiData = (isAr ? data : {}) || {};
+    const badgeText = apiData.badgeText || dict.hero.badge;
+    const titleLine1 = apiData.titleLine1 || dict.hero.titleLine1;
+    const titleLine2 = apiData.titleLine2 || dict.hero.titleLine2;
+    const description = apiData.description || dict.hero.subtitle;
+    const primaryBtnText = apiData.primaryBtnText || dict.hero.ctaPrimary;
+    const secondaryBtnText = apiData.secondaryBtnText || dict.hero.ctaSecondary;
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-primary">

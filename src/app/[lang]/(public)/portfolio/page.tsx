@@ -33,24 +33,13 @@ interface Project {
 }
 
 // --- Helpers ---
-const getCategoryName = (cat: string) => {
-    switch (cat.toLowerCase()) {
-        case 'fintech': case 'تطوير التكنولوجيا المالية': return 'FinTech';
-        case 'e-commerce': case 'التجارة الإلكترونية': return 'E-Commerce';
-        case 'saas': case 'منصات سحابية (SaaS)': return 'SaaS';
-        case 'ai': case 'الذكاء الاصطناعي': return 'AI & Automation';
-        default: return 'Innovation';
-    }
-};
-
 const getFlag = (cat: string) => {
-    switch (cat.toLowerCase()) {
-        case 'fintech': return '🏦';
-        case 'e-commerce': return '🛍️';
-        case 'saas': return '☁️';
-        case 'ai': return '🤖';
-        default: return '🚀';
-    }
+    const lower = (cat || '').toLowerCase();
+    if (lower.includes('fintech') || lower.includes('مالية')) return '🏦';
+    if (lower.includes('e-commerce') || lower.includes('commerce') || lower.includes('تجارة')) return '🛍️';
+    if (lower.includes('saas') || lower.includes('سحابية')) return '☁️';
+    if (lower.includes('ai') || lower.includes('ذكاء')) return '🤖';
+    return '🚀';
 };
 
 export default function PortfolioPage() {
@@ -86,7 +75,17 @@ export default function PortfolioPage() {
         }).catch(err => console.error(err));
     }, [lang]);
 
-    const categories = ['all', ...Array.from(new Set(projects.map(p => p.category)))];
+    const categoryDisplayMap = React.useMemo(() => {
+        const map = new Map<string, string>();
+        projects.forEach(p => {
+            if (p.category && !map.has(p.category)) {
+                map.set(p.category, p.displayCategory || p.category);
+            }
+        });
+        return map;
+    }, [projects]);
+
+    const categories = ['all', ...Array.from(categoryDisplayMap.keys())];
 
     const filteredProjects = projects.filter(p => {
         const matchesFilter = filter === 'all' || p.category === filter;
@@ -186,19 +185,19 @@ export default function PortfolioPage() {
                                         : 'bg-brand-surface/50 text-brand-muted border-white/5 hover:border-brand-accent/30'
                                         }`}
                                 >
-                                    {cat === 'all' ? portfolioDict.filters.all : getCategoryName(cat)}
+                                    {cat === 'all' ? portfolioDict.filters.all : (categoryDisplayMap.get(cat) || cat)}
                                 </button>
                             ))}
                         </div>
 
                         <div className="relative group w-full lg:w-96">
-                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-muted group-focus-within:text-brand-accent transition-colors" size={20} />
+                            <Search className="absolute start-6 top-1/2 -translate-y-1/2 text-brand-muted group-focus-within:text-brand-accent transition-colors" size={20} />
                             <input
                                 type="text"
                                 placeholder={portfolioDict.filters.search}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full h-14 bg-brand-surface border border-white/5 rounded-2xl pl-14 pr-6 text-white placeholder:text-brand-muted/40 focus:outline-none focus:border-brand-accent/30 focus:shadow-neon-cyan/20 transition-all font-light"
+                                className="w-full h-14 bg-brand-surface border border-white/5 rounded-2xl ps-14 pe-6 text-white placeholder:text-brand-muted/40 focus:outline-none focus:border-brand-accent/30 focus:shadow-neon-cyan/20 transition-all font-light"
                             />
                         </div>
                     </div>
@@ -224,8 +223,8 @@ export default function PortfolioPage() {
                                         <Link href={`/${lang}/portfolio/${project.slug}`}>
                                             <div className="px-8 pt-8 pb-4 border-b border-white/5 flex items-center justify-between">
                                                 <span className="flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-wider uppercase bg-brand-accent text-brand-primary rounded-full shadow-neon-cyan/50 transition-transform duration-300 group-hover/card:scale-105">
-                                                    <span className="text-base leading-none">{getFlag(project.displayCategory || project.category)}</span>
-                                                    <span>{getCategoryName(project.displayCategory || project.category)}</span>
+                                                    <span className="text-base leading-none">{getFlag(project.category)}</span>
+                                                    <span>{project.displayCategory || project.category}</span>
                                                 </span>
                                             </div>
 
