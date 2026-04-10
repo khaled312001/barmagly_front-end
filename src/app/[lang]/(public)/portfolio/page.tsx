@@ -77,18 +77,22 @@ export default function PortfolioPage() {
 
     const localizeCategory = React.useCallback((cat: string, displayCat?: string): string => {
         if (!cat) return cat;
-        // If displayCategory is already different from raw category (i.e. already localized), use it
-        if (displayCat && displayCat !== cat) return displayCat;
-        // Try to translate using dictionary types (website → موقع, app → تطبيق)
         const types = (portfolioDict.grid as any).types as Record<string, string>;
+        const countries = (portfolioDict.grid as any).countries as Record<string, string>;
+        // Direct type match (website → موقع)
         const typeMatch = types[cat.toLowerCase()];
         if (typeMatch) return typeMatch;
-        // Try to translate using dictionary country codes (CH → سويسرا CH)
-        const countries = (portfolioDict.grid as any).countries as Record<string, string>;
-        const countryMatch = countries[cat.toUpperCase()];
-        if (countryMatch) return `${countryMatch} ${cat.toUpperCase()}`;
-        // Return as-is (already in correct language or unknown)
-        return displayCat || cat;
+        // Direct country code match (CH → سويسرا CH)
+        const directCountry = countries[cat.toUpperCase()];
+        if (directCountry) return `${directCountry} ${cat.toUpperCase()}`;
+        // Extract code from mixed strings like "مصر EG" or "Egypt EG" → EG → سويسرا EG
+        const codeMatch = cat.match(/([A-Z]{2,6})\s*$/);
+        if (codeMatch) {
+            const code = codeMatch[1];
+            const countryName = countries[code];
+            if (countryName) return `${countryName} ${code}`;
+        }
+        return displayCat && displayCat !== cat ? displayCat : cat;
     }, [portfolioDict]);
 
     const categoryDisplayMap = React.useMemo(() => {
@@ -101,7 +105,17 @@ export default function PortfolioPage() {
         return map;
     }, [projects, localizeCategory]);
 
-    const categories = ['all', ...Array.from(categoryDisplayMap.keys())];
+    // CH first, then alphabetical by known order
+    const CATEGORY_ORDER = ['CH', 'FR', 'AE', 'SA', 'EG', 'IQ', 'GLOBAL'];
+    const getCode = (cat: string) => { const m = cat.match(/([A-Z]{2,6})\s*$/); return m ? m[1] : cat.toUpperCase(); };
+    const categories = ['all', ...Array.from(categoryDisplayMap.keys()).sort((a, b) => {
+        const ai = CATEGORY_ORDER.indexOf(getCode(a));
+        const bi = CATEGORY_ORDER.indexOf(getCode(b));
+        if (ai === -1 && bi === -1) return 0;
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+    })];
 
     const filteredProjects = projects.filter(p => {
         const matchesFilter = filter === 'all' || p.category === filter;
