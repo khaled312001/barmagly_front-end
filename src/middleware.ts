@@ -10,20 +10,35 @@ function getCountry(request: NextRequest): string | undefined {
         request.headers.get('x-vercel-ip-country') ||
         request.headers.get('cf-ipcountry') ||
         request.headers.get('x-country-code') ||
+        request.headers.get('x-geo-country') ||
         (request as any).geo?.country;
     return country?.toUpperCase();
 }
 
+function prefersArabic(request: NextRequest): boolean {
+    // Fallback when no geo-IP header is available: check the browser language.
+    // Egyptian users almost always have ar-EG or ar in their accept-language.
+    const acceptLang = request.headers.get('accept-language')?.toLowerCase() || '';
+    return /\bar(-|_|,|;|$)/.test(acceptLang) || acceptLang.startsWith('ar');
+}
+
 function getLocale(request: NextRequest): string | undefined {
-    // 1. Check if there is a cookie saved (respect user's explicit choice)
+    // 1. Respect the user's explicit choice if a cookie is saved
     const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
     if (cookieLocale && locales.includes(cookieLocale)) {
         return cookieLocale;
     }
 
-    // 2. Geo-based default: Egyptian visitors get Arabic, everyone else English
+    // 2. Geo-IP: Egyptian visitors get Arabic
     const country = getCountry(request);
-    return country === 'EG' ? 'ar' : 'en';
+    if (country === 'EG') return 'ar';
+
+    // 3. If geo-IP is unavailable, fall back to browser language (covers Egyptian
+    //    visitors when the hosting layer doesn't inject a country header)
+    if (!country && prefersArabic(request)) return 'ar';
+
+    // 4. Default to English for everyone else
+    return 'en';
 }
 
 export function middleware(request: NextRequest) {
