@@ -3,6 +3,7 @@ import { SiteProvider } from '@/lib/contexts/SiteContext';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
+import { GeoLocaleCorrector } from '@/components/layout/GeoLocaleCorrector';
 import { MouseGlow } from '@/components/ui/MouseGlow';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { SmoothScroll, ScrollProgress } from '@/components/ui/SmoothScroll';
@@ -34,6 +35,7 @@ export default async function PublicLayout({
                 </DictionaryProvider>
             </SiteProvider>
             <WhatsAppButton />
+            <GeoLocaleCorrector currentLang={lang} />
         </div>
     );
 }

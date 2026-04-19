@@ -12,6 +12,7 @@ export function TopHeader({ lang, dict, scrolled = false }: { lang: string, dict
 
     const switchLanguage = (newLang: string) => {
         document.cookie = `NEXT_LOCALE=${newLang}; path=/; max-age=31536000`;
+        document.cookie = `NEXT_LOCALE_USER_CHOSEN=1; path=/; max-age=31536000`;
         const segments = pathname.split('/').filter(Boolean);
         if (segments[0] === lang) {
             segments[0] = newLang;
