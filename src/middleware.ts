@@ -1,34 +1,29 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { match as matchLocale } from '@formatjs/intl-localematcher';
-import Negotiator from 'negotiator';
 
 export const locales = ['en', 'ar'];
 export const defaultLocale = 'en';
 
+function getCountry(request: NextRequest): string | undefined {
+    // Try common geo-IP headers from various platforms/CDNs
+    const country =
+        request.headers.get('x-vercel-ip-country') ||
+        request.headers.get('cf-ipcountry') ||
+        request.headers.get('x-country-code') ||
+        (request as any).geo?.country;
+    return country?.toUpperCase();
+}
+
 function getLocale(request: NextRequest): string | undefined {
-    // 1. Check if there is a cookie saved
+    // 1. Check if there is a cookie saved (respect user's explicit choice)
     const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
     if (cookieLocale && locales.includes(cookieLocale)) {
         return cookieLocale;
     }
 
-    // 2. Negotiator expects plain object so we need to transform headers
-    const negotiatorHeaders: Record<string, string> = {};
-    request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
-
-    // 3. Use negotiator and intl-localematcher to get best locale
-    let languages = new Negotiator({ headers: negotiatorHeaders }).languages();
-
-    if (!languages || languages.length === 0 || languages[0] === '*') {
-        languages = [defaultLocale];
-    }
-
-    try {
-        return matchLocale(languages, locales, defaultLocale);
-    } catch (error) {
-        return defaultLocale;
-    }
+    // 2. Geo-based default: Egyptian visitors get Arabic, everyone else English
+    const country = getCountry(request);
+    return country === 'EG' ? 'ar' : 'en';
 }
 
 export function middleware(request: NextRequest) {

@@ -4,8 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Phone, Facebook, Linkedin, Globe } from 'lucide-react';
-import { cn, OFFICE_PHONE, FACEBOOK_URL, LINKEDIN_URL } from '@/lib/utils';
+import { Phone, Facebook, Linkedin, Globe, MessageCircle } from 'lucide-react';
+import { cn, OFFICE_PHONE, FACEBOOK_URL, LINKEDIN_URL, WHATSAPP_PHONE, WHATSAPP_URL } from '@/lib/utils';
 
 export function TopHeader({ lang, dict, scrolled = false }: { lang: string, dict: any, scrolled?: boolean }) {
     const pathname = usePathname();
@@ -36,6 +36,15 @@ export function TopHeader({ lang, dict, scrolled = false }: { lang: string, dict
                     >
                         <Phone size={14} className="text-brand-accent" />
                         <span dir="ltr">{OFFICE_PHONE}</span>
+                    </a>
+                    <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-brand-muted hover:text-brand-accent transition-colors duration-300"
+                    >
+                        <MessageCircle size={14} className="text-brand-accent" />
+                        <span dir="ltr">{WHATSAPP_PHONE}</span>
                     </a>
                 </div>
 

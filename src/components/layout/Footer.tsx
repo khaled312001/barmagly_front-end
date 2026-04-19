@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { COMPANY_ADDRESS, COMPANY_LICENSE, OFFICE_PHONE } from '@/lib/utils';
-import { MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+import { COMPANY_ADDRESS, COMPANY_LICENSE, OFFICE_PHONE, WHATSAPP_PHONE, WHATSAPP_URL } from '@/lib/utils';
+import { MapPin, Phone, Mail, ExternalLink, MessageCircle } from 'lucide-react';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 
 interface FooterProps {
@@ -64,6 +64,10 @@ export function Footer({ dict, lang }: FooterProps) {
                             <div className="flex items-center gap-2 text-brand-muted">
                                 <Phone size={16} className="text-brand-accent/70 shrink-0" />
                                 <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="hover:text-brand-accent transition-colors duration-300" dir="ltr">{OFFICE_PHONE}</a>
+                            </div>
+                            <div className="flex items-center gap-2 text-brand-muted">
+                                <MessageCircle size={16} className="text-brand-accent/70 shrink-0" />
+                                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hover:text-brand-accent transition-colors duration-300" dir="ltr">{WHATSAPP_PHONE}</a>
                             </div>
                             <div className="flex items-center gap-2 text-brand-muted">
                                 <Mail size={16} className="text-brand-accent shrink-0" />
