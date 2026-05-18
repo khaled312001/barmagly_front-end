@@ -4,8 +4,24 @@ import type { NextRequest } from 'next/server';
 export const locales = ['en', 'ar'];
 export const defaultLocale = 'en';
 
+const CANONICAL_HOST = 'www.barmagly.tech';
+
+// Legacy URLs that 404 today → permanent redirects to the live equivalent.
+// Keys are lower-cased, locale-stripped, query-less pathnames.
+const LEGACY_EXACT: Record<string, string> = {
+    '/about-us': '/about',
+    '/contact-us': '/contact',
+    '/blogs': '/blog',
+};
+
+const LEGACY_PREFIX: Array<{ from: string; to: string; keepTail: boolean }> = [
+    { from: '/service/', to: '/services/', keepTail: true },   // /service/x → /services/x
+    { from: '/team/', to: '/about', keepTail: false },          // team members no longer exist
+    { from: '/custom-page/', to: '/', keepTail: false },        // custom pages removed
+    { from: '/blogs/', to: '/blog', keepTail: false },          // /blogs/foo → /blog
+];
+
 function getCountry(request: NextRequest): string | undefined {
-    // Try common geo-IP headers from various platforms/CDNs
     const country =
         request.headers.get('x-vercel-ip-country') ||
         request.headers.get('cf-ipcountry') ||
@@ -16,86 +32,108 @@ function getCountry(request: NextRequest): string | undefined {
 }
 
 function prefersArabic(request: NextRequest): boolean {
-    // Fallback when no geo-IP header is available: check the browser language.
-    // Egyptian users almost always have ar-EG or ar in their accept-language.
     const acceptLang = request.headers.get('accept-language')?.toLowerCase() || '';
     return /\bar(-|_|,|;|$)/.test(acceptLang) || acceptLang.startsWith('ar');
 }
 
-function getLocale(request: NextRequest): string | undefined {
-    // 1. Respect the user's explicit choice if a cookie is saved
+function getLocale(request: NextRequest): string {
     const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
-    if (cookieLocale && locales.includes(cookieLocale)) {
-        return cookieLocale;
-    }
+    if (cookieLocale && locales.includes(cookieLocale)) return cookieLocale;
 
-    // 2. Geo-IP: Egyptian visitors get Arabic
     const country = getCountry(request);
     if (country === 'EG') return 'ar';
-
-    // 3. If geo-IP is unavailable, fall back to browser language (covers Egyptian
-    //    visitors when the hosting layer doesn't inject a country header)
     if (!country && prefersArabic(request)) return 'ar';
+    return defaultLocale;
+}
 
-    // 4. Default to English for everyone else
-    return 'en';
+function stripLocale(pathname: string): { locale: string | null; rest: string } {
+    for (const loc of locales) {
+        if (pathname === `/${loc}`) return { locale: loc, rest: '/' };
+        if (pathname.startsWith(`/${loc}/`)) return { locale: loc, rest: pathname.slice(loc.length + 1) };
+    }
+    return { locale: null, rest: pathname };
+}
+
+function legacyTarget(rest: string): string | null {
+    const lower = rest.toLowerCase();
+
+    if (LEGACY_EXACT[lower]) return LEGACY_EXACT[lower];
+
+    for (const { from, to, keepTail } of LEGACY_PREFIX) {
+        if (lower.startsWith(from)) {
+            if (!keepTail) return to;
+            return `${to}${rest.slice(from.length)}`;
+        }
+    }
+
+    // Trim trailing dashes / dots on detail slugs (e.g. /portfolio/king-kebab-, /blog/-)
+    const slugClean = rest.match(/^(\/(?:blog|portfolio|services))\/([^/?#]+?)[-.]+\/?$/);
+    if (slugClean) {
+        const cleanedSlug = slugClean[2];
+        // If the slug becomes empty after trimming, redirect to the listing page.
+        if (!cleanedSlug) return slugClean[1];
+        return `${slugClean[1]}/${cleanedSlug}`;
+    }
+
+    return null;
 }
 
 export function middleware(request: NextRequest) {
-    const pathname = request.nextUrl.pathname;
+    const { pathname, search } = request.nextUrl;
+    const host = (request.headers.get('host') || '').toLowerCase();
 
-    // Skip middleware for API routes, public assets, and static files
+    // Skip middleware for API routes, admin, static files, and asset paths
     if (
         pathname.startsWith('/api') ||
-        pathname.startsWith('/admin') || // Admin is handled separately or in English
-        pathname.includes('.') ||        // Files like .jpg, .png
-        pathname.startsWith('/uploads')
+        pathname.startsWith('/admin') ||
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/uploads') ||
+        pathname.includes('.')
     ) {
         return NextResponse.next();
     }
 
-    // Check if there is any supported locale in the pathname
-    const pathnameIsMissingLocale = locales.every(
-        (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-    );
+    // 1. Canonical host: non-www → www (permanent).
+    if (host === 'barmagly.tech') {
+        const url = new URL(request.url);
+        url.host = CANONICAL_HOST;
+        url.port = '';
+        return NextResponse.redirect(url, 308);
+    }
 
-    // Redirect if there is no locale
-    if (pathnameIsMissingLocale) {
+    // 2. Legacy URL rewrites — handled before locale logic so /about-us → /en/about
+    //    (rather than the broken /en/about-us).
+    const { locale: pathLocale, rest } = stripLocale(pathname);
+    const target = legacyTarget(rest);
+    if (target !== null) {
+        const targetLocale = pathLocale || getLocale(request);
+        const targetPath = target === '/' ? `/${targetLocale}` : `/${targetLocale}${target}`;
+        return NextResponse.redirect(new URL(targetPath, request.url), 301);
+    }
+
+    // 3. Inject locale if missing (permanent so Google consolidates).
+    if (!pathLocale) {
         const locale = getLocale(request);
-
-        // e.g. incoming request is /services
-        // The new URL is now /en/services or /ar/services
         const newUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url);
-
-        // Preserve existing search params
-        newUrl.search = request.nextUrl.search;
-
-        return NextResponse.redirect(newUrl);
+        newUrl.search = search;
+        return NextResponse.redirect(newUrl, 308);
     }
 
-    // If the pathname has a locale, let's extract it and save it to the cookie 
-    // so the user's preference is remembered
-    const currentLocale = locales.find(
-        (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-    );
+    // 4. Locale already in path — expose pathname so pages can build canonical/hreflang,
+    //    and persist the user's choice.
+    const response = NextResponse.next();
+    response.headers.set('x-pathname', pathname);
 
-    if (currentLocale) {
-        const response = NextResponse.next();
-        // Only set the cookie if it's different from what's there
-        const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
-        if (cookieLocale !== currentLocale) {
-            response.cookies.set('NEXT_LOCALE', currentLocale, {
-                path: '/',
-                maxAge: 365 * 24 * 60 * 60, // 1 year
-            });
-        }
-        return response;
+    const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value;
+    if (cookieLocale !== pathLocale) {
+        response.cookies.set('NEXT_LOCALE', pathLocale, {
+            path: '/',
+            maxAge: 365 * 24 * 60 * 60,
+        });
     }
-
-    return NextResponse.next();
+    return response;
 }
 
 export const config = {
-    // Matcher ignoring `/_next/` and `/api/`
-    matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 };

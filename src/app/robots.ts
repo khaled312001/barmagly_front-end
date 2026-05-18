@@ -7,8 +7,21 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/admin/', '/api/'],
+            disallow: [
+                '/admin/',
+                '/api/',
+                '/uploads/',
+                // Legacy listing URLs that 404 today; block re-crawl while
+                // 301 redirects do their job.
+                '/blogs',
+                '/blogs/',
+                '/blogs?*',
+                '/custom-page/',
+                '/team/',
+                '/service/',
+            ],
         },
+        host: baseUrl,
         sitemap: `${baseUrl}/sitemap.xml`,
     };
 }
