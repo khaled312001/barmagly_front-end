@@ -67,7 +67,7 @@ function legacyTarget(rest: string): string | null {
     }
 
     // Trim trailing dashes / dots on detail slugs (e.g. /portfolio/king-kebab-, /blog/-)
-    const slugClean = rest.match(/^(\/(?:blog|portfolio|services))\/([^/?#]+?)[-.]+\/?$/);
+    const slugClean = rest.match(/^(\/(?:blog|portfolio|services))\/([^/?#]*?)[-.]+\/?$/);
     if (slugClean) {
         const cleanedSlug = slugClean[2];
         // If the slug becomes empty after trimming, redirect to the listing page.
