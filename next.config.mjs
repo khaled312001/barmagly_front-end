@@ -27,6 +27,27 @@ const nextConfig = {
                     { key: 'X-XSS-Protection', value: '1; mode=block' },
                 ],
             },
+            // Admin pages must never be cached by the CDN — the build hash bakes asset
+            // URLs into the HTML, and a stale CDN entry would point at chunks that no
+            // longer exist after redeploy.
+            {
+                source: '/admin/:path*',
+                headers: [
+                    { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
+                    { key: 'CDN-Cache-Control', value: 'no-store' },
+                    { key: 'Surrogate-Control', value: 'no-store' },
+                    { key: 'Pragma', value: 'no-cache' },
+                ],
+            },
+            // Same protection for the API routes (especially auth/admin endpoints).
+            {
+                source: '/api/:path*',
+                headers: [
+                    { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, max-age=0' },
+                    { key: 'CDN-Cache-Control', value: 'no-store' },
+                    { key: 'Surrogate-Control', value: 'no-store' },
+                ],
+            },
         ];
     },
 };
