@@ -11,6 +11,7 @@ import { MessageCircle, ArrowRight, CheckCircle2, Search, Layout, Cpu, ShieldChe
 import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
+import { getAllServices } from '@/data/services';
 
 // Helper to render icon dynamically
 const DynamicIcon = ({ name, size = 32 }: { name: string; size?: number }) => {
@@ -223,13 +224,28 @@ function RoadmapSection() {
 export default function ServicesPage() {
     const params = useParams();
     const lang = params?.lang as string;
-    const [services, setServices] = React.useState<ServiceDetail[]>([]);
     const dict = useDictionary();
 
+    // Seed with the static catalogue so the page is fully rendered at SSR time,
+    // then merge any extras from the API on the client.
+    const staticSeed = React.useMemo<ServiceDetail[]>(() => {
+        return getAllServices().map((s) => ({
+            id: s.slug,
+            title: lang === 'en' ? s.titleEn : s.title,
+            description: lang === 'en' ? s.summaryEn : s.summary,
+            icon: <DynamicIcon name={s.icon || 'Code2'} size={32} />,
+            features: lang === 'en' ? s.featuresEn : s.features,
+            slug: s.slug,
+        } as any));
+    }, [lang]);
+
+    const [services, setServices] = React.useState<ServiceDetail[]>(staticSeed);
+
     React.useEffect(() => {
+        setServices(staticSeed);
         publicApi.getServices().then(({ data }) => {
-            // Flatten services from categories
-            const allServices = data.flatMap((cat: any) => cat.services || []).map((s: any) => {
+            if (!Array.isArray(data) || data.length === 0) return;
+            const apiServices = data.flatMap((cat: any) => cat.services || []).map((s: any) => {
                 let features: string[] = [];
                 const featuresStr = (lang === 'en' && s.featuresEn) ? s.featuresEn : s.features;
                 if (featuresStr) {
@@ -240,7 +256,6 @@ export default function ServicesPage() {
                             const parsed = JSON.parse(featuresStr);
                             features = Array.isArray(parsed) ? parsed : [parsed.toString()];
                         } catch (e) {
-                            // If not valid JSON, treat as comma-separated string
                             features = featuresStr.split(',').map((s: string) => s.trim()).filter(Boolean);
                         }
                     }
@@ -250,13 +265,16 @@ export default function ServicesPage() {
                     title: lang === 'en' && s.titleEn ? s.titleEn : s.title,
                     description: lang === 'en' && s.descriptionEn ? s.descriptionEn : s.description,
                     icon: <DynamicIcon name={s.icon || 'Code2'} size={32} />,
-                    features: features,
-                    slug: s.slug
+                    features,
+                    slug: s.slug,
                 };
-            })
-            setServices(allServices);
-        });
-    }, [lang]);
+            });
+            const bySlug = new Map<string, any>();
+            staticSeed.forEach((s) => bySlug.set((s as any).slug, s));
+            apiServices.forEach((s: any) => bySlug.set(s.slug, s));
+            setServices(Array.from(bySlug.values()));
+        }).catch(() => { /* keep seed */ });
+    }, [lang, staticSeed]);
 
     const displayServices = services;
 

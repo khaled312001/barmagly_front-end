@@ -26,8 +26,10 @@ export const publicApi = {
     getFaq: () => axios.get(`${API_URL}/faq`),
     getSettings: () => axios.get(`${API_URL}/settings`),
     getSeo: (page: string) => axios.get(`${API_URL}/seo/${page}`),
-    submitLead: (data: any) => axios.post(`${API_URL}/leads`, data),
-    subscribe: (email: string) => axios.post(`${API_URL}/newsletter`, { email }),
+    // Always hit the same-origin Next.js route. It sends via SMTP and works even
+    // when the remote backend / database is offline.
+    submitLead: (data: any) => axios.post('/api/leads', data),
+    subscribe: (email: string) => axios.post('/api/newsletter', { email }),
     getPageSections: (page: string) => axios.get(`${API_URL}/pages/${page}`),
 };
 
@@ -78,7 +80,9 @@ const authClient = createAuthClient();
 
 export const adminApi = {
     // Auth
-    login: (data: { email: string; password: string }) => axios.post(`${API_URL}/auth/login`, data),
+    // Same-origin so the env-based fallback in app/api/auth/login can sign you in
+    // even when the remote backend / database is offline.
+    login: (data: { email: string; password: string }) => axios.post('/api/auth/login', data),
     getProfile: () => authClient.get('/auth/profile'),
 
     // Dashboard

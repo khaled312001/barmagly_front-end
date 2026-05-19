@@ -31,6 +31,8 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
     const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;
     const description = lang === 'en' && project.descriptionEn ? project.descriptionEn : project.description;
     const category = lang === 'en' && project.categoryEn ? project.categoryEn : project.category;
+    const longContent = lang === 'en' && project.contentEn ? project.contentEn : project.content;
+    const isLongContent = longContent && !longContent.startsWith('http');
 
     return (
         <main className="min-h-screen bg-brand-primary">
@@ -80,8 +82,8 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                             </div>
 
                             <div className="flex items-center gap-10">
-                                {project.content && project.content.startsWith('http') && (
-                                    <a href={project.content} target="_blank" rel="noopener noreferrer">
+                                {(project.liveUrl || (project.content && project.content.startsWith('http'))) && (
+                                    <a href={project.liveUrl || project.content} target="_blank" rel="noopener noreferrer">
                                         <Button variant="primary" size="lg" icon={<ExternalLink size={20} />} className="px-10 h-16 rounded-xl font-bold shadow-neon-cyan">
                                             {portfolioDict.featured.visitSite}
                                         </Button>
@@ -99,9 +101,24 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                     <SectionReveal>
                         <div className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-black prose-p:text-brand-muted prose-p:font-light prose-p:leading-relaxed">
                             <h2 className="text-3xl md:text-5xl text-white mb-10 tracking-tight">{portfolioDict.detail.overview}</h2>
-                            <p className="text-xl mb-16">
+                            <p className="text-xl mb-8">
                                 {description}
                             </p>
+                            {isLongContent && (
+                                <p className="text-lg mb-16 opacity-90">
+                                    {longContent}
+                                </p>
+                            )}
+                            {project.results && (
+                                <div className="my-12 p-8 glass-card bg-brand-accent/5 border border-brand-accent/30 rounded-2xl">
+                                    <h4 className="text-brand-accent font-mono text-xs tracking-widest uppercase mb-3">
+                                        {lang === 'ar' ? 'النتائج' : 'Results'}
+                                    </h4>
+                                    <p className="text-lg text-white/90 leading-relaxed not-italic">
+                                        {project.results}
+                                    </p>
+                                </div>
+                            )}
 
                             {/* Additional structural layout for content if needed */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-20">

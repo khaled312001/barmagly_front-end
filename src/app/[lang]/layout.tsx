@@ -38,25 +38,39 @@ export async function generateMetadata({
     const lang = params.lang || 'en';
     const isAr = lang === 'ar';
 
+    const homeTitle = isAr
+        ? 'برمجلي - شركة سويسرية لتطوير المواقع والتطبيقات وحلول البرمجيات'
+        : 'Barmagly | Swiss Licensed Software Development Company';
+    const homeDescription = isAr
+        ? 'برمجلي شركة برمجيات سويسرية مرخصة متخصصة في تصميم وتطوير المواقع الإلكترونية وتطبيقات الموبايل (iOS و Android)، تصميم UI/UX، أنظمة ERP و CRM و POS، التجارة الإلكترونية، والتسويق الرقمي وSEO. نخدم العملاء في سويسرا، مصر، السعودية، الإمارات وحول العالم.'
+        : 'Barmagly is a Swiss-licensed software development company building websites, iOS / Android apps, UI/UX, ERP / CRM / POS systems, e-commerce stores, and digital marketing / SEO campaigns for clients in Switzerland, Egypt, Saudi Arabia, UAE, and worldwide.';
+
     return {
         metadataBase: new URL(SITE_URL),
         title: {
-            default: 'Barmagly | Swiss Licensed Software Development Company',
+            default: homeTitle,
             template: '%s | Barmagly',
         },
-        description:
-            'Barmagly is a Swiss-licensed software development company specializing in web development, mobile apps, UI/UX design, business systems, and digital marketing solutions.',
+        description: homeDescription,
         keywords: [
-            'software development',
-            'Swiss software company',
-            'web development',
-            'mobile app development',
-            'UI/UX design',
-            'ERP systems',
-            'POS systems',
-            'digital marketing',
-            'Barmagly',
-            'Zürich',
+            // English
+            'software development', 'Swiss software company', 'Barmagly',
+            'web development', 'website design', 'mobile app development',
+            'iOS app development', 'Android app development', 'Flutter development',
+            'React Native', 'Next.js development', 'UI/UX design', 'product design',
+            'e-commerce development', 'Shopify development', 'WooCommerce', 'Magento',
+            'custom ERP', 'CRM development', 'POS system', 'business automation',
+            'digital marketing', 'SEO agency', 'Google Ads', 'Meta Ads', 'TikTok Ads',
+            'content marketing', 'web design Switzerland', 'web design Zurich',
+            // Arabic
+            'برمجلي', 'تصميم مواقع', 'تطوير مواقع', 'برمجة مواقع',
+            'تصميم تطبيقات', 'تطوير تطبيقات الموبايل', 'تطبيقات اندرويد', 'تطبيقات ايفون',
+            'تصميم متجر الكتروني', 'انشاء متجر', 'تجارة الكترونية',
+            'تصميم تجربة مستخدم', 'تصميم واجهات', 'ux', 'ui',
+            'نظام erp', 'نظام crm', 'نقاط بيع', 'pos', 'نظام محاسبة',
+            'تسويق رقمي', 'سيو', 'تحسين محركات البحث', 'اعلانات جوجل', 'اعلانات فيسبوك',
+            'شركة برمجة سويسرا', 'شركة تطوير مواقع', 'شركة تصميم تطبيقات',
+            'تصميم موقع شركة', 'تصميم موقع احترافي', 'افضل شركة برمجة',
         ],
         authors: [{ name: 'Barmagly' }],
         creator: 'Barmagly',
@@ -118,25 +132,88 @@ export default async function RootLayout({
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify({
                             '@context': 'https://schema.org',
-                            '@type': 'Organization',
-                            name: 'Barmagly',
-                            url: 'https://www.barmagly.tech',
-                            logo: 'https://www.barmagly.tech/logo.png',
-                            description:
-                                'Swiss-licensed software development company specializing in enterprise solutions.',
-                            address: {
-                                '@type': 'PostalAddress',
-                                streetAddress: 'Hardstrasse 201',
-                                addressLocality: 'Zürich',
-                                postalCode: '8005',
-                                addressCountry: 'CH',
-                            },
-                            contactPoint: {
-                                '@type': 'ContactPoint',
-                                telephone: '+41-779412126',
-                                contactType: 'customer service',
-                            },
-                            sameAs: [],
+                            '@graph': [
+                                {
+                                    '@type': ['Organization', 'ProfessionalService'],
+                                    '@id': 'https://www.barmagly.tech/#organization',
+                                    name: 'Barmagly',
+                                    alternateName: ['برمجلي', 'Barmagly Swiss Tech'],
+                                    url: 'https://www.barmagly.tech',
+                                    logo: {
+                                        '@type': 'ImageObject',
+                                        url: 'https://www.barmagly.tech/logo.png',
+                                        width: 512,
+                                        height: 512,
+                                    },
+                                    image: 'https://www.barmagly.tech/og-image.png',
+                                    description:
+                                        'Swiss-licensed software development company building websites, mobile apps, e-commerce, ERP/CRM/POS systems, UI/UX, and digital marketing campaigns.',
+                                    address: {
+                                        '@type': 'PostalAddress',
+                                        streetAddress: 'Hardstrasse 201',
+                                        addressLocality: 'Zürich',
+                                        postalCode: '8005',
+                                        addressCountry: 'CH',
+                                    },
+                                    contactPoint: [
+                                        {
+                                            '@type': 'ContactPoint',
+                                            telephone: '+41-779412126',
+                                            email: 'info@barmagly.tech',
+                                            contactType: 'customer service',
+                                            availableLanguage: ['en', 'ar', 'de', 'fr'],
+                                            areaServed: ['CH', 'EG', 'SA', 'AE', 'QA', 'KW', 'BH', 'OM', 'IQ'],
+                                        },
+                                    ],
+                                    sameAs: [
+                                        'https://linkedin.com/company/barmagly',
+                                        'https://www.facebook.com/barmagly',
+                                        'https://www.instagram.com/barmagly',
+                                    ],
+                                    knowsAbout: [
+                                        'Web Development', 'Mobile App Development', 'UI/UX Design',
+                                        'E-commerce Development', 'ERP Systems', 'CRM Systems',
+                                        'POS Systems', 'Digital Marketing', 'SEO', 'Cloud Hosting',
+                                    ],
+                                    areaServed: [
+                                        { '@type': 'Country', name: 'Switzerland' },
+                                        { '@type': 'Country', name: 'Egypt' },
+                                        { '@type': 'Country', name: 'Saudi Arabia' },
+                                        { '@type': 'Country', name: 'United Arab Emirates' },
+                                        { '@type': 'Country', name: 'Qatar' },
+                                        { '@type': 'Country', name: 'Kuwait' },
+                                        { '@type': 'Country', name: 'Iraq' },
+                                    ],
+                                    hasOfferCatalog: {
+                                        '@type': 'OfferCatalog',
+                                        name: 'Barmagly Services',
+                                        itemListElement: [
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Web Development', url: 'https://www.barmagly.tech/en/services/web-development' } },
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Mobile App Development', url: 'https://www.barmagly.tech/en/services/mobile-app-development' } },
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'E-Commerce Development', url: 'https://www.barmagly.tech/en/services/e-commerce-development' } },
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'UI/UX Design', url: 'https://www.barmagly.tech/en/services/ui-ux-design' } },
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Digital Marketing & SEO', url: 'https://www.barmagly.tech/en/services/digital-marketing' } },
+                                            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'ERP & Business Systems', url: 'https://www.barmagly.tech/en/services/erp-business-systems' } },
+                                        ],
+                                    },
+                                },
+                                {
+                                    '@type': 'WebSite',
+                                    '@id': 'https://www.barmagly.tech/#website',
+                                    url: 'https://www.barmagly.tech',
+                                    name: 'Barmagly',
+                                    inLanguage: lang,
+                                    publisher: { '@id': 'https://www.barmagly.tech/#organization' },
+                                    potentialAction: {
+                                        '@type': 'SearchAction',
+                                        target: {
+                                            '@type': 'EntryPoint',
+                                            urlTemplate: 'https://www.barmagly.tech/en/blog?q={search_term_string}',
+                                        },
+                                        'query-input': 'required name=search_term_string',
+                                    },
+                                },
+                            ],
                         }),
                     }}
                 />

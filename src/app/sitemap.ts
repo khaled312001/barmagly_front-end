@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { publicApi } from '@/lib/api';
+import { getAllProjects } from '@/data/portfolio';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://www.barmagly.tech';
 const LOCALES = ['en', 'ar'] as const;
@@ -40,6 +41,15 @@ export default async function sitemap(): Promise<Sitemap> {
         entry(path, { priority, changeFrequency })
     );
 
+    // Static portfolio is always available (no DB needed).
+    const staticPortfolio = getAllProjects().map((p) =>
+        entry(`/portfolio/${p.slug}`, {
+            lastModified: new Date(p.updatedAt),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        })
+    );
+
     try {
         const [servicesRes, portfolioRes, blogRes] = await Promise.all([
             publicApi.getServices().catch(() => ({ data: [] })),
@@ -55,13 +65,20 @@ export default async function sitemap(): Promise<Sitemap> {
             })
         );
 
-        const portfolio = (portfolioRes.data || []).map((project: any) =>
+        const apiPortfolio = (portfolioRes.data || []).map((project: any) =>
             entry(`/portfolio/${project.slug}`, {
                 lastModified: new Date(project.updatedAt || Date.now()),
                 changeFrequency: 'monthly',
                 priority: 0.7,
             })
         );
+
+        // Dedupe by URL — static wins.
+        const seen = new Set<string>(staticPortfolio.map((e) => e.url));
+        const portfolio = [
+            ...staticPortfolio,
+            ...apiPortfolio.filter((e: typeof apiPortfolio[number]) => !seen.has(e.url)),
+        ];
 
         const posts = Array.isArray(blogRes.data) ? blogRes.data : (blogRes.data.posts || []);
         const blog = posts.map((post: any) =>
@@ -75,6 +92,6 @@ export default async function sitemap(): Promise<Sitemap> {
         return [...staticRoutes, ...services, ...portfolio, ...blog];
     } catch (error) {
         console.error('Sitemap generation failed to fetch dynamic content:', error);
-        return staticRoutes;
+        return [...staticRoutes, ...staticPortfolio];
     }
 }
