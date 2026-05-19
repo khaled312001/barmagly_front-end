@@ -3,18 +3,12 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import PortfolioDetailClient from './PortfolioDetailClient';
 import { publicApi } from '@/lib/api';
-import { getProjectBySlug } from '@/data/portfolio';
 
 interface PageProps {
     params: { slug: string; lang: string };
 }
 
-// Use the static portfolio first (always available, no DB needed); fall back to
-// the API for projects added through the admin dashboard.
 async function getProjectData(slug: string) {
-    const fromStatic = getProjectBySlug(slug);
-    if (fromStatic) return fromStatic;
-
     try {
         const { data } = await publicApi.getProject(slug);
         return data || null;

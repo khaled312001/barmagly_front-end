@@ -11,7 +11,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
-import { getAllProjects } from '@/data/portfolio';
 
 // --- Types ---
 interface Project {
@@ -49,37 +48,13 @@ export default function PortfolioPage() {
     const dict = useDictionary();
     const portfolioDict = dict.portfolio;
 
-    // Seed with the static portfolio so projects render even before the API responds.
-    // The API call below merges in any additional projects from the backend, deduped by slug.
-    const staticSeed = React.useMemo<Project[]>(() => {
-        return getAllProjects().map((p) => ({
-            id: p.id,
-            slug: p.slug,
-            title: p.title,
-            titleEn: p.titleEn,
-            description: p.description,
-            descriptionEn: p.descriptionEn,
-            category: p.category,
-            categoryEn: p.categoryEn,
-            image: p.image,
-            technologies: p.technologies,
-            content: p.content,
-            isFeatured: p.isFeatured,
-            displayTitle: lang === 'en' ? p.titleEn : p.title,
-            displayDescription: lang === 'en' ? p.descriptionEn : p.description,
-            displayCategory: lang === 'en' ? p.categoryEn : p.category,
-        }));
-    }, [lang]);
-
-    const [projects, setProjects] = React.useState<Project[]>(staticSeed);
+    const [projects, setProjects] = React.useState<Project[]>([]);
     const [filter, setFilter] = React.useState('all');
     const [searchQuery, setSearchQuery] = React.useState('');
 
     React.useEffect(() => {
-        setProjects(staticSeed);
         publicApi.getPortfolio().then(({ data }) => {
-            if (!Array.isArray(data) || data.length === 0) return;
-            const apiMapped: Project[] = data.map((p: any) => ({
+            const mapped = (Array.isArray(data) ? data : []).map((p: any) => ({
                 id: p.id,
                 slug: p.slug,
                 title: p.title,
@@ -95,13 +70,9 @@ export default function PortfolioPage() {
                 displayDescription: lang === 'en' && p.descriptionEn ? p.descriptionEn : p.description,
                 displayCategory: lang === 'en' && p.categoryEn ? p.categoryEn : p.category,
             }));
-            // Merge — API wins by slug, static fills gaps.
-            const bySlug = new Map<string, Project>();
-            staticSeed.forEach((p) => bySlug.set(p.slug, p));
-            apiMapped.forEach((p) => bySlug.set(p.slug, p));
-            setProjects(Array.from(bySlug.values()));
-        }).catch(() => { /* keep static seed */ });
-    }, [lang, staticSeed]);
+            setProjects(mapped);
+        }).catch((err) => console.error('Portfolio load failed:', err));
+    }, [lang]);
 
     const localizeCategory = React.useCallback((cat: string, displayCat?: string): string => {
         if (!cat) return cat;

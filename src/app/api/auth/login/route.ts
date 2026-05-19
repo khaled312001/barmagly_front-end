@@ -1,30 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import * as crypto from 'crypto';
+import { signJWT } from '@/lib/authJwt';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-function stripQuotes(s?: string) {
-    return s ? s.replace(/^"(.*)"$/, '$1').trim() : s;
-}
-
-// Minimal JWT (HS256) so we don't need to ship the full jsonwebtoken dep just for fallback auth.
-function base64url(input: Buffer | string) {
-    return Buffer.from(input)
-        .toString('base64')
-        .replace(/=+$/, '')
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_');
-}
-
-function signJWT(payload: Record<string, any>, secret: string, expiresInSec: number) {
-    const header = { alg: 'HS256', typ: 'JWT' };
-    const now = Math.floor(Date.now() / 1000);
-    const claims = { ...payload, iat: now, exp: now + expiresInSec };
-    const enc = `${base64url(JSON.stringify(header))}.${base64url(JSON.stringify(claims))}`;
-    const sig = base64url(crypto.createHmac('sha256', secret).update(enc).digest());
-    return `${enc}.${sig}`;
-}
+const stripQuotes = (s?: string) => (s ? s.replace(/^"(.*)"$/, '$1').trim() : s);
 
 export async function POST(req: NextRequest) {
     let body: { email?: string; password?: string };
@@ -58,23 +38,9 @@ export async function POST(req: NextRequest) {
     const jwtSecret = stripQuotes(process.env.JWT_SECRET) || 'change-me-in-production';
     const refreshSecret = stripQuotes(process.env.JWT_REFRESH_SECRET) || 'change-me-refresh';
 
-    const userPayload = {
-        id: 'fallback-admin',
-        email: adminEmail,
-        role: 'ADMIN',
-    };
+    const user = { id: 'admin', email: adminEmail, name: 'Admin', role: 'ADMIN' };
+    const accessToken = signJWT(user, jwtSecret, 60 * 60);              // 1h
+    const refreshToken = signJWT({ id: user.id }, refreshSecret, 7 * 24 * 60 * 60); // 7d
 
-    const accessToken = signJWT(userPayload, jwtSecret, 15 * 60); // 15min
-    const refreshToken = signJWT({ id: userPayload.id }, refreshSecret, 7 * 24 * 60 * 60); // 7d
-
-    return NextResponse.json({
-        accessToken,
-        refreshToken,
-        user: {
-            id: userPayload.id,
-            email: adminEmail,
-            name: 'Admin',
-            role: 'ADMIN',
-        },
-    });
+    return NextResponse.json({ accessToken, refreshToken, user });
 }

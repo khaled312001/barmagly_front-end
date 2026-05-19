@@ -2,9 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 
 const getBaseUrl = () => {
     const url = process.env.NEXT_PUBLIC_API_URL || '';
-    if (!url) return '';
-    // If the user forgot /api, we can add it, but it's risky if they just put the domain.
-    // Let's just return it as is but ensure no trailing slash.
+    // Empty / unset → same-origin "/api" so the bundled Next.js routes serve everything.
+    if (!url) return '/api';
     return url.replace(/\/$/, '');
 };
 
@@ -26,10 +25,8 @@ export const publicApi = {
     getFaq: () => axios.get(`${API_URL}/faq`),
     getSettings: () => axios.get(`${API_URL}/settings`),
     getSeo: (page: string) => axios.get(`${API_URL}/seo/${page}`),
-    // Always hit the same-origin Next.js route. It sends via SMTP and works even
-    // when the remote backend / database is offline.
-    submitLead: (data: any) => axios.post('/api/leads', data),
-    subscribe: (email: string) => axios.post('/api/newsletter', { email }),
+    submitLead: (data: any) => axios.post(`${API_URL}/leads`, data),
+    subscribe: (email: string) => axios.post(`${API_URL}/newsletter`, { email }),
     getPageSections: (page: string) => axios.get(`${API_URL}/pages/${page}`),
 };
 
@@ -80,9 +77,7 @@ const authClient = createAuthClient();
 
 export const adminApi = {
     // Auth
-    // Same-origin so the env-based fallback in app/api/auth/login can sign you in
-    // even when the remote backend / database is offline.
-    login: (data: { email: string; password: string }) => axios.post('/api/auth/login', data),
+    login: (data: { email: string; password: string }) => axios.post(`${API_URL}/auth/login`, data),
     getProfile: () => authClient.get('/auth/profile'),
 
     // Dashboard
