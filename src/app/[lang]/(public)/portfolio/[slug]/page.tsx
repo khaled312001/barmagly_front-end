@@ -1,20 +1,20 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import PortfolioDetailClient from './PortfolioDetailClient';
-import { publicApi } from '@/lib/api';
+import { findOne } from '@/lib/dataStore';
+
+// Read fresh from the data store on every request so admin edits appear instantly.
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
     params: { slug: string; lang: string };
 }
 
+// Server component → read the data store directly (a relative axios URL has no
+// host server-side and would always fail).
 async function getProjectData(slug: string) {
-    try {
-        const { data } = await publicApi.getProject(slug);
-        return data || null;
-    } catch {
-        return null;
-    }
+    return findOne<any>('portfolio', (p) => p.slug === slug && p.isActive !== false);
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -64,7 +64,9 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     const project = await getProjectData(slug);
 
     if (!project) {
-        notFound();
+        // Legacy / deleted slug → send users and crawlers to the gallery instead of
+        // a soft-404 (200 + "not found"), which Google leaves un-indexed.
+        permanentRedirect(`/${lang}/portfolio`);
     }
 
     const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;

@@ -1,20 +1,19 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import BlogDetailClient from './BlogDetailClient';
-import { publicApi } from '@/lib/api';
+import { findOne } from '@/lib/dataStore';
+
+// Read fresh from the data store on every request so admin edits appear instantly.
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
     params: { slug: string; lang: string };
 }
 
+// Server component → read the data store directly (relative axios URL fails server-side).
 async function getPostData(slug: string) {
-    try {
-        const { data } = await publicApi.getPost(slug);
-        return data;
-    } catch (error) {
-        return null;
-    }
+    return findOne<any>('blog', (p) => p.slug === slug && p.status !== 'DRAFT');
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -49,7 +48,8 @@ export default async function BlogPostPage({ params }: PageProps) {
     const post = await getPostData(slug);
 
     if (!post) {
-        notFound();
+        // Legacy / deleted slug → redirect to the blog index instead of a soft-404.
+        permanentRedirect(`/${lang}/blog`);
     }
 
     const title = lang === 'en' && post.titleEn ? post.titleEn : post.title;

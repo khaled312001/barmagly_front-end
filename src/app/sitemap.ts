@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
-import { publicApi } from '@/lib/api';
-import { getAllProjects } from '@/data/portfolio';
+import { readAll } from '@/lib/dataStore';
+import { getAllServices } from '@/data/services';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://www.barmagly.tech';
 const LOCALES = ['en', 'ar'] as const;
@@ -41,57 +41,40 @@ export default async function sitemap(): Promise<Sitemap> {
         entry(path, { priority, changeFrequency })
     );
 
-    // Static portfolio is always available (no DB needed).
-    const staticPortfolio = getAllProjects().map((p) =>
-        entry(`/portfolio/${p.slug}`, {
-            lastModified: new Date(p.updatedAt),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        })
+    // Services from the rich static catalogue (always available).
+    const services = getAllServices().map((s) =>
+        entry(`/services/${s.slug}`, { changeFrequency: 'weekly', priority: 0.8 })
     );
 
     try {
-        const [servicesRes, portfolioRes, blogRes] = await Promise.all([
-            publicApi.getServices().catch(() => ({ data: [] })),
-            publicApi.getPortfolio().catch(() => ({ data: [] })),
-            publicApi.getBlog().catch(() => ({ data: { posts: [] } })),
+        const [portfolioItems, blogItems] = await Promise.all([
+            readAll<any>('portfolio').catch(() => []),
+            readAll<any>('blog').catch(() => []),
         ]);
 
-        const services = (servicesRes.data || []).map((service: any) =>
-            entry(`/services/${service.slug}`, {
-                lastModified: new Date(service.updatedAt || Date.now()),
-                changeFrequency: 'weekly',
-                priority: 0.8,
-            })
-        );
+        const portfolio = portfolioItems
+            .filter((p) => p.isActive !== false)
+            .map((p) =>
+                entry(`/portfolio/${p.slug}`, {
+                    lastModified: new Date(p.updatedAt || p.createdAt || Date.now()),
+                    changeFrequency: 'monthly',
+                    priority: 0.7,
+                })
+            );
 
-        const apiPortfolio = (portfolioRes.data || []).map((project: any) =>
-            entry(`/portfolio/${project.slug}`, {
-                lastModified: new Date(project.updatedAt || Date.now()),
-                changeFrequency: 'monthly',
-                priority: 0.7,
-            })
-        );
-
-        // Dedupe by URL — static wins.
-        const seen = new Set<string>(staticPortfolio.map((e) => e.url));
-        const portfolio = [
-            ...staticPortfolio,
-            ...apiPortfolio.filter((e: typeof apiPortfolio[number]) => !seen.has(e.url)),
-        ];
-
-        const posts = Array.isArray(blogRes.data) ? blogRes.data : (blogRes.data.posts || []);
-        const blog = posts.map((post: any) =>
-            entry(`/blog/${post.slug}`, {
-                lastModified: new Date(post.updatedAt || post.publishedAt || Date.now()),
-                changeFrequency: 'weekly',
-                priority: 0.7,
-            })
-        );
+        const blog = blogItems
+            .filter((p) => p.status !== 'DRAFT')
+            .map((p) =>
+                entry(`/blog/${p.slug}`, {
+                    lastModified: new Date(p.updatedAt || p.publishedAt || Date.now()),
+                    changeFrequency: 'weekly',
+                    priority: 0.7,
+                })
+            );
 
         return [...staticRoutes, ...services, ...portfolio, ...blog];
     } catch (error) {
-        console.error('Sitemap generation failed to fetch dynamic content:', error);
-        return [...staticRoutes, ...staticPortfolio];
+        console.error('Sitemap generation failed to read data store:', error);
+        return [...staticRoutes, ...services];
     }
 }

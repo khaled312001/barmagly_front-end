@@ -1,29 +1,40 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import ServiceDetailClient from './ServiceDetailClient';
-import { publicApi } from '@/lib/api';
 import { getServiceBySlug, type StaticService } from '@/data/services';
+import { readAll } from '@/lib/dataStore';
 
 interface PageProps {
     params: { slug: string; lang: string };
 }
 
-// Static catalogue first (always available); merge with API data if present.
+// Server component → read directly from the rich static catalogue + data store
+// (no HTTP; a relative axios URL has no host server-side).
 async function getServiceData(slug: string): Promise<any> {
     const fromStatic = getServiceBySlug(slug);
-    let fromApi: any = null;
+
+    // Look in the data store (admin-managed services, possibly inside categories).
+    let fromStore: any = null;
     try {
-        const { data } = await publicApi.getService(slug);
-        fromApi = data;
+        const all = await readAll<any>('services');
+        if (all.length && Array.isArray(all[0]?.services)) {
+            for (const cat of all) {
+                const hit = (cat.services || []).find((s: any) => s.slug === slug && s.isActive !== false);
+                if (hit) { fromStore = { ...hit, category: cat }; break; }
+            }
+        } else {
+            fromStore = all.find((s: any) => s.slug === slug && s.isActive !== false) || null;
+        }
     } catch {
-        /* swallow — static data still wins below */
+        /* ignore — static still wins */
     }
-    if (!fromStatic && !fromApi) return null;
-    if (!fromApi) return fromStatic;
-    if (!fromStatic) return fromApi;
-    // Static data has richer SEO content; layer API fields on top so admins can override.
-    return { ...fromStatic, ...fromApi };
+
+    if (!fromStatic && !fromStore) return null;
+    if (!fromStore) return fromStatic;
+    if (!fromStatic) return fromStore;
+    // Static data carries the richer SEO content; layer store fields on top.
+    return { ...fromStatic, ...fromStore };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -77,7 +88,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const { lang, slug } = params;
 
     if (!service) {
-        notFound();
+        permanentRedirect(`/${lang}/services`);
     }
 
     const title = lang === 'en' && service.titleEn ? service.titleEn : service.title;
@@ -147,3 +158,6 @@ export function generateStaticParams() {
     const langs = ['en', 'ar'];
     return langs.flatMap((lang) => services.map((slug) => ({ lang, slug })));
 }
+
+// Allow slugs beyond the pre-rendered set (admin-added services) to render on demand.
+export const dynamicParams = true;
