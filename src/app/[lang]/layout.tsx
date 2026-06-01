@@ -1,34 +1,9 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
 import '../globals.css';
 import { ToastProvider } from '@/components/ui/Toast';
-import { locales } from '@/middleware';
+import { buildAlternates } from '@/lib/seo';
 
 const SITE_URL = 'https://www.barmagly.tech';
-
-function buildAlternates(lang: string) {
-    const h = headers();
-    const pathname = h.get('x-pathname') || `/${lang}`;
-
-    // Strip the locale prefix so we can rebuild URLs for both languages.
-    let restOfPath = pathname;
-    for (const loc of locales) {
-        if (pathname === `/${loc}`) { restOfPath = ''; break; }
-        if (pathname.startsWith(`/${loc}/`)) { restOfPath = pathname.slice(loc.length + 1); break; }
-    }
-    const trimmed = restOfPath === '/' ? '' : restOfPath;
-
-    const url = (loc: string) => `${SITE_URL}/${loc}${trimmed}`;
-
-    return {
-        canonical: url(lang),
-        languages: {
-            en: url('en'),
-            ar: url('ar'),
-            'x-default': url('en'),
-        },
-    };
-}
 
 export async function generateMetadata({
     params,

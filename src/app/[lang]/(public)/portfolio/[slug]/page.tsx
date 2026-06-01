@@ -1,11 +1,25 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { permanentRedirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import PortfolioDetailClient from './PortfolioDetailClient';
 import { findOne } from '@/lib/dataStore';
+import seedPortfolio from '@/data/seeds/portfolio.json';
 
-// Read fresh from the data store on every request so admin edits appear instantly.
-export const dynamic = 'force-dynamic';
+// Pre-render every known project at build time and return a REAL 404 for anything
+// else (dynamicParams=false). This avoids the soft-404 (200 + "not found") that
+// Google leaves un-indexed. New admin projects are picked up on the next deploy.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+    const slugs = Array.from(
+        new Set(
+            (seedPortfolio as any[])
+                .filter((p) => p.isActive !== false && p.slug)
+                .map((p) => p.slug as string)
+        )
+    );
+    return ['en', 'ar'].flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
+}
 
 interface PageProps {
     params: { slug: string; lang: string };
@@ -64,9 +78,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     const project = await getProjectData(slug);
 
     if (!project) {
-        // Legacy / deleted slug → send users and crawlers to the gallery instead of
-        // a soft-404 (200 + "not found"), which Google leaves un-indexed.
-        permanentRedirect(`/${lang}/portfolio`);
+        notFound();
     }
 
     const title = lang === 'en' && project.titleEn ? project.titleEn : project.title;

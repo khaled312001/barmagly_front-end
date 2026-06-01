@@ -1,9 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { permanentRedirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import ServiceDetailClient from './ServiceDetailClient';
-import { getServiceBySlug, type StaticService } from '@/data/services';
+import { getServiceBySlug, getAllServices, type StaticService } from '@/data/services';
 import { readAll } from '@/lib/dataStore';
+import seedServices from '@/data/seeds/services.json';
 
 interface PageProps {
     params: { slug: string; lang: string };
@@ -88,7 +89,7 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     const { lang, slug } = params;
 
     if (!service) {
-        permanentRedirect(`/${lang}/services`);
+        notFound();
     }
 
     const title = lang === 'en' && service.titleEn ? service.titleEn : service.title;
@@ -151,13 +152,17 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     );
 }
 
-// Pre-render the static catalogue at build time so each service has a real HTML
-// document that crawlers can index even without the API.
+// Pre-render the static catalogue + any seeded services. Real 404 for the rest.
 export function generateStaticParams() {
-    const services = ['web-development', 'mobile-app-development', 'e-commerce-development', 'ui-ux-design', 'digital-marketing', 'erp-business-systems'];
-    const langs = ['en', 'ar'];
-    return langs.flatMap((lang) => services.map((slug) => ({ lang, slug })));
+    const slugs = new Set<string>(getAllServices().map((s) => s.slug));
+    for (const item of seedServices as any[]) {
+        if (Array.isArray(item?.services)) {
+            item.services.forEach((s: any) => s?.slug && slugs.add(s.slug));
+        } else if (item?.slug) {
+            slugs.add(item.slug);
+        }
+    }
+    return ['en', 'ar'].flatMap((lang) => Array.from(slugs).map((slug) => ({ lang, slug })));
 }
 
-// Allow slugs beyond the pre-rendered set (admin-added services) to render on demand.
-export const dynamicParams = true;
+export const dynamicParams = false;

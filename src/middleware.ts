@@ -12,6 +12,16 @@ const LEGACY_EXACT: Record<string, string> = {
     '/about-us': '/about',
     '/contact-us': '/contact',
     '/blogs': '/blog',
+    // Old service slugs Google still has indexed → map to the current catalogue
+    // entry (clean 301), instead of letting the [slug] route 404.
+    '/services/mobile-application-development': '/services/mobile-app-development',
+    '/services/pos-system': '/services/erp-business-systems',
+    '/services/pos-business-systems': '/services/erp-business-systems',
+    '/services/sales-marketing': '/services/digital-marketing',
+    '/services/sales-crm-solutions': '/services/erp-business-systems',
+    '/services/maintenance': '/services',
+    '/services/software-development-switzerland': '/services/web-development',
+    '/services/e-commerce-solutions': '/services/e-commerce-development',
 };
 
 const LEGACY_PREFIX: Array<{ from: string; to: string; keepTail: boolean }> = [
@@ -54,15 +64,21 @@ function stripLocale(pathname: string): { locale: string | null; rest: string } 
     return { locale: null, rest: pathname };
 }
 
+// Apply LEGACY_EXACT once more on the input — used to collapse chains like
+// /service/sales-crm-solutions → /services/sales-crm-solutions → /services/erp-...
+function cascadeExact(path: string): string {
+    return LEGACY_EXACT[path.toLowerCase()] || path;
+}
+
 function legacyTarget(rest: string): string | null {
     const lower = rest.toLowerCase();
 
-    if (LEGACY_EXACT[lower]) return LEGACY_EXACT[lower];
+    if (LEGACY_EXACT[lower]) return cascadeExact(LEGACY_EXACT[lower]);
 
     for (const { from, to, keepTail } of LEGACY_PREFIX) {
         if (lower.startsWith(from)) {
-            if (!keepTail) return to;
-            return `${to}${rest.slice(from.length)}`;
+            const intermediate = keepTail ? `${to}${rest.slice(from.length)}` : to;
+            return cascadeExact(intermediate);
         }
     }
 
@@ -70,9 +86,8 @@ function legacyTarget(rest: string): string | null {
     const slugClean = rest.match(/^(\/(?:blog|portfolio|services))\/([^/?#]*?)[-.]+\/?$/);
     if (slugClean) {
         const cleanedSlug = slugClean[2];
-        // If the slug becomes empty after trimming, redirect to the listing page.
         if (!cleanedSlug) return slugClean[1];
-        return `${slugClean[1]}/${cleanedSlug}`;
+        return cascadeExact(`${slugClean[1]}/${cleanedSlug}`);
     }
 
     return null;
