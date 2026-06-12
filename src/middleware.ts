@@ -22,6 +22,18 @@ const LEGACY_EXACT: Record<string, string> = {
     '/services/maintenance': '/services',
     '/services/software-development-switzerland': '/services/web-development',
     '/services/e-commerce-solutions': '/services/e-commerce-development',
+    // Old blog posts (deleted) Google still has indexed — 1-hop to the listing
+    // instead of 308→404 (soft chain that hurts the redirect report).
+    '/blog/the-future-of-customer-experience-staying-ahead-in-business': '/blog',
+    '/blog/boost-your-startup-business-with-our-digital-agency': '/blog',
+    '/blog/barmagly-projects-showcasing-excellence-in-digital-solutions': '/blog',
+    '/blog/optimizing-website-performance-speed-up-your-site-with-barmagly': '/blog',
+    '/blog/why-choose-barmagly-for-your-web-development-needs': '/blog',
+    '/blog/barmagly-mobile-app-development-native-vs-cross-platform-solutions': '/blog',
+    '/blog/planning-your-online-business-goals-with-a-specialist': '/blog',
+    '/blog/e-commerce-solutions-by-barmagly-building-successful-online-stores': '/blog',
+    '/blog/web-development': '/blog',
+    '/blog/-': '/blog',
 };
 
 const LEGACY_PREFIX: Array<{ from: string; to: string; keepTail: boolean }> = [

@@ -7,19 +7,11 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: [
-                '/admin/',
-                '/api/',
-                '/uploads/',
-                // Legacy listing URLs that 404 today; block re-crawl while
-                // 301 redirects do their job.
-                '/blogs',
-                '/blogs/',
-                '/blogs?*',
-                '/custom-page/',
-                '/team/',
-                '/service/',
-            ],
+            // Block only genuinely-private paths. Legacy URLs (`/blogs`, `/team/`,
+            // `/service/`, `/custom-page/`) MUST stay crawlable so Google can follow
+            // their 301 redirects and drop the dead URLs from its index. Disallowing
+            // them traps the URLs in "Blocked by robots.txt" indefinitely.
+            disallow: ['/admin/', '/api/', '/uploads/'],
         },
         host: baseUrl,
         sitemap: `${baseUrl}/sitemap.xml`,
