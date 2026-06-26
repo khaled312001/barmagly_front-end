@@ -73,7 +73,7 @@ export const servicesData: StaticService[] = [
             'fullstack development', 'jamstack', 'headless cms',
         ],
         icon: 'Code2',
-        image: SHOT('/web-dev'),
+        image: '/service-web-development.png',
         faqs: [
             {
                 q: 'كم يستغرق بناء موقع إلكتروني؟',
@@ -143,7 +143,7 @@ export const servicesData: StaticService[] = [
             'google play submission', 'mobile backend', 'push notifications',
         ],
         icon: 'Smartphone',
-        image: SHOT('/mobile-app'),
+        image: '/service-mobile-app-development.png',
         faqs: [
             {
                 q: 'هل تطورون تطبيقات أصلية أم هجينة؟',
@@ -208,7 +208,7 @@ export const servicesData: StaticService[] = [
             'ecommerce agency', 'ecommerce migration', 'ecommerce seo',
         ],
         icon: 'ShoppingCart',
-        image: SHOT('/ecommerce'),
+        image: '/service-e-commerce-development.png',
         faqs: [
             {
                 q: 'أيهما أفضل: Shopify أم متجر مخصص؟',
@@ -223,7 +223,7 @@ export const servicesData: StaticService[] = [
                 aEn: 'Yes — Mada, Tap, PayTabs, HyperPay, PayMob in the Middle East, plus Stripe, PayPal, Adyen internationally.',
             },
         ],
-        order: 3,
+        order: 4,
     },
     {
         slug: 'ui-ux-design',
@@ -271,7 +271,7 @@ export const servicesData: StaticService[] = [
             'usability testing', 'ux research', 'design agency',
         ],
         icon: 'Palette',
-        image: SHOT('/uiux'),
+        image: '/service-ui-ux-design.png',
         faqs: [
             {
                 q: 'هل أحتاج إلى تصميم UX قبل البرمجة؟',
@@ -280,7 +280,7 @@ export const servicesData: StaticService[] = [
                 aEn: 'Always. Good design upfront cuts dev cost by 30-40% and lifts conversion materially.',
             },
         ],
-        order: 4,
+        order: 5,
     },
     {
         slug: 'digital-marketing',
@@ -329,7 +329,7 @@ export const servicesData: StaticService[] = [
             'technical seo', 'local seo', 'international seo',
         ],
         icon: 'TrendingUp',
-        image: SHOT('/marketing'),
+        image: '/service-digital-marketing.png',
         faqs: [
             {
                 q: 'كم تستغرق نتائج SEO؟',
@@ -338,7 +338,7 @@ export const servicesData: StaticService[] = [
                 aEn: 'Technical SEO shows results in 2-4 weeks. Content + keyword wins take 3-6 months to land page one.',
             },
         ],
-        order: 5,
+        order: 6,
     },
     {
         slug: 'erp-business-systems',
@@ -387,7 +387,7 @@ export const servicesData: StaticService[] = [
             'workflow automation', 'b2b software', 'saas erp',
         ],
         icon: 'Layers',
-        image: SHOT('/erp'),
+        image: '/service-erp-business-systems.png',
         faqs: [
             {
                 q: 'هل تطورون نظام مخصص أم تستخدمون أنظمة جاهزة؟',
@@ -396,7 +396,7 @@ export const servicesData: StaticService[] = [
                 aEn: 'Both. For standard ops we deploy Odoo or Zoho. For complex flows we build a custom Next.js + Node.js system.',
             },
         ],
-        order: 6,
+        order: 3,
     },
 ];
 

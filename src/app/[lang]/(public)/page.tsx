@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Code2, Smartphone, Palette, ShoppingCart, TrendingUp, ArrowRight, Shield, Zap, Users, Globe, CheckCircle2, Star, ChevronRight, Atom, Server, Cpu, Database, Cloud, Terminal, Box, Figma, Mail, Flame, Layers, Briefcase, Target } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
@@ -29,117 +30,153 @@ function HeroSection({ data }: { data?: any }) {
     const primaryBtnText = dict.hero.ctaPrimary;
     const secondaryBtnText = dict.hero.ctaSecondary;
 
+    // Pull out a single italic accent word from the headline (last word) for editorial flair.
+    const headlineWords = (titleLine2 || '').split(' ');
+    const headlineLead = headlineWords.slice(0, -1).join(' ');
+    const headlineAccent = headlineWords[headlineWords.length - 1] || '';
+
+    const trustStats = [
+        { value: 'CHE-154.312.079', label: isAr ? 'سجل تجاري سويسري' : 'Swiss license' },
+        { value: '8+', label: isAr ? 'سنوات خبرة' : 'Years operating' },
+        { value: '120+', label: isAr ? 'مشروع منشور' : 'Shipped projects' },
+        { value: '4', label: isAr ? 'فِرَق متخصصة' : 'Disciplines' },
+    ];
+
     return (
-        <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden bg-brand-primary">
-            {/* Calm ambient backdrop — soft tint, no animation thrash. */}
-            <div className="absolute inset-0 bg-hero-gradient" />
-            <div className="absolute inset-0 tech-grid opacity-50" />
+        <section className="relative bg-brand-primary overflow-hidden">
+            {/* Quiet ambient — single radial wash at top right. */}
+            <div className="absolute inset-0 bg-hero-gradient pointer-events-none" />
+            <div className="absolute inset-0 tech-grid opacity-60 pointer-events-none" />
 
-            {/* Two very gentle color washes (no spin, no rotate) — pure decoration. */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-32 -right-32 w-[560px] h-[560px] bg-brand-accent/10 rounded-full blur-[150px]" />
-                <div className="absolute -bottom-40 -left-40 w-[520px] h-[520px] bg-brand-secondary/8 rounded-full blur-[140px]" />
-            </div>
+            <div className="section-container relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-44 lg:pb-28">
+                <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
+                    {/* Left: headline + CTAs (7 cols) */}
+                    <motion.div
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="visible"
+                        className="lg:col-span-7"
+                    >
+                        <motion.span variants={heroTextReveal} className="section-eyebrow">
+                            {badgeText}
+                        </motion.span>
 
-            <div className="section-container relative z-10 pt-32 pb-24 lg:pt-44 lg:pb-32 text-center">
+                        <motion.h1
+                            variants={heroTextReveal}
+                            className={cn(
+                                'mt-5 sm:mt-6 font-display text-brand-text',
+                                'text-[36px] sm:text-[52px] lg:text-[72px]',
+                                isAr ? 'leading-[1.3] font-bold' : 'leading-[1.05] tracking-[-0.025em] font-extrabold',
+                            )}
+                        >
+                            {headlineLead}{' '}
+                            <span className={cn(
+                                'text-brand-accent',
+                                isAr ? 'font-extrabold' : 'italic font-bold',
+                            )}>
+                                {headlineAccent}
+                            </span>
+                        </motion.h1>
+
+                        <motion.p
+                            variants={heroTextReveal}
+                            className={cn(
+                                'mt-5 sm:mt-7 max-w-[58ch] text-brand-text-soft',
+                                'text-[15px] sm:text-[17px] lg:text-[18px]',
+                                isAr ? 'leading-[1.85]' : 'leading-[1.65]',
+                            )}
+                        >
+                            {description}
+                        </motion.p>
+
+                        <motion.div variants={heroTextReveal} className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+                            <Link
+                                href={`/${params.lang}/portfolio`}
+                                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-7 rounded-full bg-brand-accent text-white text-[14px] sm:text-[15px] font-semibold hover:bg-brand-accent-hover transition-all duration-200 hover:-translate-y-[1px] shadow-neon-cyan"
+                            >
+                                {primaryBtnText}
+                                <ArrowRight size={16} className="rtl:rotate-180" />
+                            </Link>
+                            <Link
+                                href={`/${params.lang}/contact`}
+                                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-7 rounded-full border border-brand-border-strong bg-white text-brand-text text-[14px] sm:text-[15px] font-semibold hover:border-brand-accent hover:bg-brand-accent-soft hover:text-brand-accent transition-colors"
+                            >
+                                {secondaryBtnText}
+                            </Link>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Right: brand plate — actual logo + services list */}
+                    <motion.div
+                        variants={heroTextReveal}
+                        initial="hidden"
+                        animate="visible"
+                        className="lg:col-span-5"
+                    >
+                        <div className="relative aspect-[5/6] sm:aspect-[4/5] rounded-md border border-brand-border bg-white overflow-hidden shadow-card-lg">
+                            <div className="absolute inset-0 flex flex-col p-6 sm:p-8 lg:p-9">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-brand-muted font-semibold">
+                                        {isAr ? 'الاستوديو' : 'The Studio'}
+                                    </span>
+                                    <span className="text-[10px] sm:text-[11px] text-brand-text-soft font-medium">Zürich · CH</span>
+                                </div>
+
+                                {/* Actual logo — focal element */}
+                                <div className="flex-1 flex items-center justify-center my-4 sm:my-6">
+                                    <div className="relative w-[55%] sm:w-[60%] aspect-square">
+                                        <Image
+                                            src="/logo.jpg"
+                                            alt="Barmagly"
+                                            fill
+                                            sizes="(min-width: 1024px) 280px, 220px"
+                                            priority
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-brand-muted font-semibold mb-2.5 sm:mb-3">
+                                        {isAr ? 'الخدمات' : 'What we build'}
+                                    </div>
+                                    {[
+                                        isAr ? 'مواقع ومنصات ويب' : 'Web platforms',
+                                        isAr ? 'تطبيقات iOS و Android' : 'iOS & Android apps',
+                                        isAr ? 'متاجر إلكترونية' : 'E-commerce',
+                                        isAr ? 'أنظمة ERP / POS / CRM' : 'ERP · POS · CRM',
+                                        isAr ? 'تسويق رقمي و SEO' : 'Marketing & SEO',
+                                    ].map((line, i) => (
+                                        <div key={i} className="flex items-center gap-3 text-[12px] sm:text-[13px] text-brand-text border-b border-brand-border py-1.5 last:border-0">
+                                            <span className="font-mono text-brand-accent text-[10px] sm:text-[11px] font-semibold w-5">0{i + 1}</span>
+                                            <span className="font-medium">{line}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Trust micro-stats below the columns */}
                 <motion.div
-                    variants={staggerContainer}
+                    variants={heroTextReveal}
                     initial="hidden"
                     animate="visible"
-                    className="max-w-4xl mx-auto flex flex-col items-center"
+                    className="mt-14 sm:mt-16 lg:mt-20 pt-6 sm:pt-8 border-t border-brand-border grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6 sm:gap-8"
                 >
-                    {/* Badge */}
-                    <motion.div variants={heroTextReveal} className="mb-8">
-                        <span className="chip-soft">
-                            <Shield size={14} />
-                            <span className={isAr ? 'tracking-normal' : 'uppercase tracking-widest'}>
-                                {badgeText}
-                            </span>
-                        </span>
-                    </motion.div>
-
-                    {/* Main Headline — clear hierarchy, single gradient accent line */}
-                    <motion.h1
-                        variants={heroTextReveal}
-                        className={cn(
-                            "font-display font-bold text-brand-text mb-7 tracking-tight px-4",
-                            "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
-                            isAr ? "leading-[1.25]" : "leading-[1.08]"
-                        )}
-                    >
-                        <span className="block mb-2 sm:mb-3">{titleLine1}</span>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">
-                            {titleLine2}
-                        </span>
-                    </motion.h1>
-
-                    {/* Description — softer slate tone, max-width tightened */}
-                    <motion.p
-                        variants={heroTextReveal}
-                        className={cn(
-                            "text-brand-text-soft max-w-2xl mx-auto mb-10 font-normal",
-                            "text-base sm:text-lg md:text-xl",
-                            isAr ? "leading-[1.9]" : "leading-relaxed"
-                        )}
-                    >
-                        {description}
-                    </motion.p>
-
-                    {/* CTAs — primary solid + secondary outline */}
-                    <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md px-4">
-                        <Link href={`/${params.lang}/portfolio`} className="w-full sm:w-1/2">
-                            <Button size="lg" variant="primary" icon={<ArrowRight size={18} className="rtl:rotate-180" />} className="w-full h-12 text-sm sm:text-base font-semibold rounded-lg shadow-neon-cyan transition hover:translate-y-[-1px] active:scale-[0.99]">
-                                {primaryBtnText}
-                            </Button>
-                        </Link>
-                        <Link href={`/${params.lang}/contact`} className="w-full sm:w-1/2">
-                            <Button size="lg" variant="outline" className="w-full h-12 text-sm sm:text-base font-semibold rounded-lg border-brand-border-strong text-brand-text hover:bg-brand-surface transition">
-                                {secondaryBtnText}
-                            </Button>
-                        </Link>
-                    </motion.div>
-
-                    {/* Trust indicators — simplified row, soft icons */}
-                    <motion.div
-                        variants={heroTextReveal}
-                        className="mt-16 grid grid-cols-2 sm:grid-cols-4 items-start justify-center gap-x-4 gap-y-8 w-full max-w-3xl px-4"
-                    >
-                        {[
-                            { icon: <Terminal size={18} />, text: dict.hero.trust.programming, sub: dict.hero.trust.techStack },
-                            { icon: <Target size={18} />, text: dict.hero.trust.marketing, sub: dict.hero.trust.growth },
-                            { icon: <TrendingUp size={18} />, text: dict.hero.trust.sales, sub: dict.hero.trust.revenue },
-                            { icon: <Shield size={18} />, text: dict.hero.trust.reliability, sub: dict.hero.trust.quality },
-                        ].map((item, i) => (
-                            <motion.div key={i} variants={staggerItem} className="flex flex-col items-center gap-2.5">
-                                <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-brand-accent-soft text-brand-accent">
-                                    {item.icon}
-                                </span>
-                                <div className="text-center">
-                                    <p className="text-brand-text font-semibold text-sm">{item.text}</p>
-                                    <p className="text-brand-muted text-[11px] uppercase tracking-wider mt-0.5">{item.sub}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    {trustStats.map((stat, i) => (
+                        <div key={i}>
+                            <div className="font-display text-[16px] sm:text-[18px] lg:text-[22px] text-brand-text font-bold tracking-tight">
+                                {stat.value}
+                            </div>
+                            <div className="mt-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.14em] text-brand-muted font-semibold">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))}
                 </motion.div>
             </div>
-
-            {/* Premium Scroll indicator */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2, duration: 1 }}
-                className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-brand-accent/40"
-            >
-                <span className="text-[10px] uppercase tracking-[0.4em] font-mono">{dict.hero.explore}</span>
-                <div className="w-px h-12 bg-gradient-to-b from-brand-accent/50 to-transparent relative overflow-hidden">
-                    <motion.div
-                        animate={{ y: [0, 48] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute top-0 left-0 w-full h-1/3 bg-white shadow-[0_0_10px_white]"
-                    />
-                </div>
-            </motion.div>
         </section>
     );
 }
@@ -276,71 +313,17 @@ function PosSection() {
                 </SectionReveal>
 
                 <SectionReveal direction="right" className="w-full lg:w-1/2">
-                    <div className="relative group">
-                        <div className="absolute -inset-4 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
-                        <div className="glass-card border-brand-border rounded-3xl overflow-hidden relative shadow-2xl p-2 bg-brand-surface/80 backdrop-blur-xl">
-                            {/* Dashboard Mockup Representation */}
-                            <div className="bg-[#0A0A0B] rounded-2xl w-full h-[400px] md:h-[500px] border border-brand-border relative overflow-hidden flex flex-col">
-                                {/* Window Navigation Bar */}
-                                <div className="h-10 border-b border-brand-border flex items-center px-4 gap-2 bg-white/[0.02]">
-                                    <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors cursor-pointer" />
-                                    <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors cursor-pointer" />
-                                    <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors cursor-pointer" />
-                                    <div className="ml-4 flex-1 flex justify-center">
-                                        <div className="text-xs text-brand-text/30 font-mono tracking-widest">Barmagly POS Dashboard</div>
-                                    </div>
-                                </div>
-                                {/* Mockup Content */}
-                                <div className="flex-1 p-6 flex flex-col gap-6 w-full opacity-80 group-hover:opacity-100 transition-opacity duration-700">
-                                    {/* Stats Row */}
-                                    <div className="grid grid-cols-3 gap-4">
-                                        {[...Array(3)].map((_, i) => (
-                                            <div key={i} className="h-24 rounded-xl bg-white/[0.03] border border-brand-border p-4 flex flex-col justify-between overflow-hidden relative">
-                                                <div className="w-8 h-8 rounded-lg bg-brand-accent/20" />
-                                                <div className="w-20 h-4 bg-brand-surface rounded" />
-                                                <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-brand-accent/10 rounded-full blur-xl" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                    {/* Main Chart Area */}
-                                    <div className="flex-1 rounded-xl bg-white/[0.03] border border-brand-border p-4 flex gap-4">
-                                        <div className="w-2/3 h-full rounded-lg bg-brand-secondary/10 relative overflow-hidden flex items-end">
-                                            <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-brand-accent/20 to-transparent" />
-                                            {/* Abstract wave representing analytics */}
-                                            <svg className="absolute bottom-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                                                <path d="M0,100 L0,50 Q25,20 50,60 T100,30 L100,100 Z" fill="rgba(0, 212, 255, 0.15)" />
-                                                <path d="M0,50 Q25,20 50,60 T100,30" fill="none" stroke="rgba(0, 212, 255, 0.6)" strokeWidth="2" />
-                                            </svg>
-                                        </div>
-                                        <div className="w-1/3 flex flex-col gap-3">
-                                            {[...Array(4)].map((_, i) => (
-                                                <div key={i} className="h-full rounded-lg bg-brand-surface w-full flex items-center p-2 gap-2">
-                                                    <div className="w-6 h-6 rounded bg-brand-surface" />
-                                                    <div className="flex-1 h-2 bg-brand-surface rounded" />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="relative">
+                        <div className="relative rounded-2xl overflow-hidden border border-brand-border shadow-card-lg bg-white">
+                            <Image
+                                src="/pos-showcase.png"
+                                alt="Barmagly POS — integrated point of sale platform"
+                                width={1200}
+                                height={700}
+                                priority
+                                className="w-full h-auto object-cover"
+                            />
                         </div>
-
-                        {/* Floating elements to show platforms */}
-                        <motion.div
-                            animate={{ y: [0, -15, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute -bottom-6 -left-6 glass-card p-4 rounded-full border-brand-accent/30 shadow-neon-cyan bg-brand-primary/80 backdrop-blur-md z-20"
-                        >
-                            <Smartphone size={32} className="text-brand-accent" />
-                        </motion.div>
-                        <motion.div
-                            animate={{ y: [0, 15, 0] }}
-                            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute -top-6 -right-6 glass-card p-4 rounded-full border-brand-secondary/30 shadow-neon-purple bg-brand-primary/80 backdrop-blur-md z-20"
-                        >
-                            <Globe size={32} className="text-brand-secondary" />
-                        </motion.div>
-
                     </div>
                 </SectionReveal>
             </div>
@@ -472,73 +455,92 @@ function CountersSection({ data }: { data?: any }) {
 }
 
 // ============ TESTIMONIALS SECTION ============
+const TESTIMONIALS_EN = [
+    { name: 'Khaled Al-Rashid', role: 'CEO · Lotus Sharm Resort', initial: 'K', content: 'Barmagly rebuilt our booking system end-to-end. Direct inquiries grew 220% in the first two months. They actually understood hospitality — not just code.' },
+    { name: 'Sara Hassan', role: 'Founder · Jovero Marketing', initial: 'S', content: 'Eight weeks from kick-off to launch. Clean architecture, honest timelines, no scope drama. The team felt like an extension of mine.' },
+    { name: 'Mohamed Abdelbaset', role: 'Owner · Dr. Mohamed Dental Clinic', initial: 'M', content: 'I needed a website that converts visitors into actual appointments. The new site books 40% of its visitors. That number changed how I run my marketing.' },
+    { name: 'Omar Saleh', role: 'COO · Infinity Wear SA', initial: 'O', content: 'They migrated our 2,400-SKU catalogue to a new storefront over a single weekend with zero downtime. AOV is up 65%. I have no idea how to thank them.' },
+    { name: 'Layla Khoury', role: 'Product Lead · Services Researcher', initial: 'L', content: 'Barmagly delivered a B2B marketplace I couldn’t even fully spec at the start. They asked the right questions and shipped the right thing.' },
+    { name: 'Ahmed Tarek', role: 'CTO · Pharmcy', initial: 'A', content: 'Prescription handling, drug-interaction warnings, courier integration — they nailed every detail. We launched on time and on budget. Rare combo.' },
+    { name: 'Nora Mansour', role: 'Founder · King Kebab Le Pouzin', initial: 'N', content: 'The POS system runs my whole shop now — orders, inventory, online menu. My staff learned it in an afternoon. That was the test.' },
+    { name: 'Yusuf Al-Amri', role: 'Director · Aman Law', initial: 'Y', content: 'A serious legal firm needs a serious web presence. Barmagly understood the tone and delivered exactly that. Highly recommend.' },
+];
+
+const TESTIMONIALS_AR = [
+    { name: 'خالد الرشيد', role: 'الرئيس التنفيذي · منتجع لوتس شرم', initial: 'خ', content: 'فريق برمجلي أعاد بناء نظام الحجز عندنا من الصفر. الاستفسارات المباشرة زادت بنسبة 220% في أول شهرين. فهمنا تشغيلياً، مش بس برمجياً.' },
+    { name: 'سارة حسن', role: 'المؤسِّسة · Jovero للتسويق', initial: 'س', content: 'من بداية المشروع للإطلاق ثمانية أسابيع. كود نظيف، مواعيد دقيقة، صفر مفاجآت. حسّيتهم زي امتداد لفريقي.' },
+    { name: 'محمد عبد الباسط', role: 'مالك · عيادة د. محمد لطب الأسنان', initial: 'م', content: 'كنت محتاج موقع يحوّل الزوار لحجوزات فعلية. الموقع الجديد بيحجز 40% من زواره. الرقم ده غيّر طريقة تسويقي بالكامل.' },
+    { name: 'عمر صالح', role: 'مدير العمليات · Infinity Wear', initial: 'ع', content: 'نقلوا كاتالوج 2400 منتج لمتجر جديد في عطلة نهاية أسبوع واحدة بدون أي downtime. متوسط قيمة السلة طلع 65%. مش عارف أشكرهم إزاي.' },
+    { name: 'ليلى خوري', role: 'مدير المنتج · Services Researcher', initial: 'ل', content: 'سلّموا منصة B2B ما كنتش حتى عارفة أحدد متطلباتها بدقة. سألوا الأسئلة الصح وبنوا اللي محتاجاه.' },
+    { name: 'أحمد طارق', role: 'CTO · Pharmcy', initial: 'أ', content: 'إدارة الوصفات، تنبيهات تفاعل الأدوية، تكامل مع شركات التوصيل — أتقنوا كل التفاصيل. أطلقنا في الموعد المحدد بالميزانية المتفق عليها.' },
+    { name: 'نورة منصور', role: 'مالكة · مطعم King Kebab', initial: 'ن', content: 'نظام POS بيدير الفرع كله — الطلبات، المخزون، المنيو الأونلاين. الفريق فهمه في عصر يوم واحد. ده كان الاختبار الحقيقي.' },
+    { name: 'يوسف العامري', role: 'الشريك الإداري · أمان لو', initial: 'ي', content: 'مكتب محاماة جاد محتاج موقع جاد. برمجلي فهموا اللهجة المطلوبة وسلّموا اللي يليق بمستوى المكتب.' },
+];
+
 function TestimonialsSection() {
     const params = useParams();
     const lang = params?.lang as string;
-    const [testimonials, setTestimonials] = React.useState<any[]>([]);
+    const isAr = lang === 'ar';
     const dict = useDictionary();
 
-    React.useEffect(() => {
-        publicApi.getTestimonials().then(({ data }) => {
-            const mapped = data.map((t: any) => ({
-                ...t,
-                name: lang === 'en' && t.nameEn ? t.nameEn : t.name,
-                role: lang === 'en' && t.roleEn ? t.roleEn : t.role,
-                content: lang === 'en' && t.contentEn ? t.contentEn : t.content
-            }));
-            setTestimonials(mapped);
-        }).catch(console.error);
-    }, [lang]);
+    const testimonials = isAr ? TESTIMONIALS_AR : TESTIMONIALS_EN;
+    // Split into two rows for variety, both auto-scrolling in opposite directions.
+    const rowA = testimonials.slice(0, Math.ceil(testimonials.length / 2));
+    const rowB = testimonials.slice(Math.ceil(testimonials.length / 2));
+    // Duplicate for seamless infinite loop.
+    const loopA = [...rowA, ...rowA, ...rowA];
+    const loopB = [...rowB, ...rowB, ...rowB];
 
-    const displayTestimonials = testimonials;
+    const TestimonialCard = ({ t }: { t: typeof TESTIMONIALS_EN[0] }) => (
+        <div className="shrink-0 w-[340px] sm:w-[400px] bg-white border border-brand-border rounded-xl p-7 shadow-card mx-3 hover:shadow-card-lg transition-shadow">
+            <div className="flex gap-1 mb-5 text-brand-accent">
+                {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} size={14} className="fill-current" />
+                ))}
+            </div>
+            <p className={cn(
+                'text-brand-text-soft text-[15px] mb-6 min-h-[110px]',
+                isAr ? 'leading-[1.9]' : 'leading-[1.65]',
+            )}>
+                “{t.content}”
+            </p>
+            <div className="flex items-center gap-3 border-t border-brand-border pt-5">
+                <div className="w-11 h-11 rounded-full bg-brand-accent-soft border border-brand-accent/20 flex items-center justify-center text-brand-accent font-bold text-base shrink-0">
+                    {t.initial}
+                </div>
+                <div className="min-w-0">
+                    <p className="text-brand-text font-semibold text-[14px] truncate">{t.name}</p>
+                    <p className="text-brand-muted text-[12px] truncate">{t.role}</p>
+                </div>
+            </div>
+        </div>
+    );
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary">
-            <div className="absolute inset-0 tech-grid opacity-5" />
-            <div className="section-container relative z-10">
-                <SectionReveal>
-                    <div className="text-center mb-24">
-                        <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.testimonials.badge}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.testimonials.title}</span>
-                        </h2>
-                        <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
-                        <p className="text-brand-muted max-w-2xl mx-auto text-lg font-light opacity-80 italic">
-                            {dict.home.testimonials.subtitle}
-                        </p>
-                    </div>
-                </SectionReveal>
+        <section className="relative overflow-hidden py-20 sm:py-24 lg:py-32 bg-brand-surface border-y border-brand-border">
+            <div className="section-container">
+                <div className="max-w-2xl mb-12 sm:mb-16">
+                    <span className="section-eyebrow">{dict.home.testimonials.badge}</span>
+                    <h2 className="mt-4 font-display text-brand-text">
+                        {dict.home.testimonials.title}
+                    </h2>
+                    <p className="mt-4 text-brand-text-soft text-[16px] sm:text-[17px] leading-[1.7]">
+                        {dict.home.testimonials.subtitle}
+                    </p>
+                </div>
+            </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
-                    {displayTestimonials.map((t, i) => (
-                        <SectionReveal key={i} delay={i * 0.1}>
-                            <div className="glass-card p-10 h-full flex flex-col group hover:bg-white/[0.04] transition-all duration-500 border-brand-border relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-6 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity">
-                                    <Globe size={80} className="text-brand-accent" />
-                                </div>
+            {/* Row A — scrolls left (or right in RTL) */}
+            <div className="relative w-full mask-fade-edges overflow-hidden">
+                <div className="flex animate-marquee" style={{ width: 'max-content' }}>
+                    {loopA.map((t, i) => <TestimonialCard key={`a-${i}`} t={t} />)}
+                </div>
+            </div>
 
-                                <div className="flex gap-1.5 mb-8 text-brand-accent">
-                                    {Array.from({ length: t.rating }).map((_, j) => (
-                                        <Star key={j} size={16} className="fill-current" />
-                                    ))}
-                                </div>
-
-                                <p className="text-brand-muted text-lg leading-relaxed flex-1 mb-10 font-light opacity-90">
-                                    &ldquo;{t.content}&rdquo;
-                                </p>
-
-                                <div className="flex items-center gap-5 border-t border-brand-border pt-8 mt-auto">
-                                    <div className="w-14 h-14 rounded-2xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent font-black text-xl shadow-inner">
-                                        {t.name.charAt(0)}
-                                    </div>
-                                    <div>
-                                        <p className="text-brand-text font-black leading-none mb-1.5 text-lg">{t.name}</p>
-                                        <p className="text-brand-accent text-xs font-mono uppercase tracking-[0.2em] opacity-80">{t.role}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </SectionReveal>
-                    ))}
+            {/* Row B — scrolls in the opposite direction */}
+            <div className="relative w-full mask-fade-edges overflow-hidden mt-6">
+                <div className="flex animate-marquee-reverse" style={{ width: 'max-content' }}>
+                    {loopB.map((t, i) => <TestimonialCard key={`b-${i}`} t={t} />)}
                 </div>
             </div>
         </section>

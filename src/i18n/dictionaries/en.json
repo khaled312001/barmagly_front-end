@@ -20,26 +20,26 @@
         "admin": "Admin"
     },
     "hero": {
-        "badge": "Licensed Swiss Tech Company",
-        "titleLine1": "Barmagly:",
-        "titleLine2": "Swiss Precision, Global Innovation",
-        "subtitle": "Engineering enterprise-grade software solutions with unparalleled quality and security.",
-        "ctaPrimary": "Explore Our Work",
-        "ctaSecondary": "Talk to an Expert",
+        "badge": "Software Development Studio",
+        "titleLine1": "Barmagly",
+        "titleLine2": "Software that ships and scales.",
+        "subtitle": "We design and build websites, mobile apps, e-commerce stores, ERP/CRM/POS systems, and digital marketing — for startups and growing businesses.",
+        "ctaPrimary": "See Our Work",
+        "ctaSecondary": "Talk to Us",
         "explore": "Explore",
         "trust": {
-            "programming": "High-End Programming",
-            "techStack": "Tech Stack",
-            "marketing": "Strategic Marketing",
+            "programming": "Web & Mobile",
+            "techStack": "Engineering",
+            "marketing": "Digital Marketing",
             "growth": "Growth",
-            "sales": "Sales Optimization",
+            "sales": "E-commerce",
             "revenue": "Revenue",
-            "reliability": "Swiss Reliability",
-            "quality": "Quality"
+            "reliability": "Business Systems",
+            "quality": "ERP / CRM / POS"
         }
     },
     "footer": {
-        "description": "Barmagly is a Swiss-licensed software development company specializing in enterprise-grade web, mobile, and business solutions.",
+        "description": "Barmagly is a software development company building websites, mobile apps, e-commerce, ERP/CRM/POS systems, and digital marketing campaigns for startups and growing businesses.",
         "quickLinks": "Quick Links",
         "legal": "Legal",
         "contact": "Contact Us",
@@ -51,8 +51,8 @@
         "privacyPolicy": "Privacy Policy",
         "termsOfService": "Terms of Service",
         "services": "Services",
-        "swissLicensed": "Swiss Licensed",
-        "officialLicense": "Official Swiss License",
+        "swissLicensed": "Licensed",
+        "officialLicense": "Official License",
         "chatWhatsapp": "Chat on WhatsApp",
         "links": {
             "web": "Web Development & Design",
@@ -65,7 +65,7 @@
     "home": {
         "services": {
             "title": "Digital Excellence",
-            "subtitle": "We combine Swiss precision with cutting-edge technology to deliver systems that drive growth and institutionalize innovation."
+            "subtitle": "We combine software craft with cutting-edge technology to deliver systems that drive growth and institutionalize innovation."
         },
         "portfolio": {
             "title": "Our Work",
@@ -122,12 +122,12 @@
         },
         "whyChoose": {
             "badge": "Core Values",
-            "title": "Built on Swiss Precision & Excellence",
-            "subtitle": "We combine Swiss engineering discipline with global rapid innovation to deliver software solutions that redefine industry standards in quality, security, and performance.",
+            "title": "Built for engineering teams that ship",
+            "subtitle": "We combine engineering discipline with global rapid innovation to deliver software solutions that redefine industry standards in quality, security, and performance.",
             "cta": "Our Scientific Approach",
             "cards": {
                 "licensed": {
-                    "title": "Swiss Licensed",
+                    "title": "Licensed",
                     "desc": "Officially registered in Switzerland (CHE-154.312.079), ensuring maximum security and regulatory compliance."
                 },
                 "performance": {
@@ -156,27 +156,27 @@
             "badge": "Digital Excellence",
             "titleLine1": "Crafting Digital",
             "titleHighlight": "Solutions with Precision",
-            "subtitle": "We are a <span class=\"text-white font-semibold\">Swiss-licensed</span> software power-house, engineering advanced systems that redefine industry standards through precision and innovation."
+            "subtitle": "We are a <span class=\"text-white font-semibold\">licensed</span> software power-house, engineering advanced systems that redefine industry standards through precision and innovation."
         },
         "story": {
             "badge": "Our Origin",
             "title": "From Zürich to the World",
             "desc1": "Barmagly was born from a simple yet powerful vision: to bridge the gap between cutting-edge technology and real-world business needs.",
             "desc2": "Founded in the Heart of <span class=\"text-white font-medium\">Switzerland</span>, we set out to create software solutions that don't just meet expectations — they redefine them through absolute technical excellence.",
-            "desc3": "Our multidisciplinary team combines Swiss engineering traditions with global innovative speed. We specialize in architecting complex digital ecosystems that empower businesses to lead in a technology-first world.",
+            "desc3": "Our multidisciplinary team combines engineering traditions with global innovative speed. We specialize in architecting complex digital ecosystems that empower businesses to lead in a technology-first world.",
             "stat1Value": "100+",
             "stat1Label": "Projects Delivered",
             "stat2Value": "5+",
             "stat2Label": "Years of Innovation",
-            "licenseTitle": "Swiss Licensed Enterprise",
+            "licenseTitle": "Licensed Enterprise",
             "qualityTitle": "Quality Certified",
-            "qualityDesc": "Adhering to the most rigorous Swiss standards for software engineering and data security."
+            "qualityDesc": "Adhering to the most rigorous engineering standards and data security."
         },
         "missionVision": {
             "missionTitle": "Our Mission",
             "missionDesc": "To empower businesses worldwide with <span class=\"text-white font-medium\">innovative, reliable, and scalable</span> software solutions. We are committed to transforming complex challenges into elegant digital experiences that drive measurable growth and lasting impact.",
             "visionTitle": "Our Vision",
-            "visionDesc": "To be the leading <span class=\"text-white font-medium\">Swiss software company</span> recognized globally for innovation, quality, and client success. We envision a future where every business, regardless of size, can harness the power of technology to reach its full potential."
+            "visionDesc": "To be the leading <span class=\"text-white font-medium\">software company</span> recognized globally for innovation, quality, and client success. We envision a future where every business, regardless of size, can harness the power of technology to reach its full potential."
         },
         "values": {
             "badge": "Core Principles",
@@ -205,7 +205,7 @@
                 },
                 {
                     "title": "Reliability",
-                    "desc": "Delivering on our promises with Swiss precision, every time.",
+                    "desc": "Delivering on our promises with software craft, every time.",
                     "color": "cyan"
                 },
                 {
@@ -227,7 +227,7 @@
                 {
                     "year": "2020",
                     "title": "Enterprise Milestone",
-                    "description": "Delivered our first large-scale enterprise system for a Swiss financial client."
+                    "description": "Delivered our first large-scale enterprise system for a enterprise financial client."
                 },
                 {
                     "year": "2021",
@@ -259,10 +259,10 @@
     },
     "services": {
         "hero": {
-            "badge": "Licensed Swiss Tech Company",
+            "badge": "Licensed Software Company",
             "titleLine1": "Strategic",
             "titleHighlight": "Digital Solutions",
-            "subtitle": "We architect enterprise-grade digital systems and bespoke software solutions with <span class=\"text-white font-semibold\">Swiss precision</span>. Every system we build is engineered for performance, security, and global scale."
+            "subtitle": "We architect enterprise-grade digital systems and bespoke software solutions with <span class=\"text-white font-semibold\">software craft</span>. Every system we build is engineered for performance, security, and global scale."
         },
         "serviceSection": {
             "explorationHub": "Exploration Hub",
@@ -280,7 +280,7 @@
                 },
                 {
                     "title": "Strategic Architecture",
-                    "desc": "Designing a scalable system blueprint with Swiss engineering precision."
+                    "desc": "Designing a scalable system blueprint with engineering precision."
                 },
                 {
                     "title": "Agile Development",
@@ -349,7 +349,7 @@
             "challenge": "The Challenge",
             "challengeText": "Creating a highly scalable and secure enterprise solution using modern tech stacks.",
             "solution": "The Solution",
-            "solutionText": "Leveraging Swiss precision and distributed architecture to ensure maximum reliability.",
+            "solutionText": "Leveraging software craft and distributed architecture to ensure maximum reliability.",
             "backToPortfolio": "Back to Portfolio",
             "startSimilarProject": "Start a Similar Project"
         }
@@ -467,7 +467,7 @@
         },
         "info": {
             "location": "Location",
-            "license": "Swiss License",
+            "license": "License",
             "whatsapp": "WhatsApp",
             "emailUs": "Email Us",
             "hqTitle": "Zürich HQ",
@@ -520,7 +520,7 @@
             "copied": "Copied!",
             "relatedTopics": "Related Topics",
             "ctaTitle": "Ready to Build Your Next Project?",
-            "ctaDesc": "Barmagly delivers enterprise-grade software solutions with Swiss precision. From web and mobile apps to POS systems and custom platforms — we turn your vision into reality.",
+            "ctaDesc": "Barmagly delivers enterprise-grade software solutions with software craft. From web and mobile apps to POS systems and custom platforms — we turn your vision into reality.",
             "contactTeam": "Contact Our Team",
             "viewServices": "View Our Services"
         }
@@ -546,7 +546,7 @@
         "integratedTechStack": "Integrated Tech Stack",
         "backToServices": "Back to Services",
         "readyToBuildTitle": "Ready to Build This Architecture?",
-        "readyToBuildSubtitle": "Connect with our Swiss-trained architects to transform this service module into a scalable reality for your enterprise.",
+        "readyToBuildSubtitle": "Connect with our product architects to transform this service module into a scalable reality for your enterprise.",
         "whatsappProtocol": "WhatsApp Protocol",
         "launchDiscussion": "Launch Discussion",
         "architecture": "Architecture",

@@ -14,11 +14,11 @@ export async function generateMetadata({
     const isAr = lang === 'ar';
 
     const homeTitle = isAr
-        ? 'برمجلي - شركة سويسرية لتطوير المواقع والتطبيقات وحلول البرمجيات'
-        : 'Barmagly | Swiss Licensed Software Development Company';
+        ? 'برمجلي - شركة برمجيات لتطوير المواقع والتطبيقات وحلول الأعمال'
+        : 'Barmagly | Software Company — Websites, Mobile Apps, E-commerce & ERP';
     const homeDescription = isAr
-        ? 'برمجلي شركة برمجيات سويسرية مرخصة متخصصة في تصميم وتطوير المواقع الإلكترونية وتطبيقات الموبايل (iOS و Android)، تصميم UI/UX، أنظمة ERP و CRM و POS، التجارة الإلكترونية، والتسويق الرقمي وSEO. نخدم العملاء في سويسرا، مصر، السعودية، الإمارات وحول العالم.'
-        : 'Barmagly is a Swiss-licensed software development company building websites, iOS / Android apps, UI/UX, ERP / CRM / POS systems, e-commerce stores, and digital marketing / SEO campaigns for clients in Switzerland, Egypt, Saudi Arabia, UAE, and worldwide.';
+        ? 'شركة برمجلي متخصصة في تطوير المواقع الإلكترونية وتطبيقات iOS و Android وتصميم UI/UX وأنظمة ERP و CRM و POS والمتاجر الإلكترونية والتسويق الرقمي. نقدّم حلول برمجية متكاملة للشركات والـ Startups.'
+        : 'Barmagly is a software company building websites, iOS / Android apps, UI/UX, ERP / CRM / POS systems, e-commerce stores, and digital marketing campaigns for startups and growing businesses.';
 
     return {
         metadataBase: new URL(SITE_URL),
@@ -28,24 +28,27 @@ export async function generateMetadata({
         },
         description: homeDescription,
         keywords: [
-            // English
-            'software development', 'Swiss software company', 'Barmagly',
-            'web development', 'website design', 'mobile app development',
-            'iOS app development', 'Android app development', 'Flutter development',
-            'React Native', 'Next.js development', 'UI/UX design', 'product design',
-            'e-commerce development', 'Shopify development', 'WooCommerce', 'Magento',
-            'custom ERP', 'CRM development', 'POS system', 'business automation',
-            'digital marketing', 'SEO agency', 'Google Ads', 'Meta Ads', 'TikTok Ads',
-            'content marketing', 'web design Switzerland', 'web design Zurich',
-            // Arabic
-            'برمجلي', 'تصميم مواقع', 'تطوير مواقع', 'برمجة مواقع',
-            'تصميم تطبيقات', 'تطوير تطبيقات الموبايل', 'تطبيقات اندرويد', 'تطبيقات ايفون',
-            'تصميم متجر الكتروني', 'انشاء متجر', 'تجارة الكترونية',
-            'تصميم تجربة مستخدم', 'تصميم واجهات', 'ux', 'ui',
-            'نظام erp', 'نظام crm', 'نقاط بيع', 'pos', 'نظام محاسبة',
+            // English — service-led, not country-led
+            'Barmagly', 'software company', 'software development company',
+            'web development', 'website design', 'next.js development', 'react development',
+            'mobile app development', 'iOS app development', 'Android app development',
+            'flutter development', 'react native development',
+            'UI/UX design', 'product design', 'web app design',
+            'e-commerce development', 'shopify development', 'woocommerce', 'magento',
+            'online store development', 'B2B ecommerce',
+            'custom ERP', 'ERP system development', 'CRM development', 'POS system',
+            'restaurant POS', 'retail POS', 'inventory management', 'business automation',
+            'digital marketing', 'SEO services', 'google ads management', 'meta ads',
+            'content marketing', 'social media marketing', 'performance marketing',
+            // Arabic — service-led
+            'برمجلي', 'شركة برمجيات', 'شركة برمجة',
+            'تصميم مواقع', 'تطوير مواقع', 'برمجة مواقع', 'تصميم موقع احترافي',
+            'تصميم تطبيقات', 'تطوير تطبيقات', 'تطبيقات اندرويد', 'تطبيقات ايفون', 'تطبيقات flutter',
+            'تصميم متجر الكتروني', 'انشاء متجر اون لاين', 'تجارة الكترونية', 'shopify',
+            'تصميم تجربة مستخدم', 'تصميم واجهات', 'ux/ui',
+            'نظام erp', 'نظام crm', 'نقاط بيع', 'نظام pos', 'نظام مطاعم', 'نظام مخازن',
             'تسويق رقمي', 'سيو', 'تحسين محركات البحث', 'اعلانات جوجل', 'اعلانات فيسبوك',
-            'شركة برمجة سويسرا', 'شركة تطوير مواقع', 'شركة تصميم تطبيقات',
-            'تصميم موقع شركة', 'تصميم موقع احترافي', 'افضل شركة برمجة',
+            'شركة تصميم مواقع', 'شركة تطوير تطبيقات', 'افضل شركة برمجة',
         ],
         authors: [{ name: 'Barmagly' }],
         creator: 'Barmagly',
@@ -56,23 +59,21 @@ export async function generateMetadata({
             locale: isAr ? 'ar_EG' : 'en_US',
             url: buildAlternates(lang).canonical,
             siteName: 'Barmagly',
-            title: 'Barmagly | Swiss Licensed Software Development Company',
-            description:
-                'Swiss-licensed software development company delivering enterprise-grade web, mobile, and business solutions.',
+            title: homeTitle,
+            description: homeDescription,
             images: [
                 {
                     url: '/og-image.png',
                     width: 1200,
                     height: 630,
-                    alt: 'Barmagly - Swiss Licensed Software Development',
+                    alt: 'Barmagly — Software Development Company',
                 },
             ],
         },
         twitter: {
             card: 'summary_large_image',
-            title: 'Barmagly | Swiss Licensed Software Development Company',
-            description:
-                'Swiss-licensed software development company delivering enterprise-grade web, mobile, and business solutions.',
+            title: homeTitle,
+            description: homeDescription,
             images: ['/og-image.png'],
         },
         robots: {
@@ -112,7 +113,7 @@ export default async function RootLayout({
                                     '@type': ['Organization', 'ProfessionalService'],
                                     '@id': 'https://www.barmagly.tech/#organization',
                                     name: 'Barmagly',
-                                    alternateName: ['برمجلي', 'Barmagly Swiss Tech'],
+                                    alternateName: ['برمجلي'],
                                     url: 'https://www.barmagly.tech',
                                     logo: {
                                         '@type': 'ImageObject',
@@ -122,7 +123,7 @@ export default async function RootLayout({
                                     },
                                     image: 'https://www.barmagly.tech/og-image.png',
                                     description:
-                                        'Swiss-licensed software development company building websites, mobile apps, e-commerce, ERP/CRM/POS systems, UI/UX, and digital marketing campaigns.',
+                                        'Software company building websites, mobile apps, e-commerce stores, ERP/CRM/POS systems, UI/UX, and digital marketing campaigns for startups and growing businesses.',
                                     address: {
                                         '@type': 'PostalAddress',
                                         streetAddress: 'Hardstrasse 201',
