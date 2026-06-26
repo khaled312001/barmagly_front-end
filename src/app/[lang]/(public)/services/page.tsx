@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation';
 import { publicApi } from '@/lib/api';
 import { useDictionary } from '@/lib/contexts/DictionaryContext';
 import { getAllServices } from '@/data/services';
+import { cn } from '@/lib/utils';
 
 // Helper to render icon dynamically
 const DynamicIcon = ({ name, size = 32 }: { name: string; size?: number }) => {
@@ -26,71 +27,27 @@ interface ServiceDetail {
     title: string;
     description: string;
     features: string[];
+    image?: string;
 }
 
 function ServicesHero() {
     const dict = useDictionary();
     return (
-        <section className="relative pt-48 pb-32 lg:pt-56 lg:pb-40 overflow-hidden bg-brand-primary">
-            {/* Background Effects */}
-            <div className="absolute inset-0 bg-hero-gradient" />
-            <div className="absolute inset-0 tech-grid opacity-20" />
+        <section className="relative pt-32 pb-16 sm:pt-40 sm:pb-20 lg:pt-48 lg:pb-28 overflow-hidden bg-brand-primary border-b border-brand-border">
+            <div className="absolute inset-0 bg-hero-gradient pointer-events-none" />
 
-            {/* Animated Circuit Pattern */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.1, 0.3, 0.1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 circuit-pattern pointer-events-none"
-            />
-
-            {/* Glowing Accents */}
-            <div className="absolute top-1/4 -right-32 w-96 h-96 bg-brand-accent/20 rounded-full blur-[128px] animate-pulse-glow" />
-            <div className="absolute bottom-1/4 -left-32 w-96 h-96 bg-brand-secondary/10 rounded-full blur-[128px] animate-pulse" />
-
-            <div className="section-container relative z-10">
-                <motion.div
-                    variants={staggerContainer}
-                    initial="hidden"
-                    animate="visible"
-                    className="max-w-5xl mx-auto text-center"
-                >
-                    <motion.div variants={heroTextReveal} className="mb-8">
-                        <span className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-brand-glass border border-brand-accent/30 text-brand-accent text-sm font-mono tracking-[0.2em] shadow-neon-cyan backdrop-blur-md">
-                            <LucideIcons.Shield size={18} className="animate-pulse" />
-                            <span className="uppercase">{dict.services.hero.badge}</span>
-                        </span>
-                    </motion.div>
-
-                    <motion.h1
-                        variants={heroTextReveal}
-                        className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tight drop-shadow-2xl px-4"
-                    >
-                        {dict.services.hero.titleLine1} <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_30px_rgba(0,212,255,0.3)] italic">
-                            {dict.services.hero.titleHighlight}
-                        </span>
-                    </motion.h1>
-                    <motion.p variants={heroTextReveal} className="text-xl md:text-2xl text-brand-muted max-w-3xl mx-auto leading-relaxed font-light" dangerouslySetInnerHTML={{ __html: dict.services.hero.subtitle }} />
-                </motion.div>
-            </div>
-
-            {/* Floating Elements Container */}
-            <div className="absolute inset-0 pointer-events-none hidden lg:block overflow-hidden">
-                <motion.div
-                    animate={{ y: [0, -30, 0], rotate: [0, 10, -10, 0], opacity: [0.2, 0.5, 0.2] }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[20%] left-[10%] p-5 glass-card border-brand-accent/20 shadow-neon-cyan"
-                >
-                    <LucideIcons.Code2 className="text-brand-accent" size={32} />
-                </motion.div>
-                <motion.div
-                    animate={{ y: [0, 30, 0], rotate: [0, -10, 10, 0], opacity: [0.2, 0.4, 0.2] }}
-                    transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-[50%] right-[10%] p-5 glass-card border-brand-secondary/20 shadow-neon-purple"
-                >
-                    <LucideIcons.Zap className="text-brand-secondary" size={32} />
-                </motion.div>
+            <div className="section-container relative">
+                <div className="max-w-3xl">
+                    <span className="section-eyebrow">{dict.services.hero.badge}</span>
+                    <h1 className="mt-4 font-display text-brand-text text-[36px] sm:text-[52px] lg:text-[72px] leading-[1.05] font-extrabold tracking-[-0.025em]">
+                        {dict.services.hero.titleLine1}{' '}
+                        <span className="text-brand-accent">{dict.services.hero.titleHighlight}</span>
+                    </h1>
+                    <p
+                        className="mt-6 text-brand-text-soft text-[16px] sm:text-[17px] lg:text-[18px] leading-[1.7] max-w-[58ch]"
+                        dangerouslySetInnerHTML={{ __html: dict.services.hero.subtitle }}
+                    />
+                </div>
             </div>
         </section>
     );
@@ -101,81 +58,71 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
     const dict = useDictionary();
 
     return (
-        <section id={service.id} className={`section-padding relative overflow-hidden ${isEven ? 'bg-brand-primary' : 'bg-brand-dark/30'}`}>
-            <div className="absolute inset-0 tech-grid opacity-5" />
+        <section
+            id={service.id}
+            className={cn(
+                'relative overflow-hidden py-20 lg:py-28 border-b border-brand-border',
+                isEven ? 'bg-brand-primary' : 'bg-brand-surface'
+            )}
+        >
+            <div className="section-container">
+                <div className={cn(
+                    'grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center',
+                )}>
+                    {/* Text col */}
+                    <SectionReveal direction={isEven ? 'left' : 'right'} className={cn('lg:col-span-6', isEven ? 'lg:order-1' : 'lg:order-2')}>
+                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-accent-soft text-brand-accent mb-6">
+                            {service.icon}
+                        </div>
 
-            <div className="section-container relative z-10">
-                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-20 items-center ${!isEven ? 'lg:flex-row-reverse' : ''}`}>
-                    <SectionReveal direction={isEven ? 'left' : 'right'}>
-                        <div className={!isEven ? 'lg:order-2' : ''}>
-                            <div className="relative inline-block mb-8">
-                                <div className="absolute -inset-4 bg-brand-accent/20 rounded-full blur-2xl animate-pulse" />
-                                <div className="p-5 rounded-2xl bg-brand-accent/10 border border-brand-accent/20 text-brand-accent relative z-10">
-                                    {service.icon}
-                                </div>
-                            </div>
+                        <span className="section-eyebrow">0{index + 1}</span>
+                        <h2 className="mt-3 font-display text-brand-text text-[28px] sm:text-[36px] lg:text-[44px] leading-[1.15] font-extrabold tracking-tight">
+                            {service.title}
+                        </h2>
+                        <p className="mt-5 text-brand-text-soft text-[15px] sm:text-[16px] lg:text-[17px] leading-[1.7] max-w-[58ch]">
+                            {service.description}
+                        </p>
 
-                            <h2 className="text-3xl md:text-5xl font-display font-black text-brand-text mb-6 tracking-tight">
-                                {service.title}
-                            </h2>
-                            <p className="text-brand-muted text-lg leading-relaxed mb-10 font-light">
-                                {service.description}
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <Link href={`/${lang}/services/${service.id}`}>
-                                    <Button variant="primary" size="lg" icon={<ArrowRight size={20} className="rtl:rotate-180" />} className="shadow-neon-cyan">
-                                        {dict.services.serviceSection.explorationHub}
-                                    </Button>
-                                </Link>
-                                <Link href={`/${lang}/contact`}>
-                                    <Button variant="outline" size="lg" icon={<MessageCircle size={20} />} className="border-brand-border hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
-                                        {dict.services.serviceSection.expertConsult}
-                                    </Button>
-                                </Link>
-                            </div>
+                        {service.features && service.features.length > 0 && (
+                            <ul className="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                                {service.features.slice(0, 6).map((feature, i) => (
+                                    <li key={i} className="flex items-start gap-3 text-[14px] text-brand-text-soft">
+                                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0" />
+                                        <span className="leading-[1.65]">{feature}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <div className="mt-9 flex flex-wrap gap-3">
+                            <Link href={`/${lang}/services/${service.id}`}>
+                                <Button variant="primary" size="lg" icon={<ArrowRight size={18} className="rtl:rotate-180" />} className="rounded-full px-6 h-12 text-[14px]">
+                                    {dict.services.serviceSection.explorationHub}
+                                </Button>
+                            </Link>
+                            <Link href={`/${lang}/contact`}>
+                                <Button variant="outline" size="lg" className="rounded-full px-6 h-12 text-[14px] border-brand-border-strong text-brand-text hover:bg-brand-surface">
+                                    {dict.services.serviceSection.expertConsult}
+                                </Button>
+                            </Link>
                         </div>
                     </SectionReveal>
 
-                    <SectionReveal direction={isEven ? 'right' : 'left'}>
-                        <div className={`relative ${!isEven ? 'lg:order-1' : ''}`}>
-                            <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 rounded-3xl blur opacity-30" />
-                            <div className="glass-card p-10 relative bg-brand-dark/50 border-brand-border backdrop-blur-2xl overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-48 h-48 bg-brand-accent/5 rounded-full blur-[80px] rtl:-ml-24 rtl:mr-auto ltr:-mr-24 -mt-24 group-hover:bg-brand-accent/10 transition-colors" />
-
-                                <h4 className="text-xs font-mono font-bold uppercase tracking-[0.3em] text-brand-accent mb-10 flex items-center gap-3">
-                                    <span className="w-8 h-px bg-brand-accent/50" />
-                                    {dict.services.serviceSection.technicalCapabilities}
-                                </h4>
-
-                                <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {service.features.map((feature, i) => (
-                                        <motion.li
-                                            key={i}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ delay: i * 0.05 }}
-                                            className="flex items-center gap-4 group/item"
-                                        >
-                                            <div className="w-2 h-2 rounded-full bg-brand-accent shadow-neon-cyan group-hover/item:scale-150 transition-transform flex-shrink-0" />
-                                            <span className="text-brand-muted text-sm tracking-wide font-light group-hover/item:text-brand-text transition-colors">
-                                                {feature}
-                                            </span>
-                                        </motion.li>
-                                    ))}
-                                </ul>
-
-                                <div className="mt-12 pt-8 border-t border-brand-border flex items-center justify-between">
-                                    <div className="flex -space-x-3 rtl:space-x-reverse">
-                                        {[1, 2, 3].map(i => (
-                                            <div key={i} className="w-8 h-8 rounded-full border border-brand-dark bg-brand-surface flex items-center justify-center text-[10px] font-mono text-brand-accent">
-                                                0{i}
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <span className="text-[10px] font-mono uppercase tracking-widest text-brand-muted/40">{dict.services.serviceSection.verifiedArchitecture}</span>
+                    {/* Image col */}
+                    <SectionReveal direction={isEven ? 'right' : 'left'} className={cn('lg:col-span-6', isEven ? 'lg:order-2' : 'lg:order-1')}>
+                        <div className="relative rounded-2xl overflow-hidden border border-brand-border shadow-card-lg bg-white">
+                            {service.image ? (
+                                <img
+                                    src={service.image}
+                                    alt={service.title}
+                                    className="w-full h-auto object-cover aspect-[16/10]"
+                                    loading="lazy"
+                                />
+                            ) : (
+                                <div className="aspect-[16/10] bg-brand-sunken flex items-center justify-center text-brand-muted text-sm">
+                                    {service.title}
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </SectionReveal>
                 </div>
@@ -235,6 +182,7 @@ export default function ServicesPage() {
             description: lang === 'en' ? s.summaryEn : s.summary,
             icon: <DynamicIcon name={s.icon || 'Code2'} size={32} />,
             features: lang === 'en' ? s.featuresEn : s.features,
+            image: s.image,
             slug: s.slug,
         } as any));
     }, [lang]);

@@ -92,17 +92,29 @@ function HeroSection({ data }: { data?: any }) {
                         <motion.div variants={heroTextReveal} className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                             <Link
                                 href={`/${params.lang}/portfolio`}
-                                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-7 rounded-full bg-brand-accent text-white text-[14px] sm:text-[15px] font-semibold hover:bg-brand-accent-hover transition-all duration-200 hover:-translate-y-[1px] shadow-neon-cyan"
+                                className="group inline-flex items-center justify-center gap-2 h-12 sm:h-[52px] px-6 sm:px-7 rounded-full bg-brand-accent text-white text-[14px] sm:text-[15px] font-semibold hover:bg-brand-accent-hover transition-all duration-200 hover:-translate-y-[1px] shadow-neon-cyan"
                             >
                                 {primaryBtnText}
-                                <ArrowRight size={16} className="rtl:rotate-180" />
+                                <ArrowRight size={16} className="rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
                             </Link>
                             <Link
                                 href={`/${params.lang}/contact`}
-                                className="inline-flex items-center justify-center gap-2 h-12 px-6 sm:px-7 rounded-full border border-brand-border-strong bg-white text-brand-text text-[14px] sm:text-[15px] font-semibold hover:border-brand-accent hover:bg-brand-accent-soft hover:text-brand-accent transition-colors"
+                                className="inline-flex items-center justify-center gap-2 h-12 sm:h-[52px] px-6 sm:px-7 rounded-full border border-brand-border-strong bg-white text-brand-text text-[14px] sm:text-[15px] font-semibold hover:border-brand-accent hover:bg-brand-accent-soft hover:text-brand-accent transition-colors"
                             >
                                 {secondaryBtnText}
                             </Link>
+                        </motion.div>
+
+                        {/* Social proof line under CTAs */}
+                        <motion.div variants={heroTextReveal} className="mt-6 sm:mt-8 flex items-center gap-3 text-[12px] sm:text-[13px] text-brand-muted">
+                            <div className="flex -space-x-2 rtl:space-x-reverse">
+                                {['#0A2A5C', '#1A6FD9', '#6B7588', '#1356B0'].map((c, i) => (
+                                    <div key={i} className="w-7 h-7 rounded-full border-2 border-white" style={{ background: c }} />
+                                ))}
+                            </div>
+                            <span className="font-medium">
+                                {isAr ? 'موثوق به من ١٢٠+ شركة وعلامة تجارية' : 'Trusted by 120+ businesses & brands'}
+                            </span>
                         </motion.div>
                     </motion.div>
 
