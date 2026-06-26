@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 export function Preloader() {
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-brand-dark overflow-hidden">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-brand-ink overflow-hidden">
             {/* Background Tech Effects */}
             <div className="absolute inset-0 tech-grid opacity-20" />
 

@@ -64,7 +64,7 @@ function ServicesHero() {
 
                     <motion.h1
                         variants={heroTextReveal}
-                        className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tight drop-shadow-2xl px-4"
+                        className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tight drop-shadow-2xl px-4"
                     >
                         {dict.services.hero.titleLine1} <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_30px_rgba(0,212,255,0.3)] italic">
@@ -115,7 +115,7 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
                                 </div>
                             </div>
 
-                            <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-6 tracking-tight">
+                            <h2 className="text-3xl md:text-5xl font-display font-black text-brand-text mb-6 tracking-tight">
                                 {service.title}
                             </h2>
                             <p className="text-brand-muted text-lg leading-relaxed mb-10 font-light">
@@ -128,7 +128,7 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
                                     </Button>
                                 </Link>
                                 <Link href={`/${lang}/contact`}>
-                                    <Button variant="outline" size="lg" icon={<MessageCircle size={20} />} className="border-white/10 hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
+                                    <Button variant="outline" size="lg" icon={<MessageCircle size={20} />} className="border-brand-border hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
                                         {dict.services.serviceSection.expertConsult}
                                     </Button>
                                 </Link>
@@ -139,7 +139,7 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
                     <SectionReveal direction={isEven ? 'right' : 'left'}>
                         <div className={`relative ${!isEven ? 'lg:order-1' : ''}`}>
                             <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 rounded-3xl blur opacity-30" />
-                            <div className="glass-card p-10 relative bg-brand-dark/50 border-white/10 backdrop-blur-2xl overflow-hidden group">
+                            <div className="glass-card p-10 relative bg-brand-dark/50 border-brand-border backdrop-blur-2xl overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-48 h-48 bg-brand-accent/5 rounded-full blur-[80px] rtl:-ml-24 rtl:mr-auto ltr:-mr-24 -mt-24 group-hover:bg-brand-accent/10 transition-colors" />
 
                                 <h4 className="text-xs font-mono font-bold uppercase tracking-[0.3em] text-brand-accent mb-10 flex items-center gap-3">
@@ -158,14 +158,14 @@ function ServiceSection({ service, index, lang }: { service: ServiceDetail; inde
                                             className="flex items-center gap-4 group/item"
                                         >
                                             <div className="w-2 h-2 rounded-full bg-brand-accent shadow-neon-cyan group-hover/item:scale-150 transition-transform flex-shrink-0" />
-                                            <span className="text-brand-muted text-sm tracking-wide font-light group-hover/item:text-white transition-colors">
+                                            <span className="text-brand-muted text-sm tracking-wide font-light group-hover/item:text-brand-text transition-colors">
                                                 {feature}
                                             </span>
                                         </motion.li>
                                     ))}
                                 </ul>
 
-                                <div className="mt-12 pt-8 border-t border-white/5 flex items-center justify-between">
+                                <div className="mt-12 pt-8 border-t border-brand-border flex items-center justify-between">
                                     <div className="flex -space-x-3 rtl:space-x-reverse">
                                         {[1, 2, 3].map(i => (
                                             <div key={i} className="w-8 h-8 rounded-full border border-brand-dark bg-brand-surface flex items-center justify-center text-[10px] font-mono text-brand-accent">
@@ -195,7 +195,7 @@ function RoadmapSection() {
     ];
 
     return (
-        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-white/5">
+        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <SectionHeading badge={dict.services.roadmap.badge} title={dict.services.roadmap.title} />
@@ -204,13 +204,13 @@ function RoadmapSection() {
                     {steps.map((step, i) => (
                         <SectionReveal key={i} delay={i * 0.1} direction="up">
                             <div className="glass-card p-8 h-full relative group hover:border-brand-accent/30 transition-all duration-500">
-                                <div className="absolute -top-6 -left-6 text-6xl font-display font-black text-white/5 group-hover:text-brand-accent/10 transition-colors">
+                                <div className="absolute -top-6 -left-6 text-6xl font-display font-black text-brand-text/5 group-hover:text-brand-accent/10 transition-colors">
                                     0{i + 1}
                                 </div>
                                 <div className="p-4 rounded-2xl bg-brand-accent/10 text-brand-accent w-fit mb-6 border border-brand-accent/20 group-hover:shadow-neon-cyan transition-all duration-500">
                                     {step.icon}
                                 </div>
-                                <h3 className="text-xl font-display font-black text-white mb-3 tracking-tight">{step.title}</h3>
+                                <h3 className="text-xl font-display font-black text-brand-text mb-3 tracking-tight">{step.title}</h3>
                                 <p className="text-brand-muted leading-relaxed text-sm font-light">{step.desc}</p>
                             </div>
                         </SectionReveal>
@@ -297,7 +297,7 @@ export default function ServicesPage() {
 
                         <div className="relative z-10">
                             <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-6 block">{dict.services.cta.badge}</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-8 tracking-tighter">
+                            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-8 tracking-tighter">
                                 {dict.services.cta.titleLine1} <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">{dict.services.cta.titleHighlight}</span>
                             </h2>
@@ -311,7 +311,7 @@ export default function ServicesPage() {
                                     </Button>
                                 </Link>
                                 <Link href={`/${lang}/contact`} className="w-full sm:w-auto">
-                                    <Button size="xl" variant="outline" icon={<MessageCircle size={24} />} className="w-full sm:min-w-[240px] border-white/10 hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
+                                    <Button size="xl" variant="outline" icon={<MessageCircle size={24} />} className="w-full sm:min-w-[240px] border-brand-border hover:border-brand-accent/30 flex-row-reverse rtl:flex-row">
                                         {dict.services.cta.whatsappIntel}
                                     </Button>
                                 </Link>

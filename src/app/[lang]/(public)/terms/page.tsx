@@ -53,12 +53,12 @@ export default function TermsPage() {
 
                         <motion.h1
                             variants={heroTextReveal}
-                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tighter drop-shadow-2xl"
+                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
                             Terms of <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">Service</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-brand-muted text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
-                            Agreement Protocol: {lastUpdated} | <span className="text-white">Legal Jurisdiction: Switzerland</span>
+                            Agreement Protocol: {lastUpdated} | <span className="text-brand-text">Legal Jurisdiction: Switzerland</span>
                         </motion.p>
                     </motion.div>
                 </div>
@@ -69,7 +69,7 @@ export default function TermsPage() {
                 <div className="section-container max-w-4xl relative z-10">
                     <div className="space-y-12">
                         <SectionReveal>
-                            <div className="glass-card p-10 border-white/5">
+                            <div className="glass-card p-10 border-brand-border">
                                 <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Agreement to Terms</h2>
                                 <p className="text-brand-muted leading-relaxed">
                                     Welcome to Barmagly. By accessing our website or using our services, you agree to be bound by these Terms of Service. Please read them carefully.
@@ -99,9 +99,9 @@ export default function TermsPage() {
                                         <Gavel size={56} />
                                     </div>
                                     <div>
-                                        <h2 className="text-3xl font-display font-black text-white mb-6 uppercase tracking-wider">Governing Law</h2>
+                                        <h2 className="text-3xl font-display font-black text-brand-text mb-6 uppercase tracking-wider">Governing Law</h2>
                                         <p className="text-brand-muted leading-relaxed font-light text-lg">
-                                            These terms are governed by and construed in accordance with the laws of <span className="text-white font-semibold">Switzerland</span>. Any disputes arising from these terms or our services shall be subject to the exclusive jurisdiction of the Swiss federal courts.
+                                            These terms are governed by and construed in accordance with the laws of <span className="text-brand-text font-semibold">Switzerland</span>. Any disputes arising from these terms or our services shall be subject to the exclusive jurisdiction of the Swiss federal courts.
                                         </p>
                                     </div>
                                 </div>

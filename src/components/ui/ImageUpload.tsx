@@ -51,7 +51,7 @@ export function ImageUpload({ value, onChange, label = "Upload Image", className
 
             <div className="relative">
                 {value ? (
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 group">
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-brand-border group">
                         <Image src={value} alt="Preview" fill className="object-cover" />
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Button
@@ -68,7 +68,7 @@ export function ImageUpload({ value, onChange, label = "Upload Image", className
                 ) : (
                     <div
                         onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-white/10 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-brand-accent/50 hover:bg-brand-accent/5 transition-all group"
+                        className="border-2 border-dashed border-brand-border rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-brand-accent/50 hover:bg-brand-accent/5 transition-all group"
                     >
                         {uploading ? (
                             <Loader2 className="w-8 h-8 text-brand-accent animate-spin mb-2" />

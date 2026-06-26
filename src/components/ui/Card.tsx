@@ -69,7 +69,7 @@ export function ServiceCard({
         <div onClick={onClick} className="flex flex-col items-start gap-6 h-full">
             {/* Icon Container */}
             <div className={cn(
-                'p-4 rounded-2xl bg-brand-surface border border-white/10 group-hover:scale-110 transition-all duration-500 relative',
+                'p-4 rounded-2xl bg-brand-surface border border-brand-border group-hover:scale-110 transition-all duration-500 relative',
                 color === 'cyan' ? 'shadow-neon-cyan text-brand-accent' : 'shadow-neon-purple text-brand-secondary'
             )}>
                 <div className="relative z-10">{icon}</div>
@@ -77,7 +77,7 @@ export function ServiceCard({
             </div>
 
             <div className="space-y-4">
-                <h3 className="text-xl md:text-2xl font-display font-black text-white group-hover:text-brand-accent transition-colors duration-500 tracking-tight leading-tight">
+                <h3 className="text-xl md:text-2xl font-display font-black text-brand-text group-hover:text-brand-accent transition-colors duration-500 tracking-tight leading-tight">
                     {title}
                 </h3>
                 <p className="text-brand-muted leading-relaxed text-base opacity-80 group-hover:opacity-100 transition-opacity">
@@ -104,7 +104,7 @@ export function ServiceCard({
             hover
             glow
             className={cn(
-                'cursor-pointer border-white/5 bg-brand-glass h-full p-8 md:p-10',
+                'cursor-pointer border-brand-border bg-brand-glass h-full p-8 md:p-10',
                 'hover:bg-white/[0.02]',
                 className
             )}

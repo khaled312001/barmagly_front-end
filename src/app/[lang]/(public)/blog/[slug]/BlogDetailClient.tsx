@@ -41,7 +41,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                 <div className="w-20 h-20 rounded-full bg-brand-accent/10 flex items-center justify-center mb-8">
                     <span className="text-4xl">📄</span>
                 </div>
-                <h1 className="text-3xl font-display font-bold text-white mb-4">{blogDict.detail.notFound}</h1>
+                <h1 className="text-3xl font-display font-bold text-brand-text mb-4">{blogDict.detail.notFound}</h1>
                 <p className="text-brand-muted mb-8 max-w-md">{blogDict.detail.notFoundDesc}</p>
                 <Link href={`/${lang}/blog`}>
                     <Button variant="primary" icon={<ArrowLeft size={18} className="rtl:rotate-180" />} className="rtl:flex-row flex-row-reverse gap-2">
@@ -120,7 +120,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-8 leading-tight"
+                        className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-brand-text mb-8 leading-tight"
                     >
                         {title}
                     </motion.h1>
@@ -142,14 +142,14 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
-                        className="flex items-center justify-between flex-wrap gap-6 pt-8 border-t border-white/10"
+                        className="flex items-center justify-between flex-wrap gap-6 pt-8 border-t border-brand-border"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 border border-white/10 flex items-center justify-center text-brand-accent font-bold text-lg">
+                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-accent/20 to-brand-secondary/20 border border-brand-border flex items-center justify-center text-brand-accent font-bold text-lg">
                                 {post.author?.name?.charAt(0) || 'B'}
                             </div>
                             <div>
-                                <p className="text-base font-semibold text-white">{post.author?.name || 'Barmagly Team'}</p>
+                                <p className="text-base font-semibold text-brand-text">{post.author?.name || 'Barmagly Team'}</p>
                                 <p className="text-xs text-brand-muted/60">{blogDict.detail.publishedOn} {formatDate(post.publishedAt)}</p>
                             </div>
                         </div>
@@ -159,21 +159,21 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                             <span className="text-xs text-brand-muted/40 uppercase tracking-wider mx-2 hidden sm:block">{blogDict.detail.share}</span>
                             <button
                                 onClick={handleShareTwitter}
-                                className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
+                                className="w-10 h-10 rounded-full bg-brand-surface hover:bg-brand-accent/10 border border-brand-border hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
                                 title={blogDict.detail.shareTwitter}
                             >
                                 <Twitter size={16} />
                             </button>
                             <button
                                 onClick={handleShareLinkedin}
-                                className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
+                                className="w-10 h-10 rounded-full bg-brand-surface hover:bg-brand-accent/10 border border-brand-border hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all"
                                 title={blogDict.detail.shareLinkedin}
                             >
                                 <Linkedin size={16} />
                             </button>
                             <button
                                 onClick={handleCopyLink}
-                                className="w-10 h-10 rounded-full bg-white/5 hover:bg-brand-accent/10 border border-white/10 hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all relative"
+                                className="w-10 h-10 rounded-full bg-brand-surface hover:bg-brand-accent/10 border border-brand-border hover:border-brand-accent/30 flex items-center justify-center text-brand-muted hover:text-brand-accent transition-all relative"
                                 title={blogDict.detail.copyLink}
                             >
                                 <Link2 size={16} />
@@ -196,21 +196,21 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="prose prose-invert prose-lg max-w-none
-                        prose-headings:font-display prose-headings:font-bold prose-headings:text-white
-                        prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:mt-14 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-white/10
+                        prose-headings:font-display prose-headings:font-bold prose-headings:text-brand-text
+                        prose-h2:text-2xl prose-h2:md:text-3xl prose-h2:mt-14 prose-h2:mb-6 prose-h2:pb-3 prose-h2:border-b prose-h2:border-brand-border
                         prose-h3:text-xl prose-h3:md:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-h3:text-brand-accent/90
                         prose-p:text-brand-muted prose-p:leading-[1.85] prose-p:mb-6
-                        prose-strong:text-white prose-strong:font-semibold
+                        prose-strong:text-brand-text prose-strong:font-semibold
                         prose-a:text-brand-accent prose-a:no-underline prose-a:hover:underline prose-a:font-medium prose-a:transition-colors
                         prose-blockquote:border-l-4 prose-blockquote:border-l-brand-accent prose-blockquote:bg-brand-accent/5 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-blockquote:not-italic prose-blockquote:my-8
-                        prose-blockquote:text-white/80 prose-blockquote:font-medium prose-blockquote:text-lg
+                        prose-blockquote:text-brand-text/80 prose-blockquote:font-medium prose-blockquote:text-lg
                         prose-li:text-brand-muted prose-li:mb-2 prose-li:leading-relaxed
                         prose-ul:list-disc prose-ul:pl-6 prose-ul:my-6
                         prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-6
                         prose-img:rounded-2xl prose-img:shadow-2xl prose-img:my-10
                         prose-table:border-collapse prose-table:my-8 prose-table:w-full
-                        prose-th:bg-brand-accent/10 prose-th:text-brand-accent prose-th:font-bold prose-th:text-sm prose-th:uppercase prose-th:tracking-wider prose-th:px-4 prose-th:py-3 prose-th:border prose-th:border-white/10 prose-th:text-left
-                        prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-white/10 prose-td:text-brand-muted prose-td:text-sm
+                        prose-th:bg-brand-accent/10 prose-th:text-brand-accent prose-th:font-bold prose-th:text-sm prose-th:uppercase prose-th:tracking-wider prose-th:px-4 prose-th:py-3 prose-th:border prose-th:border-brand-border prose-th:text-left
+                        prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-brand-border prose-td:text-brand-muted prose-td:text-sm
                     "
                 >
                     <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -222,7 +222,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7 }}
-                        className="mt-16 pt-10 border-t border-white/10"
+                        className="mt-16 pt-10 border-t border-brand-border"
                     >
                         <h4 className="text-sm font-mono text-brand-muted/60 uppercase tracking-widest mb-5 flex items-center gap-2">
                             <Tag size={14} className="text-brand-accent/50" />
@@ -232,7 +232,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                             {post.tags.map((tag: any) => (
                                 <span
                                     key={tag.id}
-                                    className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 hover:bg-brand-accent/10 text-sm text-brand-muted hover:text-brand-accent transition-all duration-300 border border-white/5 hover:border-brand-accent/20 cursor-default"
+                                    className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-surface hover:bg-brand-accent/10 text-sm text-brand-muted hover:text-brand-accent transition-all duration-300 border border-brand-border hover:border-brand-accent/20 cursor-default"
                                 >
                                     #{tag.name}
                                 </span>
@@ -250,7 +250,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                 >
                     <div className="absolute -bottom-16 -right-16 w-40 h-40 bg-brand-accent/5 rounded-full blur-[60px]" />
                     <div className="relative z-10">
-                        <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                        <h3 className="text-2xl md:text-3xl font-display font-bold text-brand-text mb-4">
                             {blogDict.detail.ctaTitle}
                         </h3>
                         <p className="text-brand-muted mb-8 max-w-2xl leading-relaxed">
@@ -263,7 +263,7 @@ export default function BlogDetailClient({ post, lang }: BlogDetailClientProps) 
                                 </Button>
                             </Link>
                             <Link href={`/${lang}/services`}>
-                                <Button variant="outline" size="lg" className="border-white/10 hover:border-brand-accent/50">
+                                <Button variant="outline" size="lg" className="border-brand-border hover:border-brand-accent/50">
                                     {blogDict.detail.viewServices}
                                 </Button>
                             </Link>

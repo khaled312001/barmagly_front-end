@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -15,172 +15,161 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* RTL gets Cairo as primary face. */
+  html[dir="rtl"] body,
+  html[lang="ar"] body {
+    font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    letter-spacing: 0;
   }
 
   body {
     @apply bg-brand-primary text-brand-text font-sans;
     overflow-x: hidden;
-    background-image:
-      linear-gradient(to bottom, transparent 0%, rgba(3, 7, 18, 1) 100%),
-      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300D4FF' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    font-feature-settings: 'cv11', 'ss01';
   }
 
   ::selection {
-    @apply bg-brand-accent/30 text-white;
+    @apply bg-brand-accent text-white;
   }
 
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
+    height: 10px;
   }
-
   ::-webkit-scrollbar-track {
-    @apply bg-brand-dark;
+    background: transparent;
   }
-
   ::-webkit-scrollbar-thumb {
-    @apply bg-brand-surface rounded-full;
-    border: 1px solid rgba(0, 212, 255, 0.2);
+    @apply bg-brand-border-strong rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-muted;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-brand-accent/50;
+  /* Heading defaults — display face on Latin, Cairo handles Arabic via html[dir=rtl] above. */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-brand-text;
+    font-weight: 700;
   }
+
+  h1 { @apply text-4xl sm:text-5xl lg:text-6xl; line-height: 1.1; }
+  h2 { @apply text-3xl sm:text-4xl lg:text-5xl; line-height: 1.15; }
+  h3 { @apply text-2xl sm:text-3xl; line-height: 1.25; }
+
+  p {
+    @apply text-brand-text-soft;
+    line-height: 1.65;
+  }
+
+  /* Arabic headings need looser leading */
+  html[dir="rtl"] h1 { line-height: 1.4; }
+  html[dir="rtl"] h2 { line-height: 1.45; }
+  html[dir="rtl"] h3 { line-height: 1.5; }
+  html[dir="rtl"] p  { line-height: 1.9; }
 }
 
 @layer components {
 
-  /* Advanced Tech Background */
+  /* Crisp ambient backdrop — barely visible, premium. */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.02) 0%, transparent 40%);
+      radial-gradient(circle at 85% 5%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 0% 60%, rgba(5, 150, 105, 0.03) 0%, transparent 45%);
     pointer-events: none;
     z-index: -1;
   }
 
+  /* Faint dotted grid backdrop (used on hero / feature sections) */
   .tech-grid {
-    background-size: 40px 40px;
-    background-image:
-      linear-gradient(to right, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
-    mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 70%);
+    background-image: radial-gradient(circle, rgba(10, 22, 40, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(circle at 50% 40%, black 30%, transparent 75%);
   }
 
-  /* Refined Glassmorphism */
+  /* Refined card — flat white with crisp border + soft shadow */
   .glass-card {
-    @apply bg-brand-glass backdrop-blur-xl border border-white/5 rounded-2xl transition-all duration-500;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    @apply bg-white border border-brand-border rounded-2xl transition-all duration-300 shadow-card;
   }
-
   .glass-card:hover {
-    @apply border-brand-accent/40 shadow-neon-cyan;
-    transform: translateY(-5px) scale(1.01);
-    background: rgba(255, 255, 255, 0.03);
+    @apply border-brand-accent/40 shadow-card-hover;
+    transform: translateY(-3px);
   }
 
-  /* Neon Buttons */
+  /* Premium CTA — solid accent w/ depth */
   .btn-neon {
-    @apply relative overflow-hidden bg-brand-accent text-brand-primary font-bold px-6 py-3 rounded-lg transition-all duration-300;
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+    @apply relative inline-flex items-center justify-center bg-brand-accent text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-neon-cyan;
   }
-
   .btn-neon:hover {
-    @apply bg-white text-brand-accent;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    @apply bg-brand-accent-hover;
+    box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.45);
   }
 
-  /* Advanced Neon Glow */
-  .neon-glow-cyan {
-    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
-  }
-
-  .neon-glow-purple {
-    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
-  }
+  /* Icon "glow" effects — subtle drop shadow, no more neon */
+  .neon-glow-cyan { filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.20)); }
+  .neon-glow-purple { filter: drop-shadow(0 4px 8px rgba(5, 150, 105, 0.20)); }
 
   .neon-border-pulse {
     animation: neonPulse 3s ease-in-out infinite;
   }
-
   @keyframes neonPulse {
-
-    0%,
-    100% {
-      border-color: rgba(0, 212, 255, 0.1);
-      box-shadow: 0 0 5px rgba(0, 212, 255, 0.1);
-    }
-
-    50% {
-      border-color: rgba(0, 212, 255, 0.4);
-      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
-    }
+    0%, 100% { border-color: rgba(37, 99, 235, 0.25); box-shadow: 0 0 0 rgba(37, 99, 235, 0); }
+    50%      { border-color: rgba(37, 99, 235, 0.55); box-shadow: 0 0 14px rgba(37, 99, 235, 0.18); }
   }
 
-  /* Gradient Text */
+  /* Gradient text used in hero / section heads */
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-accent to-brand-secondary font-bold;
   }
 
-  /* Section Styles */
+  /* Section layout helpers */
   .section-container {
     @apply max-w-7xl mx-auto px-5 sm:px-8 lg:px-12;
   }
-
   .section-padding {
     @apply py-16 md:py-24 lg:py-32;
   }
 
-  /* Circuit Board Animation */
+  /* Refined chip / badge */
+  .chip-soft {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-accent-soft text-brand-accent text-xs font-semibold tracking-wide border border-brand-accent/15;
+  }
+  .chip-ink {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-brand-accent-ink text-xs font-semibold tracking-wide;
+  }
+
+  /* Section heading helper */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-brand-accent;
+  }
+
   .circuit-line {
-    @apply absolute bg-brand-accent/20 h-[1px] w-full;
+    @apply absolute bg-brand-accent/15 h-[1px] w-full;
     animation: circuitFlow 4s linear infinite;
   }
-
   @keyframes circuitFlow {
-    0% {
-      transform: scaleX(0);
-      opacity: 0;
-      transform-origin: left;
-    }
-
-    50% {
-      transform: scaleX(1);
-      opacity: 1;
-    }
-
-    100% {
-      transform: scaleX(1);
-      opacity: 0;
-      transform-origin: right;
-    }
+    0%   { transform: scaleX(0); opacity: 0; transform-origin: left; }
+    50%  { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0; transform-origin: right; }
   }
 
-  /* Floating Animation */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
+  .animate-float { animation: float 6s ease-in-out infinite; }
   @keyframes float {
-
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  /* Utilities */
-  .text-glow {
-    text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
   }
 
   .mask-fade-edges {
     mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+
+  /* Utility — invisible focus ring for keyboard users only */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent focus-visible:ring-offset-2;
   }
 }

@@ -64,7 +64,7 @@ function AboutHero() {
                         </span>
                     </motion.div>
 
-                    <motion.h1 variants={heroTextReveal} className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 leading-[1.1] tracking-tight">
+                    <motion.h1 variants={heroTextReveal} className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 leading-[1.1] tracking-tight">
                         {dict.about.hero.titleLine1} <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_20px_rgba(0,212,255,0.3)]">
                             {dict.about.hero.titleHighlight}
@@ -107,11 +107,11 @@ function StorySection() {
                                     {dict.about.story.desc3}
                                 </p>
                                 <div className="pt-6 grid grid-cols-2 gap-4">
-                                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 group hover:border-brand-accent/30 transition-colors">
+                                    <div className="p-4 rounded-xl bg-white/[0.02] border border-brand-border group hover:border-brand-accent/30 transition-colors">
                                         <p className="text-brand-accent font-display font-bold text-3xl mb-1">{dict.about.story.stat1Value}</p>
                                         <p className="text-xs uppercase tracking-widest opacity-60">{dict.about.story.stat1Label}</p>
                                     </div>
-                                    <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 group hover:border-brand-secondary/30 transition-colors">
+                                    <div className="p-4 rounded-xl bg-white/[0.02] border border-brand-border group hover:border-brand-secondary/30 transition-colors">
                                         <p className="text-brand-secondary font-display font-bold text-3xl mb-1">{dict.about.story.stat2Value}</p>
                                         <p className="text-xs uppercase tracking-widest opacity-60">{dict.about.story.stat2Label}</p>
                                     </div>
@@ -125,7 +125,7 @@ function StorySection() {
                             {/* Decorative Frame */}
                             <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent to-brand-secondary rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
 
-                            <div className="glass-card p-10 relative overflow-hidden bg-brand-dark/50 border-white/10 backdrop-blur-2xl">
+                            <div className="glass-card p-10 relative overflow-hidden bg-brand-dark/50 border-brand-border backdrop-blur-2xl">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[100px] rtl:-ml-32 rtl:mr-auto ltr:-mr-32 -mt-32" />
 
                                 <div className="relative space-y-10">
@@ -134,7 +134,7 @@ function StorySection() {
                                             <Shield size={28} />
                                         </div>
                                         <div>
-                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.licenseTitle}</p>
+                                            <p className="text-brand-text font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.licenseTitle}</p>
                                             <p className="text-brand-accent font-mono text-sm tracking-widest bg-brand-accent/5 px-3 py-1 rounded-md border border-brand-accent/10 inline-block">
                                                 {license}
                                             </p>
@@ -146,14 +146,14 @@ function StorySection() {
                                             <Award size={28} />
                                         </div>
                                         <div>
-                                            <p className="text-white font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.qualityTitle}</p>
+                                            <p className="text-brand-text font-bold text-lg mb-1 uppercase tracking-tight">{dict.about.story.qualityTitle}</p>
                                             <p className="text-brand-muted text-sm leading-relaxed">
                                                 {dict.about.story.qualityDesc}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <div className="pt-8 border-t border-white/10 flex items-center gap-4">
+                                    <div className="pt-8 border-t border-brand-border flex items-center gap-4">
                                         <div className="w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
                                         <p className="text-brand-muted text-sm font-mono tracking-tighter">
                                             📍 <span className="hover:text-brand-accent transition-colors">{address}</span>
@@ -180,23 +180,23 @@ function MissionVisionSection() {
             <div className="section-container relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <SectionReveal direction="left">
-                        <div className="glass-card p-12 h-full hover-glow group border-white/5 relative overflow-hidden">
+                        <div className="glass-card p-12 h-full hover-glow group border-brand-border relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-3xl group-hover:bg-brand-accent/10 transition-colors" />
                             <div className="p-4 rounded-2xl bg-brand-accent/10 text-brand-accent w-fit mb-8 border border-brand-accent/20 group-hover:shadow-neon-cyan transition-all duration-500">
                                 <Target size={32} />
                             </div>
-                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">{dict.about.missionVision.missionTitle}</h3>
+                            <h3 className="text-3xl font-display font-black text-brand-text mb-6 tracking-tight">{dict.about.missionVision.missionTitle}</h3>
                             <p className="text-brand-muted leading-relaxed text-lg font-light" dangerouslySetInnerHTML={{ __html: dict.about.missionVision.missionDesc }} />
                         </div>
                     </SectionReveal>
 
                     <SectionReveal direction="right">
-                        <div className="glass-card p-12 h-full hover-glow group border-white/5 relative overflow-hidden">
+                        <div className="glass-card p-12 h-full hover-glow group border-brand-border relative overflow-hidden">
                             <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-secondary/5 rounded-full blur-3xl group-hover:bg-brand-secondary/10 transition-colors" />
                             <div className="p-4 rounded-2xl bg-brand-secondary/10 text-brand-secondary w-fit mb-8 border border-brand-secondary/20 group-hover:shadow-neon-purple transition-all duration-500">
                                 <Eye size={32} />
                             </div>
-                            <h3 className="text-3xl font-display font-black text-white mb-6 tracking-tight">{dict.about.missionVision.visionTitle}</h3>
+                            <h3 className="text-3xl font-display font-black text-brand-text mb-6 tracking-tight">{dict.about.missionVision.visionTitle}</h3>
                             <p className="text-brand-muted leading-relaxed text-lg font-light" dangerouslySetInnerHTML={{ __html: dict.about.missionVision.visionDesc }} />
                         </div>
                     </SectionReveal>
@@ -236,7 +236,7 @@ function ValuesSection({ data }: { data?: any[] }) {
     }));
 
     return (
-        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-white/5">
+        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <SectionHeading
@@ -254,13 +254,13 @@ function ValuesSection({ data }: { data?: any[] }) {
                 >
                     {displayValues.map((value, i) => (
                         <motion.div key={i} variants={staggerItem}>
-                            <div className={`glass-card p-8 group border-white/5 hover:border-brand-${value.color || 'cyan'}/30 h-full relative overflow-hidden`}>
+                            <div className={`glass-card p-8 group border-brand-border hover:border-brand-${value.color || 'cyan'}/30 h-full relative overflow-hidden`}>
                                 <div className={`absolute -top-10 -right-10 w-24 h-24 bg-brand-${value.color || 'cyan'}/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700`} />
 
                                 <div className={`p-4 rounded-2xl bg-brand-${value.color || 'cyan'}/10 text-brand-${value.color || 'cyan'} w-fit mb-6 border border-brand-${value.color || 'cyan'}/20 group-hover:shadow-neon-${value.color || 'cyan'} transition-all duration-500`}>
                                     {value.icon}
                                 </div>
-                                <h3 className="text-xl font-display font-bold text-white mb-3 tracking-tight group-hover:text-brand-accent transition-colors">{value.title}</h3>
+                                <h3 className="text-xl font-display font-bold text-brand-text mb-3 tracking-tight group-hover:text-brand-accent transition-colors">{value.title}</h3>
                                 <p className="text-brand-muted leading-relaxed font-light">{value.desc || value.description}</p>
                             </div>
                         </motion.div>
@@ -302,9 +302,9 @@ function TimelineSection({ data }: { data?: any[] }) {
                                     <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                                         <div className="group relative">
                                             <div className={`absolute -inset-0.5 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500`} />
-                                            <div className="glass-card p-8 hover-glow relative bg-brand-dark/40 border-white/5 group-hover:border-brand-accent/30 transition-all duration-500">
+                                            <div className="glass-card p-8 hover-glow relative bg-brand-dark/40 border-brand-border group-hover:border-brand-accent/30 transition-all duration-500">
                                                 <span className="text-brand-accent font-mono text-lg font-black tracking-tighter mb-2 block">{m.year}</span>
-                                                <h3 className="text-xl font-display font-black text-white mb-3 tracking-tight">{m.title}</h3>
+                                                <h3 className="text-xl font-display font-black text-brand-text mb-3 tracking-tight">{m.title}</h3>
                                                 <p className="text-brand-muted leading-relaxed font-light">{m.desc || m.description}</p>
                                             </div>
                                         </div>
@@ -353,7 +353,7 @@ function TechStackSection({ data }: { data?: any[] }) {
     })) : defaultTech;
 
     return (
-        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-white/5">
+        <section className="section-padding relative overflow-hidden bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-10" />
             <div className="section-container relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -369,13 +369,13 @@ function TechStackSection({ data }: { data?: any[] }) {
                                 {displayTech.map((tech, i) => (
                                     <div key={i} className="space-y-2 group">
                                         <div className="flex justify-between items-center text-sm font-mono tracking-widest uppercase">
-                                            <span className="flex items-center gap-3 text-white">
+                                            <span className="flex items-center gap-3 text-brand-text">
                                                 <span className="text-brand-accent group-hover:scale-110 transition-transform">{tech.icon}</span>
                                                 {tech.name}
                                             </span>
                                             <span className="text-brand-accent">{tech.level}%</span>
                                         </div>
-                                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                                        <div className="h-1.5 w-full bg-brand-surface rounded-full overflow-hidden border border-brand-border">
                                             <motion.div
                                                 initial={{ width: 0 }}
                                                 whileInView={{ width: `${tech.level}%` }}
@@ -392,7 +392,7 @@ function TechStackSection({ data }: { data?: any[] }) {
                     <SectionReveal direction="right">
                         <div className="relative">
                             <div className="absolute inset-0 bg-brand-accent/5 rounded-full blur-[120px] animate-pulse" />
-                            <div className="glass-card p-1 items-center justify-center aspect-square flex border-white/5 relative overflow-hidden">
+                            <div className="glass-card p-1 items-center justify-center aspect-square flex border-brand-border relative overflow-hidden">
                                 <div className="absolute inset-0 tech-grid opacity-30" />
                                 <motion.div
                                     className="p-10 rounded-full border-2 border-dashed border-brand-accent/20 relative"

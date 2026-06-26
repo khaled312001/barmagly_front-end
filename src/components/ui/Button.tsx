@@ -46,12 +46,12 @@ export function Button({
     };
 
     const variants = {
-        primary: 'bg-brand-accent text-brand-primary font-bold hover:bg-white shadow-neon-cyan border-b-2 border-white/20',
-        secondary: 'bg-brand-secondary text-white font-bold hover:bg-brand-accent shadow-neon-purple transition-all',
-        outline: 'bg-transparent text-brand-text border-2 border-brand-accent/50 hover:border-brand-accent hover:bg-brand-accent/10',
-        ghost: 'bg-transparent text-brand-muted hover:text-brand-text hover:bg-white/5',
-        neon: 'bg-brand-accent text-brand-primary shadow-neon-cyan animate-pulse font-bold',
-        danger: 'bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white',
+        primary: 'bg-brand-accent text-white font-semibold hover:bg-brand-accent-hover shadow-neon-cyan',
+        secondary: 'bg-brand-secondary text-white font-semibold hover:bg-brand-secondary-hover shadow-neon-purple',
+        outline: 'bg-white text-brand-text border border-brand-border-strong hover:bg-brand-surface hover:border-brand-accent',
+        ghost: 'bg-transparent text-brand-text-soft hover:text-brand-text hover:bg-brand-surface',
+        neon: 'bg-white text-brand-accent border border-brand-accent/30 hover:bg-brand-accent-soft font-semibold',
+        danger: 'bg-red-50 text-red-600 border border-red-200 hover:bg-red-500 hover:text-brand-text',
     };
 
     const sizes = {

@@ -30,157 +30,93 @@ function HeroSection({ data }: { data?: any }) {
     const secondaryBtnText = dict.hero.ctaSecondary;
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-primary">
-            {/* Interactive Spotlight */}
-            <MouseFollower />
-
-            {/* Background Effects */}
+        <section className="relative min-h-[88vh] flex items-center justify-center overflow-hidden bg-brand-primary">
+            {/* Calm ambient backdrop — soft tint, no animation thrash. */}
             <div className="absolute inset-0 bg-hero-gradient" />
-            <div className="absolute inset-0 tech-grid opacity-20" />
+            <div className="absolute inset-0 tech-grid opacity-50" />
 
-            {/* Animated Circuit Pattern Background */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.2, 0.4, 0.2] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 circuit-pattern opacity-30"
-            />
-
-            {/* Dynamic Geometric Accents */}
-            <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.15, 0.25, 0.15],
-                        x: [0, 50, 0],
-                        y: [0, -30, 0]
-                    }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -top-[10%] -right-[5%] w-[800px] h-[800px] bg-brand-accent/20 rounded-full blur-[140px]"
-                    style={{ willChange: 'transform, opacity' }}
-                />
-                <motion.div
-                    animate={{
-                        scale: [1.2, 1, 1.2],
-                        opacity: [0.1, 0.2, 0.1],
-                        x: [0, -40, 0],
-                        y: [0, 20, 0]
-                    }}
-                    transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[20%] -left-[10%] w-[700px] h-[700px] bg-brand-secondary/20 rounded-full blur-[120px]"
-                    style={{ willChange: 'transform, opacity' }}
-                />
+            {/* Two very gentle color washes (no spin, no rotate) — pure decoration. */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute -top-32 -right-32 w-[560px] h-[560px] bg-brand-accent/10 rounded-full blur-[150px]" />
+                <div className="absolute -bottom-40 -left-40 w-[520px] h-[520px] bg-brand-secondary/8 rounded-full blur-[140px]" />
             </div>
 
-            {/* Floating Tech Elements with Enhanced Motion */}
-            <div className="absolute inset-0 pointer-events-none hidden lg:block">
-                <motion.div
-                    animate={{
-                        y: [0, -30, 0],
-                        rotate: [0, 10, -10, 0],
-                        opacity: [0.4, 0.8, 0.4]
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[25%] left-[10%] p-5 glass-card neon-glow-cyan border-brand-accent/30"
-                    style={{ willChange: 'transform' }}
-                >
-                    <Terminal className="text-brand-accent" size={38} />
-                </motion.div>
-
-                <motion.div
-                    animate={{
-                        y: [0, 30, 0],
-                        rotate: [0, -15, 15, 0],
-                        opacity: [0.4, 0.7, 0.4]
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="absolute top-[55%] right-[12%] p-5 glass-card neon-glow-purple border-brand-secondary/30"
-                    style={{ willChange: 'transform' }}
-                >
-                    <Target className="text-brand-secondary" size={38} />
-                </motion.div>
-
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        rotate: [0, 360],
-                    }}
-                    transition={{
-                        scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                        rotate: { duration: 20, repeat: Infinity, ease: "linear" }
-                    }}
-                    className="absolute bottom-[25%] left-[20%] p-3 glass-card opacity-30 border-white/10"
-                >
-                    <TrendingUp className="text-brand-accent" size={28} />
-                </motion.div>
-            </div>
-
-            <div className="section-container relative z-10 pt-40 pb-20 lg:pt-48 lg:pb-32 text-center">
+            <div className="section-container relative z-10 pt-32 pb-24 lg:pt-44 lg:pb-32 text-center">
                 <motion.div
                     variants={staggerContainer}
                     initial="hidden"
                     animate="visible"
-                    className="max-w-5xl mx-auto flex flex-col items-center"
+                    className="max-w-4xl mx-auto flex flex-col items-center"
                 >
                     {/* Badge */}
-                    <motion.div variants={heroTextReveal} className="mb-10">
-                        <span className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-brand-glass border border-brand-accent/30 text-brand-accent text-xs font-mono tracking-[0.2em] shadow-neon-cyan backdrop-blur-md">
-                            <Shield size={16} className="animate-pulse" />
-                            <span className="uppercase">{badgeText}</span>
+                    <motion.div variants={heroTextReveal} className="mb-8">
+                        <span className="chip-soft">
+                            <Shield size={14} />
+                            <span className={isAr ? 'tracking-normal' : 'uppercase tracking-widest'}>
+                                {badgeText}
+                            </span>
                         </span>
                     </motion.div>
 
-                    {/* Main Headline */}
+                    {/* Main Headline — clear hierarchy, single gradient accent line */}
                     <motion.h1
                         variants={heroTextReveal}
-                        className="font-display font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-8 leading-[1.1] tracking-tight drop-shadow-2xl px-4"
+                        className={cn(
+                            "font-display font-bold text-brand-text mb-7 tracking-tight px-4",
+                            "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
+                            isAr ? "leading-[1.25]" : "leading-[1.08]"
+                        )}
                     >
-                        <span className="block mb-4 sm:mb-2 opacity-90">{titleLine1}</span>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_40px_rgba(0,212,255,0.35)]">
+                        <span className="block mb-2 sm:mb-3">{titleLine1}</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">
                             {titleLine2}
                         </span>
                     </motion.h1>
 
-                    {/* Description */}
+                    {/* Description — softer slate tone, max-width tightened */}
                     <motion.p
                         variants={heroTextReveal}
-                        className="text-lg md:text-xl lg:text-2xl text-brand-muted max-w-4xl mx-auto mb-12 leading-relaxed font-light opacity-90"
+                        className={cn(
+                            "text-brand-text-soft max-w-2xl mx-auto mb-10 font-normal",
+                            "text-base sm:text-lg md:text-xl",
+                            isAr ? "leading-[1.9]" : "leading-relaxed"
+                        )}
                     >
                         {description}
                     </motion.p>
 
-                    {/* CTAs */}
-                    <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-xl px-4">
+                    {/* CTAs — primary solid + secondary outline */}
+                    <motion.div variants={heroTextReveal} className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-md px-4">
                         <Link href={`/${params.lang}/portfolio`} className="w-full sm:w-1/2">
-                            <Button size="xl" variant="primary" icon={<ArrowRight size={22} />} className="w-full h-16 text-lg font-bold rounded-xl group shadow-neon-cyan transition-all duration-500 hover:scale-105 active:scale-95">
+                            <Button size="lg" variant="primary" icon={<ArrowRight size={18} className="rtl:rotate-180" />} className="w-full h-12 text-sm sm:text-base font-semibold rounded-lg shadow-neon-cyan transition hover:translate-y-[-1px] active:scale-[0.99]">
                                 {primaryBtnText}
                             </Button>
                         </Link>
                         <Link href={`/${params.lang}/contact`} className="w-full sm:w-1/2">
-                            <Button size="xl" variant="neon" className="w-full h-16 text-lg font-bold rounded-xl border-white/20 hover:border-brand-secondary/50 transition-all duration-500 hover:scale-105 active:scale-95">
+                            <Button size="lg" variant="outline" className="w-full h-12 text-sm sm:text-base font-semibold rounded-lg border-brand-border-strong text-brand-text hover:bg-brand-surface transition">
                                 {secondaryBtnText}
                             </Button>
                         </Link>
                     </motion.div>
 
-                    {/* Enhanced Trust indicators */}
+                    {/* Trust indicators — simplified row, soft icons */}
                     <motion.div
                         variants={heroTextReveal}
-                        className="mt-20 grid grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-6 sm:gap-12 w-full px-4"
+                        className="mt-16 grid grid-cols-2 sm:grid-cols-4 items-start justify-center gap-x-4 gap-y-8 w-full max-w-3xl px-4"
                     >
                         {[
-                            { icon: <Terminal size={20} />, text: dict.hero.trust.programming, sub: dict.hero.trust.techStack },
-                            { icon: <Target size={20} />, text: dict.hero.trust.marketing, sub: dict.hero.trust.growth },
-                            { icon: <TrendingUp size={20} />, text: dict.hero.trust.sales, sub: dict.hero.trust.revenue },
-                            { icon: <Shield size={20} />, text: dict.hero.trust.reliability, sub: dict.hero.trust.quality },
+                            { icon: <Terminal size={18} />, text: dict.hero.trust.programming, sub: dict.hero.trust.techStack },
+                            { icon: <Target size={18} />, text: dict.hero.trust.marketing, sub: dict.hero.trust.growth },
+                            { icon: <TrendingUp size={18} />, text: dict.hero.trust.sales, sub: dict.hero.trust.revenue },
+                            { icon: <Shield size={18} />, text: dict.hero.trust.reliability, sub: dict.hero.trust.quality },
                         ].map((item, i) => (
-                            <motion.div key={i} variants={staggerItem} className="flex flex-col items-center gap-3 group">
-                                <span className="p-3.5 rounded-2xl bg-brand-surface border border-white/5 text-brand-accent shadow-neon-cyan group-hover:scale-110 transition-transform duration-300">
+                            <motion.div key={i} variants={staggerItem} className="flex flex-col items-center gap-2.5">
+                                <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-brand-accent-soft text-brand-accent">
                                     {item.icon}
                                 </span>
                                 <div className="text-center">
-                                    <p className="text-white font-bold text-xs sm:text-sm mb-0.5 tracking-wide whitespace-nowrap">{item.text}</p>
-                                    <p className="text-brand-muted text-[9px] sm:text-[10px] uppercase tracking-widest opacity-60 font-mono">{item.sub}</p>
+                                    <p className="text-brand-text font-semibold text-sm">{item.text}</p>
+                                    <p className="text-brand-muted text-[11px] uppercase tracking-wider mt-0.5">{item.sub}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -255,7 +191,7 @@ function ServicesSection() {
     return (
         <section className="relative overflow-hidden py-32 bg-brand-primary">
             {/* ... header ... */}
-            <div className="absolute top-20 left-1/2 -translate-x-1/2 text-[15vw] font-display font-black text-white/[0.02] select-none pointer-events-none tracking-tighter">
+            <div className="absolute top-20 left-1/2 -translate-x-1/2 text-[15vw] font-display font-black text-brand-text/[0.02] select-none pointer-events-none tracking-tighter">
                 {dict.home.services.title.toUpperCase()}
             </div>
 
@@ -265,7 +201,7 @@ function ServicesSection() {
                 <SectionReveal>
                     <div className="text-center mb-24">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-4 block">{dict.home.services.title}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.services.title}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
@@ -295,7 +231,7 @@ function PosSection() {
     const dict = useDictionary();
     const params = useParams();
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
+        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[150px] pointer-events-none" />
 
@@ -303,7 +239,7 @@ function PosSection() {
                 <SectionReveal direction="left" className="w-full lg:w-1/2 relative">
                     <div className="relative z-10">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.pos.badge}</span>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 leading-[1.1] tracking-tight">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-brand-text mb-6 leading-[1.1] tracking-tight">
                             {dict.home.pos.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-l from-brand-accent to-brand-secondary">{dict.home.pos.titleHighlight}</span> {dict.home.pos.titleLine2}
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full shadow-neon-cyan rtl:ml-auto ltr:mr-auto" />
@@ -324,7 +260,7 @@ function PosSection() {
                                     <div className="p-2 rounded-lg bg-brand-accent/10 text-brand-accent">
                                         {feature.icon}
                                     </div>
-                                    <span className="text-white font-medium text-sm">{feature.text}</span>
+                                    <span className="text-brand-text font-medium text-sm">{feature.text}</span>
                                 </div>
                             ))}
                         </div>
@@ -342,16 +278,16 @@ function PosSection() {
                 <SectionReveal direction="right" className="w-full lg:w-1/2">
                     <div className="relative group">
                         <div className="absolute -inset-4 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
-                        <div className="glass-card border-white/10 rounded-3xl overflow-hidden relative shadow-2xl p-2 bg-brand-surface/80 backdrop-blur-xl">
+                        <div className="glass-card border-brand-border rounded-3xl overflow-hidden relative shadow-2xl p-2 bg-brand-surface/80 backdrop-blur-xl">
                             {/* Dashboard Mockup Representation */}
-                            <div className="bg-[#0A0A0B] rounded-2xl w-full h-[400px] md:h-[500px] border border-white/5 relative overflow-hidden flex flex-col">
+                            <div className="bg-[#0A0A0B] rounded-2xl w-full h-[400px] md:h-[500px] border border-brand-border relative overflow-hidden flex flex-col">
                                 {/* Window Navigation Bar */}
-                                <div className="h-10 border-b border-white/10 flex items-center px-4 gap-2 bg-white/[0.02]">
+                                <div className="h-10 border-b border-brand-border flex items-center px-4 gap-2 bg-white/[0.02]">
                                     <div className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-400 transition-colors cursor-pointer" />
                                     <div className="w-3 h-3 rounded-full bg-yellow-500/80 hover:bg-yellow-400 transition-colors cursor-pointer" />
                                     <div className="w-3 h-3 rounded-full bg-green-500/80 hover:bg-green-400 transition-colors cursor-pointer" />
                                     <div className="ml-4 flex-1 flex justify-center">
-                                        <div className="text-xs text-white/30 font-mono tracking-widest">Barmagly POS Dashboard</div>
+                                        <div className="text-xs text-brand-text/30 font-mono tracking-widest">Barmagly POS Dashboard</div>
                                     </div>
                                 </div>
                                 {/* Mockup Content */}
@@ -359,15 +295,15 @@ function PosSection() {
                                     {/* Stats Row */}
                                     <div className="grid grid-cols-3 gap-4">
                                         {[...Array(3)].map((_, i) => (
-                                            <div key={i} className="h-24 rounded-xl bg-white/[0.03] border border-white/5 p-4 flex flex-col justify-between overflow-hidden relative">
+                                            <div key={i} className="h-24 rounded-xl bg-white/[0.03] border border-brand-border p-4 flex flex-col justify-between overflow-hidden relative">
                                                 <div className="w-8 h-8 rounded-lg bg-brand-accent/20" />
-                                                <div className="w-20 h-4 bg-white/10 rounded" />
+                                                <div className="w-20 h-4 bg-brand-surface rounded" />
                                                 <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-brand-accent/10 rounded-full blur-xl" />
                                             </div>
                                         ))}
                                     </div>
                                     {/* Main Chart Area */}
-                                    <div className="flex-1 rounded-xl bg-white/[0.03] border border-white/5 p-4 flex gap-4">
+                                    <div className="flex-1 rounded-xl bg-white/[0.03] border border-brand-border p-4 flex gap-4">
                                         <div className="w-2/3 h-full rounded-lg bg-brand-secondary/10 relative overflow-hidden flex items-end">
                                             <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-brand-accent/20 to-transparent" />
                                             {/* Abstract wave representing analytics */}
@@ -378,9 +314,9 @@ function PosSection() {
                                         </div>
                                         <div className="w-1/3 flex flex-col gap-3">
                                             {[...Array(4)].map((_, i) => (
-                                                <div key={i} className="h-full rounded-lg bg-white/5 w-full flex items-center p-2 gap-2">
-                                                    <div className="w-6 h-6 rounded bg-white/10" />
-                                                    <div className="flex-1 h-2 bg-white/10 rounded" />
+                                                <div key={i} className="h-full rounded-lg bg-brand-surface w-full flex items-center p-2 gap-2">
+                                                    <div className="w-6 h-6 rounded bg-brand-surface" />
+                                                    <div className="flex-1 h-2 bg-brand-surface rounded" />
                                                 </div>
                                             ))}
                                         </div>
@@ -449,14 +385,14 @@ function WhyChooseSection({ data }: { data?: any }) {
     ];
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
+        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <div className="flex flex-col lg:flex-row gap-20 items-center">
                     <SectionReveal direction="left" className="w-full lg:w-1/2">
                         <div className="max-w-xl">
                             <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{badge}</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-8 leading-[1.1] tracking-tight">
+                            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-8 leading-[1.1] tracking-tight">
                                 {title}
                             </h2>
                             <p className="text-brand-muted text-lg leading-relaxed mb-10 opacity-80 font-light">
@@ -477,11 +413,11 @@ function WhyChooseSection({ data }: { data?: any }) {
 
                         {reasons.map((reason, i) => (
                             <SectionReveal key={i} direction="right" delay={i * 0.1}>
-                                <div className="glass-card p-8 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 h-full flex flex-col items-start">
-                                    <div className="p-4 rounded-2xl bg-brand-surface border border-white/10 text-brand-accent w-fit mb-6 group-hover:shadow-neon-cyan transition-all duration-500 group-hover:scale-110">
+                                <div className="glass-card p-8 group hover:bg-white/[0.03] transition-all duration-500 border-brand-border h-full flex flex-col items-start">
+                                    <div className="p-4 rounded-2xl bg-brand-surface border border-brand-border text-brand-accent w-fit mb-6 group-hover:shadow-neon-cyan transition-all duration-500 group-hover:scale-110">
                                         {reason.icon}
                                     </div>
-                                    <h3 className="text-xl font-display font-bold text-white mb-3 group-hover:text-brand-accent transition-colors">
+                                    <h3 className="text-xl font-display font-bold text-brand-text mb-3 group-hover:text-brand-accent transition-colors">
                                         {reason.title}
                                     </h3>
                                     <p className="text-brand-muted leading-relaxed text-sm opacity-70">
@@ -515,7 +451,7 @@ function CountersSection({ data }: { data?: any }) {
     const stats: any[] = (isAr && data && data.length > 0) ? data : defaultStats;
 
     return (
-        <section className="relative overflow-hidden py-24 bg-brand-primary border-y border-white/5">
+        <section className="relative overflow-hidden py-24 bg-brand-primary border-y border-brand-border">
             <div className="absolute inset-0 bg-accent-gradient opacity-10" />
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
@@ -563,7 +499,7 @@ function TestimonialsSection() {
                 <SectionReveal>
                     <div className="text-center mb-24">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.testimonials.badge}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.testimonials.title}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
@@ -576,7 +512,7 @@ function TestimonialsSection() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
                     {displayTestimonials.map((t, i) => (
                         <SectionReveal key={i} delay={i * 0.1}>
-                            <div className="glass-card p-10 h-full flex flex-col group hover:bg-white/[0.04] transition-all duration-500 border-white/5 relative overflow-hidden">
+                            <div className="glass-card p-10 h-full flex flex-col group hover:bg-white/[0.04] transition-all duration-500 border-brand-border relative overflow-hidden">
                                 <div className="absolute top-0 right-0 p-6 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity">
                                     <Globe size={80} className="text-brand-accent" />
                                 </div>
@@ -591,12 +527,12 @@ function TestimonialsSection() {
                                     &ldquo;{t.content}&rdquo;
                                 </p>
 
-                                <div className="flex items-center gap-5 border-t border-white/10 pt-8 mt-auto">
+                                <div className="flex items-center gap-5 border-t border-brand-border pt-8 mt-auto">
                                     <div className="w-14 h-14 rounded-2xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent font-black text-xl shadow-inner">
                                         {t.name.charAt(0)}
                                     </div>
                                     <div>
-                                        <p className="text-white font-black leading-none mb-1.5 text-lg">{t.name}</p>
+                                        <p className="text-brand-text font-black leading-none mb-1.5 text-lg">{t.name}</p>
                                         <p className="text-brand-accent text-xs font-mono uppercase tracking-[0.2em] opacity-80">{t.role}</p>
                                     </div>
                                 </div>
@@ -639,7 +575,7 @@ function TechSection() {
     const marqueeItems = [...techs, ...techs];
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
+        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-10" />
 
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[140px] pointer-events-none opacity-50" />
@@ -649,7 +585,7 @@ function TechSection() {
                 <SectionReveal>
                     <div className="text-center mb-24 section-container pb-0">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.tech.badge}</span>
-                        <h2 className="text-4xl md:text-7xl font-display font-black text-white mb-6 text-glow tracking-tighter">
+                        <h2 className="text-4xl md:text-7xl font-display font-black text-brand-text mb-6 text-glow tracking-tighter">
                             {dict.home.tech.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary italic">{dict.home.tech.titleHighlight}</span>
                         </h2>
                         <div className="w-32 h-1 bg-brand-accent mx-auto mb-10 rounded-full shadow-neon-cyan" />
@@ -683,7 +619,7 @@ function TechSection() {
                         {marqueeItems.map((tech, i) => (
                             <div
                                 key={i}
-                                className="group/card relative flex items-center gap-6 px-10 py-8 glass-card border-white/5 bg-white/[0.01] hover:bg-white/[0.05] transition-all duration-700 cursor-pointer overflow-hidden rounded-2xl min-w-[280px] mx-5 my-2"
+                                className="group/card relative flex items-center gap-6 px-10 py-8 glass-card border-brand-border bg-white/[0.01] hover:bg-white/[0.05] transition-all duration-700 cursor-pointer overflow-hidden rounded-2xl min-w-[280px] mx-5 my-2"
                             >
                                 <div
                                     className="absolute inset-0 opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 pointer-events-none"
@@ -697,7 +633,7 @@ function TechSection() {
                                     {tech.icon}
                                 </div>
                                 <div className="relative z-10 flex flex-col">
-                                    <span className="text-xl font-display font-black tracking-widest text-brand-muted group-hover/card:text-white transition-colors duration-500 uppercase">
+                                    <span className="text-xl font-display font-black tracking-widest text-brand-muted group-hover/card:text-brand-text transition-colors duration-500 uppercase">
                                         {tech.name}
                                     </span>
                                     <div className="h-[1px] w-0 group-hover/card:w-full bg-current transition-all duration-500 mt-2 opacity-40" style={{ backgroundColor: tech.color }} />
@@ -725,13 +661,13 @@ function ContactFormSection({ data }: { data?: any }) {
     } = (isAr ? data : {}) || {};
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-white/5">
+        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <SectionReveal>
                     <div className="text-center mb-20">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{badge}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight uppercase italic">
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight uppercase italic">
                             {title}
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
@@ -744,19 +680,19 @@ function ContactFormSection({ data }: { data?: any }) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                     {/* Left: Contact Form */}
                     <SectionReveal delay={0.2} direction="left">
-                        <form className="glass-card p-10 md:p-14 space-y-8 bg-brand-glass border-white/5 shadow-2xl relative overflow-hidden group/form">
+                        <form className="glass-card p-10 md:p-14 space-y-8 bg-brand-glass border-brand-border shadow-2xl relative overflow-hidden group/form">
                             <div className="absolute inset-0 bg-brand-accent/[0.01] opacity-0 group-hover/form:opacity-100 transition-opacity pointer-events-none" />
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                                <Input label={dict.home.contact.form.name} placeholder={dict.contact.form.fields.name.placeholder} required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
-                                <Input label={dict.home.contact.form.email} type="email" placeholder={dict.contact.form.fields.email.placeholder} required className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.name} placeholder={dict.contact.form.fields.name.placeholder} required className="bg-white/[0.02] border-brand-border focus:border-brand-accent/30 transition-all" />
+                                <Input label={dict.home.contact.form.email} type="email" placeholder={dict.contact.form.fields.email.placeholder} required className="bg-white/[0.02] border-brand-border focus:border-brand-accent/30 transition-all" />
                             </div>
 
-                            <Input label={dict.home.contact.form.company} placeholder={dict.contact.form.fields.company.placeholder} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Input label={dict.home.contact.form.company} placeholder={dict.contact.form.fields.company.placeholder} className="bg-white/[0.02] border-brand-border focus:border-brand-accent/30 transition-all" />
 
                             <Select
                                 label={dict.home.contact.form.service}
-                                className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all"
+                                className="bg-white/[0.02] border-brand-border focus:border-brand-accent/30 transition-all"
                                 options={[
                                     { value: '', label: dict.contact.form.fields.service.options.default },
                                     { value: 'web', label: dict.contact.form.fields.service.options.web },
@@ -768,7 +704,7 @@ function ContactFormSection({ data }: { data?: any }) {
                                 ]}
                             />
 
-                            <Textarea label={dict.home.contact.form.message} placeholder={dict.contact.form.fields.message.placeholder} rows={6} className="bg-white/[0.02] border-white/5 focus:border-brand-accent/30 transition-all" />
+                            <Textarea label={dict.home.contact.form.message} placeholder={dict.contact.form.fields.message.placeholder} rows={6} className="bg-white/[0.02] border-brand-border focus:border-brand-accent/30 transition-all" />
 
                             <Button type="submit" variant="primary" size="lg" fullWidth icon={<ArrowRight size={24} />} className="h-16 text-lg font-bold rounded-xl shadow-neon-cyan transition-all duration-500 hover:scale-[1.02] active:scale-95">
                                 {dict.home.contact.form.submit}
@@ -780,7 +716,7 @@ function ContactFormSection({ data }: { data?: any }) {
                     <SectionReveal delay={0.4} direction="right" className="h-full">
                         <div className="flex flex-col h-full gap-10">
                             {/* Map */}
-                            <div className="glass-card overflow-hidden h-[450px] border-white/5 relative group/map shadow-2xl">
+                            <div className="glass-card overflow-hidden h-[450px] border-brand-border relative group/map shadow-2xl">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.8641668267813!2d8.5204!3d47.3863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a0d7d0f0000%3A0x0!2sHardstrasse%20201%2C%208005%20Z%C3%BCrich!5e0!3m2!1sen!2sch!4v1710691886490!5m2!1sen!2sch"
                                     width="100%"
@@ -792,7 +728,7 @@ function ContactFormSection({ data }: { data?: any }) {
                                     className="grayscale opacity-50 group-hover/map:opacity-100 group-hover/map:grayscale-0 transition-all duration-1000 scale-105 group-hover/map:scale-100"
                                 />
                                 <div className="absolute inset-0 pointer-events-none border border-brand-accent/10 group-hover/map:border-brand-accent/30 transition-colors" />
-                                <div className="absolute top-6 left-6 px-4 py-2 bg-brand-primary/80 backdrop-blur-md border border-white/10 rounded-lg text-brand-accent text-xs font-mono uppercase tracking-widest shadow-xl">
+                                <div className="absolute top-6 left-6 px-4 py-2 bg-brand-primary/80 backdrop-blur-md border border-brand-border rounded-lg text-brand-accent text-xs font-mono uppercase tracking-widest shadow-xl">
                                     {dict.contact.info.hqTitle}
                                 </div>
                             </div>
@@ -805,7 +741,7 @@ function ContactFormSection({ data }: { data?: any }) {
                                     { icon: <Smartphone size={20} />, title: dict.contact.info.phone, content: OFFICE_PHONE, color: 'cyan' },
                                     { icon: <Mail size={20} />, title: dict.contact.info.emailUs, content: 'info@barmagly.tech', color: 'purple' },
                                 ].map((item, i) => (
-                                    <div key={i} className="glass-card p-6 border-white/5 hover:border-brand-accent/20 transition-all group/info hover:bg-white/[0.01]">
+                                    <div key={i} className="glass-card p-6 border-brand-border hover:border-brand-accent/20 transition-all group/info hover:bg-white/[0.01]">
                                         <div className="flex items-center gap-4 mb-4">
                                             <div className={cn(
                                                 "p-3 rounded-xl transition-all duration-500 group-hover/info:scale-110",
@@ -813,7 +749,7 @@ function ContactFormSection({ data }: { data?: any }) {
                                             )}>
                                                 {item.icon}
                                             </div>
-                                            <h4 className="text-white font-black text-sm uppercase tracking-widest">{item.title}</h4>
+                                            <h4 className="text-brand-text font-black text-sm uppercase tracking-widest">{item.title}</h4>
                                         </div>
                                         <p className="text-brand-muted text-sm leading-relaxed font-light break-words">
                                             {item.content}

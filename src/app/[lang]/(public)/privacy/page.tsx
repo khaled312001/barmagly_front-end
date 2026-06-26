@@ -76,7 +76,7 @@ export default function PrivacyPage() {
 
                         <motion.h1
                             variants={heroTextReveal}
-                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tighter drop-shadow-2xl"
+                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
                             Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">Policy</span>
                         </motion.h1>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
 
                         {/* Introduction */}
                         <SectionReveal>
-                            <div className="glass-card p-10 border-white/5">
+                            <div className="glass-card p-10 border-brand-border">
                                 <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Introduction</h2>
                                 <p className="text-brand-muted leading-relaxed mb-4">
                                     Barmagly POS is a comprehensive Point of Sale system designed for modern restaurants, cafes, pharmacies, and retail stores. This Privacy Policy explains how we collect, use, and protect your information when you use the Barmagly POS mobile application and related services.
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
 
                         {/* Children&apos;s Privacy */}
                         <SectionReveal>
-                            <div className="glass-card p-10 border-white/5">
+                            <div className="glass-card p-10 border-brand-border">
                                 <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Children&apos;s Privacy</h2>
                                 <p className="text-brand-muted leading-relaxed">
                                     Barmagly POS is a business application intended for use by adults (18+). We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us immediately.
@@ -161,7 +161,7 @@ export default function PrivacyPage() {
 
                         {/* Policy Changes */}
                         <SectionReveal>
-                            <div className="glass-card p-10 border-white/5">
+                            <div className="glass-card p-10 border-brand-border">
                                 <h2 className="text-2xl font-display font-bold text-brand-text mb-6">Changes to This Policy</h2>
                                 <p className="text-brand-muted leading-relaxed">
                                     We may update this Privacy Policy from time to time. We will notify you of significant changes through the app or via email. Continued use of Barmagly POS after changes are posted constitutes your acceptance of the revised policy.
@@ -181,14 +181,14 @@ export default function PrivacyPage() {
                                                 POS Web Platform
                                             </span>
                                         </div>
-                                        <h2 className="text-2xl font-display font-black text-white mb-4">Barmagly POS — Web Dashboard</h2>
+                                        <h2 className="text-2xl font-display font-black text-brand-text mb-4">Barmagly POS — Web Dashboard</h2>
                                         <p className="text-brand-muted leading-relaxed mb-4">
                                             In addition to the mobile app, Barmagly POS offers a full web-based dashboard at{' '}
                                             <a
                                                 href="https://pos.barmagly.tech/"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-brand-accent underline underline-offset-4 hover:text-white transition-colors"
+                                                className="text-brand-accent underline underline-offset-4 hover:text-brand-text transition-colors"
                                             >
                                                 pos.barmagly.tech
                                             </a>
@@ -221,12 +221,12 @@ export default function PrivacyPage() {
                         <SectionReveal>
                             <div className="glass-card p-12 border-brand-accent/20 bg-brand-accent/5 relative group">
                                 <div className="absolute top-0 left-0 w-1 h-full bg-brand-accent shadow-neon-cyan" />
-                                <h2 className="text-2xl font-display font-black text-white mb-6 uppercase tracking-widest">Contact Us</h2>
+                                <h2 className="text-2xl font-display font-black text-brand-text mb-6 uppercase tracking-widest">Contact Us</h2>
                                 <p className="text-brand-muted leading-relaxed mb-8 font-light">
                                     If you have any questions about this Privacy Policy or how we handle your data, please reach out:
                                 </p>
                                 <div className="flex flex-col gap-3">
-                                    <p className="text-brand-accent font-mono font-black text-xl tracking-tighter shadow-neon-cyan inline-block p-4 bg-white/5 rounded-xl border border-brand-accent/30">
+                                    <p className="text-brand-accent font-mono font-black text-xl tracking-tighter shadow-neon-cyan inline-block p-4 bg-brand-surface rounded-xl border border-brand-accent/30">
                                         info@barmagly.com
                                     </p>
                                     <p className="text-brand-muted text-sm mt-2">Barmagly — Swiss Licensed Software Company (CHE-154.312.079)</p>

@@ -80,7 +80,7 @@ export default function ContactPage() {
 
                         <motion.h1
                             variants={heroTextReveal}
-                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tighter drop-shadow-2xl"
+                            className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
                             {contactDict.hero.titleLine1} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">{contactDict.hero.titleHighlight}</span>
@@ -127,7 +127,7 @@ export default function ContactPage() {
                                             >
                                                 <div className="relative">
                                                     <div className="absolute rtl:-right-10 ltr:-left-10 top-1/2 -translate-y-1/2 w-1 h-12 bg-brand-accent shadow-neon-cyan" />
-                                                    <h2 className="text-3xl md:text-4xl font-display font-black text-white mb-3 tracking-tight">{contactDict.form.title}</h2>
+                                                    <h2 className="text-3xl md:text-4xl font-display font-black text-brand-text mb-3 tracking-tight">{contactDict.form.title}</h2>
                                                     <p className="text-brand-muted font-light leading-relaxed">{contactDict.form.subtitle}</p>
                                                 </div>
 
@@ -139,18 +139,18 @@ export default function ContactPage() {
                                                 )}
 
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                                                    <Input name="name" label={contactDict.form.fields.name.label} placeholder={contactDict.form.fields.name.placeholder} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50" />
-                                                    <Input name="email" label={contactDict.form.fields.email.label} type="email" placeholder={contactDict.form.fields.email.placeholder} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50" />
+                                                    <Input name="name" label={contactDict.form.fields.name.label} placeholder={contactDict.form.fields.name.placeholder} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50" />
+                                                    <Input name="email" label={contactDict.form.fields.email.label} type="email" placeholder={contactDict.form.fields.email.placeholder} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50" />
                                                 </div>
                                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-                                                    <Input name="phone" label={contactDict.form.fields.phone.label} type="tel" placeholder={contactDict.form.fields.phone.placeholder} disabled={status === 'submitting'} className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50" />
-                                                    <Input name="company" label={contactDict.form.fields.company.label} placeholder={contactDict.form.fields.company.placeholder} disabled={status === 'submitting'} className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50" />
+                                                    <Input name="phone" label={contactDict.form.fields.phone.label} type="tel" placeholder={contactDict.form.fields.phone.placeholder} disabled={status === 'submitting'} className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50" />
+                                                    <Input name="company" label={contactDict.form.fields.company.label} placeholder={contactDict.form.fields.company.placeholder} disabled={status === 'submitting'} className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50" />
                                                 </div>
                                                 <Select
                                                     name="service"
                                                     label={contactDict.form.fields.service.label}
                                                     disabled={status === 'submitting'}
-                                                    className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50"
+                                                    className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50"
                                                     options={[
                                                         { value: '', label: contactDict.form.fields.service.options.default },
                                                         { value: 'web', label: contactDict.form.fields.service.options.web },
@@ -161,7 +161,7 @@ export default function ContactPage() {
                                                         { value: 'other', label: contactDict.form.fields.service.options.other },
                                                     ]}
                                                 />
-                                                <Textarea name="message" label={contactDict.form.fields.message.label} placeholder={contactDict.form.fields.message.placeholder} rows={6} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-white/5 focus:border-brand-accent/50" />
+                                                <Textarea name="message" label={contactDict.form.fields.message.label} placeholder={contactDict.form.fields.message.placeholder} rows={6} required disabled={status === 'submitting'} className="bg-brand-dark/20 border-brand-border focus:border-brand-accent/50" />
 
                                                 <Button type="submit" variant="primary" size="xl" className="w-full py-5 shadow-neon-cyan text-lg flex-row-reverse rtl:flex-row gap-2" icon={status === 'submitting' ? <div className="animate-spin rounded-full h-6 w-6 border-2 border-white/30 border-t-white" /> : <ArrowRight size={24} className="rtl:rotate-180" />} disabled={status === 'submitting'}>
                                                     {status === 'submitting' ? contactDict.form.submitting : contactDict.form.submit}
@@ -176,25 +176,25 @@ export default function ContactPage() {
                         {/* Contact Info Sidebar */}
                         <div className="space-y-6">
                             <SectionReveal direction="right">
-                                <div className="glass-card p-8 hover-glow bg-brand-dark/40 border-white/5 relative group hover:border-brand-accent/30 transition-all duration-500">
+                                <div className="glass-card p-8 hover-glow bg-brand-dark/40 border-brand-border relative group hover:border-brand-accent/30 transition-all duration-500">
                                     <div className="p-4 rounded-xl bg-brand-accent/10 border border-brand-accent/20 text-brand-accent w-fit mb-6 group-hover:shadow-neon-cyan transition-all duration-500">
                                         <MapPin size={24} />
                                     </div>
-                                    <h3 className="text-xl font-display font-black text-white mb-3">{contactDict.info.hqTitle}</h3>
+                                    <h3 className="text-xl font-display font-black text-brand-text mb-3">{contactDict.info.hqTitle}</h3>
                                     <p className="text-brand-muted text-sm font-light leading-relaxed">{address}</p>
-                                    <div className="mt-6 pt-6 border-t border-white/5 text-[10px] font-mono text-brand-muted/40 uppercase tracking-widest">{contactDict.info.hqVerified}</div>
+                                    <div className="mt-6 pt-6 border-t border-brand-border text-[10px] font-mono text-brand-muted/40 uppercase tracking-widest">{contactDict.info.hqVerified}</div>
                                 </div>
                             </SectionReveal>
 
 
                             <SectionReveal direction="right" delay={0.2}>
-                                <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-white/5 group-hover:border-brand-accent/20 transition-all duration-500">
+                                <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-brand-border group-hover:border-brand-accent/20 transition-all duration-500">
                                     <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-6">
                                         <div className="p-4 rounded-xl bg-brand-accent/10 text-brand-accent border border-brand-accent/20 flex-shrink-0">
                                             <Mail size={24} />
                                         </div>
                                         <div className="rtl:text-right ltr:text-left">
-                                            <h3 className="text-lg font-display font-black text-white mb-1">{contactDict.info.emailTitle}</h3>
+                                            <h3 className="text-lg font-display font-black text-brand-text mb-1">{contactDict.info.emailTitle}</h3>
                                             <p className="text-brand-accent text-sm font-mono">{email}</p>
                                         </div>
                                     </div>
@@ -202,13 +202,13 @@ export default function ContactPage() {
                             </SectionReveal>
 
                             <SectionReveal direction="right" delay={0.25}>
-                                <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-white/5 group-hover:border-brand-accent/20 transition-all duration-500">
+                                <div className="glass-card p-8 hover-glow bg-brand-primary/20 border-brand-border group-hover:border-brand-accent/20 transition-all duration-500">
                                     <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-6">
                                         <div className="p-4 rounded-xl bg-brand-accent/10 text-brand-accent border border-brand-accent/20 flex-shrink-0">
                                             <Phone size={24} />
                                         </div>
                                         <div className="rtl:text-right ltr:text-left">
-                                            <h3 className="text-lg font-display font-black text-white mb-1">{contactDict.info.officePhone || 'Office Phone'}</h3>
+                                            <h3 className="text-lg font-display font-black text-brand-text mb-1">{contactDict.info.officePhone || 'Office Phone'}</h3>
                                             <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="text-brand-accent text-sm font-mono hover:text-brand-accent/80 transition-colors" dir="ltr">{OFFICE_PHONE}</a>
                                         </div>
                                     </div>
@@ -216,23 +216,23 @@ export default function ContactPage() {
                             </SectionReveal>
 
                             <SectionReveal direction="right" delay={0.3}>
-                                <div className="glass-card p-8 bg-brand-dark/40 border-white/5">
+                                <div className="glass-card p-8 bg-brand-dark/40 border-brand-border">
                                     <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-6 mb-6">
-                                        <div className="p-4 rounded-xl bg-white/5 text-brand-muted border border-white/10 flex-shrink-0">
+                                        <div className="p-4 rounded-xl bg-brand-surface text-brand-muted border border-brand-border flex-shrink-0">
                                             <Clock size={24} />
                                         </div>
-                                        <h3 className="text-lg font-display font-black text-white rtl:text-right ltr:text-left">{contactDict.info.hoursTitle}</h3>
+                                        <h3 className="text-lg font-display font-black text-brand-text rtl:text-right ltr:text-left">{contactDict.info.hoursTitle}</h3>
                                     </div>
                                     <div className="space-y-3">
                                         <div className="flex flex-row-reverse rtl:flex-row items-center justify-between text-sm">
                                             <span className="text-brand-muted font-light">{contactDict.info.monFri}</span>
-                                            <span className="text-white font-mono" dir="ltr">09:00 - 18:00</span>
+                                            <span className="text-brand-text font-mono" dir="ltr">09:00 - 18:00</span>
                                         </div>
                                         <div className="flex flex-row-reverse rtl:flex-row items-center justify-between text-sm">
                                             <span className="text-brand-muted font-light">{contactDict.info.sat}</span>
-                                            <span className="text-white font-mono" dir="ltr">10:00 - 14:00</span>
+                                            <span className="text-brand-text font-mono" dir="ltr">10:00 - 14:00</span>
                                         </div>
-                                        <div className="pt-4 text-[10px] font-mono text-brand-muted/40 uppercase text-center border-t border-white/5 mt-4">{contactDict.info.timezone}</div>
+                                        <div className="pt-4 text-[10px] font-mono text-brand-muted/40 uppercase text-center border-t border-brand-border mt-4">{contactDict.info.timezone}</div>
                                     </div>
                                 </div>
                             </SectionReveal>
@@ -248,7 +248,7 @@ export default function ContactPage() {
                     <SectionReveal>
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent/20 to-brand-secondary/20 rounded-[2rem] blur opacity-30 group-hover:opacity-60 transition duration-1000" />
-                            <div className="glass-card p-2 overflow-hidden border-white/10 relative bg-brand-dark/50">
+                            <div className="glass-card p-2 overflow-hidden border-brand-border relative bg-brand-dark/50">
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2701.8641668267813!2d8.5204!3d47.3863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47900a0d7d0f0000%3A0x0!2sHardstrasse%20201%2C%208005%20Z%C3%BCrich!5e0!3m2!1sen!2sch!4v1710691886490!5m2!1sen!2sch"
                                     width="100%"
@@ -262,7 +262,7 @@ export default function ContactPage() {
                                 <div className="absolute top-8 right-8 p-4 glass-card bg-brand-primary/80 backdrop-blur-xl border-brand-accent/30 text-brand-accent shadow-neon-cyan max-w-xs">
                                     <div className="flex items-center gap-3">
                                         <div className="w-3 h-3 rounded-full bg-brand-accent animate-ping flex-shrink-0" />
-                                        <span className="text-xs font-mono font-bold tracking-widest uppercase text-white rtl:text-right">{contactDict.map.liveOps}</span>
+                                        <span className="text-xs font-mono font-bold tracking-widest uppercase text-brand-text rtl:text-right">{contactDict.map.liveOps}</span>
                                     </div>
                                 </div>
                             </div>

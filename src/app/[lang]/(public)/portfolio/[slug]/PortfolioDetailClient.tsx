@@ -59,7 +59,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-black text-white mb-8 tracking-tighter leading-none">
+                            <h1 className="text-4xl md:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter leading-none">
                                 {title}
                             </h1>
                             <p className="text-xl text-brand-muted max-w-xl leading-relaxed font-light opacity-90">
@@ -75,7 +75,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                         >
                             <div className="flex flex-wrap gap-4">
                                 {project.technologies?.map((tech: string) => (
-                                    <span key={tech} className="px-5 py-2 rounded-xl glass-card bg-brand-primary/50 text-brand-accent border-white/5 text-xs font-bold uppercase tracking-widest">
+                                    <span key={tech} className="px-5 py-2 rounded-xl glass-card bg-brand-primary/50 text-brand-accent border-brand-border text-xs font-bold uppercase tracking-widest">
                                         {tech}
                                     </span>
                                 ))}
@@ -100,7 +100,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                 <div className="max-w-4xl mx-auto px-6">
                     <SectionReveal>
                         <div className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-black prose-p:text-brand-muted prose-p:font-light prose-p:leading-relaxed">
-                            <h2 className="text-3xl md:text-5xl text-white mb-10 tracking-tight">{portfolioDict.detail.overview}</h2>
+                            <h2 className="text-3xl md:text-5xl text-brand-text mb-10 tracking-tight">{portfolioDict.detail.overview}</h2>
                             <p className="text-xl mb-8">
                                 {description}
                             </p>
@@ -114,7 +114,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                                     <h4 className="text-brand-accent font-mono text-xs tracking-widest uppercase mb-3">
                                         {lang === 'ar' ? 'النتائج' : 'Results'}
                                     </h4>
-                                    <p className="text-lg text-white/90 leading-relaxed not-italic">
+                                    <p className="text-lg text-brand-text/90 leading-relaxed not-italic">
                                         {project.results}
                                     </p>
                                 </div>
@@ -122,7 +122,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
 
                             {/* Additional structural layout for content if needed */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-20">
-                                <div className="p-10 glass-card bg-brand-surface rounded-3xl border-white/5">
+                                <div className="p-10 glass-card bg-brand-surface rounded-3xl border-brand-border">
                                     <h4 className="text-brand-accent font-mono text-sm tracking-widest uppercase mb-6 flex items-center gap-3">
                                         <Globe size={18} />
                                         {portfolioDict.detail.challenge}
@@ -145,7 +145,7 @@ export default function PortfolioDetailClient({ project, lang }: PortfolioDetail
                     </SectionReveal>
 
                     {/* Footer Navigation */}
-                    <div className="mt-32 pt-20 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-10">
+                    <div className="mt-32 pt-20 border-t border-brand-border flex flex-col sm:flex-row items-center justify-between gap-10">
                         <Link href={`/${lang}/portfolio`} className="group flex items-center gap-4 text-brand-muted hover:text-brand-accent transition-colors font-display font-bold text-xl">
                             <ArrowLeft className="group-hover:-translate-x-2 transition-transform rtl:rotate-180" />
                             {portfolioDict.detail.backToPortfolio}

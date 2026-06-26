@@ -44,7 +44,7 @@ export default function PosPage() {
                             </span>
                         </motion.div>
 
-                        <motion.h1 variants={heroTextReveal} className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-white mb-8 leading-[1.1] tracking-tight drop-shadow-2xl">
+                        <motion.h1 variants={heroTextReveal} className="font-display font-black text-5xl sm:text-7xl lg:text-8xl text-brand-text mb-8 leading-[1.1] tracking-tight drop-shadow-2xl">
                             {posDict.hero.titleLine1} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r rtl:from-brand-accent ltr:from-brand-secondary via-white rtl:to-brand-secondary ltr:to-brand-accent filter drop-shadow-[0_0_40px_rgba(0,212,255,0.35)]">
                                 {posDict.hero.titleHighlight}
@@ -62,7 +62,7 @@ export default function PosPage() {
                                 </Button>
                             </a>
                             <a href="https://pos.barmagly.tech/#features" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
-                                <Button size="xl" variant="neon" className="w-full h-16 text-lg font-bold rounded-xl border-white/20 hover:border-brand-secondary/50 transition-all duration-500 hover:scale-105 active:scale-95 font-display">
+                                <Button size="xl" variant="neon" className="w-full h-16 text-lg font-bold rounded-xl border-brand-border hover:border-brand-secondary/50 transition-all duration-500 hover:scale-105 active:scale-95 font-display">
                                     {posDict.hero.btnOutline}
                                 </Button>
                             </a>
@@ -72,13 +72,13 @@ export default function PosPage() {
             </section>
 
             {/* FEATURES GRID */}
-            <section id="features" className="relative py-32 bg-brand-primary border-t border-white/5">
+            <section id="features" className="relative py-32 bg-brand-primary border-t border-brand-border">
                 <div className="absolute inset-0 tech-grid opacity-5" />
                 <div className="section-container relative z-10">
                     <SectionReveal>
                         <div className="text-center mb-24">
                             <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{posDict.features.badge}</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-black text-white mb-6 text-glow tracking-tight">
+                            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
                                 {posDict.features.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{posDict.features.titleHighlight}</span>
                             </h2>
                             <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
@@ -88,11 +88,11 @@ export default function PosPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {posDict.features.list.map((feat: any, i: number) => (
                             <SectionReveal key={i} delay={i * 0.1}>
-                                <div className="glass-card p-8 group hover:bg-white/[0.03] transition-all duration-500 border-white/5 h-full flex flex-col items-start gap-4">
-                                    <div className="p-4 rounded-2xl bg-brand-surface border border-white/10 text-brand-accent w-fit group-hover:shadow-neon-cyan transition-all duration-500 group-hover:scale-110 rtl:ml-auto ltr:mr-auto">
+                                <div className="glass-card p-8 group hover:bg-white/[0.03] transition-all duration-500 border-brand-border h-full flex flex-col items-start gap-4">
+                                    <div className="p-4 rounded-2xl bg-brand-surface border border-brand-border text-brand-accent w-fit group-hover:shadow-neon-cyan transition-all duration-500 group-hover:scale-110 rtl:ml-auto ltr:mr-auto">
                                         {featureIcons[Math.min(i, featureIcons.length - 1)]}
                                     </div>
-                                    <h3 className="text-xl font-display font-bold text-white group-hover:text-brand-accent transition-colors rtl:text-right w-full ltr:text-left">
+                                    <h3 className="text-xl font-display font-bold text-brand-text group-hover:text-brand-accent transition-colors rtl:text-right w-full ltr:text-left">
                                         {feat.title}
                                     </h3>
                                     <p className="text-brand-muted leading-relaxed text-sm opacity-70 rtl:text-right w-full font-light ltr:text-left">
@@ -106,12 +106,12 @@ export default function PosPage() {
             </section>
 
             {/* MULTI PLATFORM SHOWCASE */}
-            <section className="relative py-32 bg-brand-primary border-t border-white/5 overflow-hidden">
+            <section className="relative py-32 bg-brand-primary border-t border-brand-border overflow-hidden">
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand-secondary/10 rounded-full blur-[150px] pointer-events-none" />
                 <div className="section-container relative z-10 flex flex-col lg:flex-row-reverse items-center gap-16">
                     <SectionReveal direction="right" className="w-full lg:w-1/2 rtl:text-right ltr:text-left flex flex-col rtl:items-end ltr:items-start">
                         <span className="text-brand-secondary font-mono text-xs tracking-[0.4em] uppercase mb-4 block w-full">{posDict.platforms.badge}</span>
-                        <h2 className="text-4xl md:text-5xl font-display font-black text-white mb-6 leading-[1.1] w-full">
+                        <h2 className="text-4xl md:text-5xl font-display font-black text-brand-text mb-6 leading-[1.1] w-full">
                             {posDict.platforms.titleLine1} <span className="text-brand-secondary">{posDict.platforms.titleHighlight}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-secondary mb-8 rounded-full shadow-neon-purple" />
@@ -119,24 +119,24 @@ export default function PosPage() {
                             {posDict.platforms.subtitle}
                         </p>
                         <div className="flex flex-col gap-4 w-full">
-                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-brand-border">
                                 <Terminal className="text-brand-secondary w-8 h-8 flex-shrink-0" />
                                 <div className="rtl:text-right ltr:text-left">
-                                    <h4 className="text-white font-bold">{posDict.platforms.desktopTitle}</h4>
+                                    <h4 className="text-brand-text font-bold">{posDict.platforms.desktopTitle}</h4>
                                     <p className="text-brand-muted text-sm font-light">{posDict.platforms.desktopDesc}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-white/5">
+                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-brand-border">
                                 <Smartphone className="text-brand-accent w-8 h-8 flex-shrink-0" />
                                 <div className="rtl:text-right ltr:text-left">
-                                    <h4 className="text-white font-bold">{posDict.platforms.mobileTitle}</h4>
+                                    <h4 className="text-brand-text font-bold">{posDict.platforms.mobileTitle}</h4>
                                     <p className="text-brand-muted text-sm font-light">{posDict.platforms.mobileDesc}</p>
                                 </div>
                             </div>
-                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-white/5">
-                                <Globe className="text-white w-8 h-8 flex-shrink-0" />
+                            <div className="flex flex-row-reverse rtl:flex-row-reverse ltr:flex-row items-center gap-4 bg-white/[0.02] p-4 rounded-xl border border-brand-border">
+                                <Globe className="text-brand-text w-8 h-8 flex-shrink-0" />
                                 <div className="rtl:text-right ltr:text-left">
-                                    <h4 className="text-white font-bold">{posDict.platforms.webTitle}</h4>
+                                    <h4 className="text-brand-text font-bold">{posDict.platforms.webTitle}</h4>
                                     <p className="text-brand-muted text-sm font-light">{posDict.platforms.webDesc}</p>
                                 </div>
                             </div>
@@ -149,24 +149,24 @@ export default function PosPage() {
                             <motion.div
                                 animate={{ y: [0, -10, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                                className="absolute z-10 w-[80%] aspect-video bg-[#0A0A0B] rounded-2xl border border-white/10 shadow-2xl p-2 top-0"
+                                className="absolute z-10 w-[80%] aspect-video bg-[#0A0A0B] rounded-2xl border border-brand-border shadow-2xl p-2 top-0"
                             >
-                                <div className="w-full h-full rounded-xl border border-white/5 bg-brand-surface relative overflow-hidden flex flex-col">
-                                    <div className="h-6 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-2">
+                                <div className="w-full h-full rounded-xl border border-brand-border bg-brand-surface relative overflow-hidden flex flex-col">
+                                    <div className="h-6 border-b border-brand-border bg-white/[0.02] flex items-center px-4 gap-2">
                                         <div className="w-2 h-2 rounded-full bg-red-400" />
                                         <div className="w-2 h-2 rounded-full bg-yellow-400" />
                                         <div className="w-2 h-2 rounded-full bg-green-400" />
                                     </div>
                                     <div className="flex-1 p-4 grid grid-cols-4 gap-4">
                                         {/* Sidebar mock */}
-                                        <div className="col-span-1 border-r border-white/5 flex flex-col gap-2 pr-4 justify-start items-end">
-                                            {[...Array(5)].map((_, i) => <div key={i} className="h-4 bg-white/10 rounded w-full" />)}
+                                        <div className="col-span-1 border-r border-brand-border flex flex-col gap-2 pr-4 justify-start items-end">
+                                            {[...Array(5)].map((_, i) => <div key={i} className="h-4 bg-brand-surface rounded w-full" />)}
                                         </div>
                                         {/* Main mock */}
                                         <div className="col-span-3 flex flex-col gap-4">
                                             <div className="h-16 bg-brand-secondary/20 rounded-lg" />
                                             <div className="flex-1 rounded-lg grid grid-cols-3 gap-2">
-                                                {[...Array(6)].map((_, i) => <div key={i} className="bg-white/5 rounded-lg h-full border border-white/5" />)}
+                                                {[...Array(6)].map((_, i) => <div key={i} className="bg-brand-surface rounded-lg h-full border border-brand-border" />)}
                                             </div>
                                         </div>
                                     </div>
@@ -179,10 +179,10 @@ export default function PosPage() {
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                                 className="absolute z-20 w-[40%] aspect-[3/4] bg-zinc-900 rounded-2xl md:rounded-3xl border-[4px] md:border-[6px] border-zinc-950 shadow-2xl -bottom-10 right-0 md:right-10 p-1"
                             >
-                                <div className="w-full h-full rounded-xl bg-brand-surface border border-white/5 overflow-hidden flex flex-col p-2 gap-2">
-                                    <div className="h-8 md:h-10 bg-white/5 rounded-lg flex items-center justify-between px-2">
-                                        <div className="w-4 h-4 rounded-full bg-white/10" />
-                                        <div className="w-12 h-2 rounded bg-white/10" />
+                                <div className="w-full h-full rounded-xl bg-brand-surface border border-brand-border overflow-hidden flex flex-col p-2 gap-2">
+                                    <div className="h-8 md:h-10 bg-brand-surface rounded-lg flex items-center justify-between px-2">
+                                        <div className="w-4 h-4 rounded-full bg-brand-surface" />
+                                        <div className="w-12 h-2 rounded bg-brand-surface" />
                                     </div>
                                     <div className="flex-1 grid grid-cols-2 gap-2">
                                         {[...Array(6)].map((_, i) => <div key={i} className="bg-brand-accent/10 rounded-md" />)}
@@ -196,13 +196,13 @@ export default function PosPage() {
                                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                                 className="absolute z-30 w-[20%] aspect-[9/19] bg-zinc-900 rounded-[1.5rem] md:rounded-[2rem] border-[4px] border-zinc-950 shadow-2xl -bottom-4 left-4 md:left-10 p-1"
                             >
-                                <div className="w-full h-full rounded-[1rem] md:rounded-[1.5rem] bg-brand-surface border border-white/5 overflow-hidden flex flex-col p-2 gap-2 relative">
+                                <div className="w-full h-full rounded-[1rem] md:rounded-[1.5rem] bg-brand-surface border border-brand-border overflow-hidden flex flex-col p-2 gap-2 relative">
                                     {/* Notch */}
                                     <div className="w-1/2 h-3 md:h-4 bg-zinc-950 rounded-b-xl md:rounded-b-2xl mx-auto absolute top-0 left-1/4" />
 
                                     <div className="h-16 md:h-20 bg-gradient-to-br from-brand-secondary/30 to-brand-accent/30 rounded-lg mt-6" />
                                     <div className="flex-1 flex flex-col gap-2">
-                                        {[...Array(4)].map((_, i) => <div key={i} className="h-6 md:h-8 bg-white/10 rounded-md w-full" />)}
+                                        {[...Array(4)].map((_, i) => <div key={i} className="h-6 md:h-8 bg-brand-surface rounded-md w-full" />)}
                                     </div>
                                 </div>
                             </motion.div>
@@ -212,7 +212,7 @@ export default function PosPage() {
             </section>
 
             {/* CTA SECTION */}
-            <section className="relative py-32 bg-brand-primary border-t border-white/5 text-center flex flex-col items-center">
+            <section className="relative py-32 bg-brand-primary border-t border-brand-border text-center flex flex-col items-center">
                 <div className="absolute inset-0 bg-accent-gradient opacity-10" />
                 <div className="absolute inset-0 tech-grid opacity-5" />
 
@@ -221,7 +221,7 @@ export default function PosPage() {
 
                 <div className="section-container relative z-10">
                     <SectionReveal>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white mb-6 leading-[1.1]">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-brand-text mb-6 leading-[1.1]">
                             {posDict.cta.titleLine1} <br className="hidden md:block" />
                             <span className="text-brand-accent">{posDict.cta.titleHighlight}</span>
                         </h2>

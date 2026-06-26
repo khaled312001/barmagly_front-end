@@ -32,7 +32,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-primary text-center px-6">
                 <div className="max-w-md">
-                    <h2 className="text-4xl font-display font-bold text-white mb-6">{dict.serviceDetail.serviceNotFound}</h2>
+                    <h2 className="text-4xl font-display font-bold text-brand-text mb-6">{dict.serviceDetail.serviceNotFound}</h2>
                     <p className="text-brand-muted mb-10">{dict.serviceDetail.notFoundDesc}</p>
                     <Link href={`/${lang}/services`}>
                         <Button variant="primary" icon={<ArrowLeft size={20} />}>
@@ -75,7 +75,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
             </div>
 
             {/* Hero Section */}
-            <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 overflow-hidden border-b border-white/5">
+            <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 overflow-hidden border-b border-brand-border">
                 <div className="section-container relative z-10">
                     <div className="flex flex-col lg:flex-row items-center gap-16">
                         <motion.div
@@ -95,7 +95,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                 <div className="mx-auto lg:mx-0 p-5 rounded-2xl bg-brand-surface border border-brand-accent/30 text-brand-accent shadow-neon-cyan">
                                     <DynamicIcon name={service.icon} size={48} />
                                 </div>
-                                <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-tight">
+                                <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-brand-text leading-tight">
                                     {title.split(' ').map((word: string, i: number) => (
                                         i === title.split(' ').length - 1 ?
                                             <span key={i} className="gradient-text"> {word}</span> :
@@ -129,7 +129,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                             transition={{ duration: 1, delay: 0.5 }}
                             className="flex-1 relative hidden lg:block"
                         >
-                            <div className="relative z-10 p-1 glass-card border-white/10 rounded-[2.5rem] overflow-hidden lg:h-[600px] w-full shadow-2xl">
+                            <div className="relative z-10 p-1 glass-card border-brand-border rounded-[2.5rem] overflow-hidden lg:h-[600px] w-full shadow-2xl">
                                 {service.image ? (
                                     <div className="relative w-full h-full">
                                         <Image
@@ -164,7 +164,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                 className="absolute -top-10 -right-10 glass-card p-6 border-brand-accent/30 shadow-neon-cyan z-20"
                             >
                                 <p className="text-brand-accent font-mono text-xs uppercase mb-1">{dict.serviceDetail.status}</p>
-                                <p className="text-white font-bold">{dict.serviceDetail.readyToDeploy}</p>
+                                <p className="text-brand-text font-bold">{dict.serviceDetail.readyToDeploy}</p>
                             </motion.div>
                             <motion.div
                                 animate={{ y: [0, 20, 0] }}
@@ -172,7 +172,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                 className="absolute -bottom-10 -left-10 glass-card p-6 border-brand-secondary/30 shadow-neon-purple z-20"
                             >
                                 <p className="text-brand-secondary font-mono text-xs uppercase mb-1">{dict.serviceDetail.efficiency}</p>
-                                <p className="text-white font-bold">{dict.serviceDetail.fullyOptimized}</p>
+                                <p className="text-brand-text font-bold">{dict.serviceDetail.fullyOptimized}</p>
                             </motion.div>
                         </motion.div>
                     </div>
@@ -185,7 +185,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                     <SectionReveal>
                         <div className="text-center mb-20">
                             <span className="text-brand-accent font-mono text-sm tracking-[0.3em] uppercase mb-4 block">{dict.serviceDetail.capabilities}</span>
-                            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">{dict.serviceDetail.strategicImplementation.split(' ')[0]} <span className="gradient-text">{dict.serviceDetail.strategicImplementation.split(' ')[1]}</span></h2>
+                            <h2 className="text-4xl md:text-5xl font-display font-bold text-brand-text mb-6">{dict.serviceDetail.strategicImplementation.split(' ')[0]} <span className="gradient-text">{dict.serviceDetail.strategicImplementation.split(' ')[1]}</span></h2>
                             <p className="text-brand-muted max-w-2xl mx-auto">{dict.home.services.subtitle}</p>
                         </div>
                     </SectionReveal>
@@ -197,7 +197,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                     <div className="w-12 h-12 rounded-xl bg-brand-accent/10 border border-brand-accent/20 flex items-center justify-center text-brand-accent mb-6 group-hover:bg-brand-accent group-hover:text-brand-primary transition-all duration-500">
                                         <CheckCircle2 size={24} />
                                     </div>
-                                    <h4 className="text-xl font-display font-bold text-white mb-4 group-hover:text-brand-accent transition-colors">{feature}</h4>
+                                    <h4 className="text-xl font-display font-bold text-brand-text mb-4 group-hover:text-brand-accent transition-colors">{feature}</h4>
                                     <p className="text-brand-muted text-sm leading-relaxed">{dict.serviceDetail.featureDescription}</p>
                                 </div>
                             </SectionReveal>
@@ -207,13 +207,13 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
             </section>
 
             {/* Tech Stack Integration */}
-            <section className="section-padding bg-brand-surface/30 border-y border-white/5 relative overflow-hidden">
+            <section className="section-padding bg-brand-surface/30 border-y border-brand-border relative overflow-hidden">
                 <div className="absolute inset-0 tech-grid opacity-5" />
                 <div className="section-container relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <SectionReveal direction="left">
                             <div className="max-w-xl">
-                                <h3 className="text-3xl md:text-4xl font-display font-bold text-white mb-8">{dict.serviceDetail.integratedTechStack.split(' ').slice(0, -1).join(' ')} <span className="text-brand-secondary">{dict.serviceDetail.integratedTechStack.split(' ').slice(-1)}</span></h3>
+                                <h3 className="text-3xl md:text-4xl font-display font-bold text-brand-text mb-8">{dict.serviceDetail.integratedTechStack.split(' ').slice(0, -1).join(' ')} <span className="text-brand-secondary">{dict.serviceDetail.integratedTechStack.split(' ').slice(-1)}</span></h3>
                                 <p className="text-brand-muted text-lg mb-10">{dict.home.whyChoose.subtitle}</p>
 
                                 <div className="grid grid-cols-2 gap-6">
@@ -223,7 +223,7 @@ export default function ServiceDetailClient({ service, lang }: ServiceDetailClie
                                         { icon: <Cloud size={20} />, label: dict.serviceDetail.techStackCloud },
                                         { icon: <Zap size={20} />, label: dict.serviceDetail.techStackLatency }
                                     ].map((item, i) => (
-                                        <div key={i} className="flex items-center gap-3 text-brand-muted bg-white/5 p-4 rounded-xl border border-white/5">
+                                        <div key={i} className="flex items-center gap-3 text-brand-muted bg-brand-surface p-4 rounded-xl border border-brand-border">
                                             <span className="text-brand-accent">{item.icon}</span>
                                             <span className="text-sm font-medium">{item.label}</span>
                                         </div>
@@ -266,7 +266,7 @@ const initialize = () => {
                         <div className="glass-card p-12 md:p-20 text-center relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
                             <div className="relative z-10">
-                                <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-8">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(0, -1).join(' ')} <span className="gradient-text">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(-1)}</span></h2>
+                                <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-text mb-8">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(0, -1).join(' ')} <span className="gradient-text">{dict.serviceDetail.readyToBuildTitle.split(' ').slice(-1)}</span></h2>
                                 <p className="text-brand-muted text-lg max-w-2xl mx-auto mb-12">{dict.serviceDetail.readyToBuildSubtitle}</p>
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
