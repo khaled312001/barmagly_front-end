@@ -66,7 +66,7 @@ function AboutHero() {
 
                     <motion.h1 variants={heroTextReveal} className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 leading-[1.1] tracking-tight">
                         {dict.about.hero.titleLine1} <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary filter drop-shadow-[0_0_20px_rgba(0,212,255,0.3)]">
+                        <span className="text-brand-accent filter drop-shadow-[0_0_20px_rgba(0,212,255,0.3)]">
                             {dict.about.hero.titleHighlight}
                         </span>
                     </motion.h1>
@@ -123,7 +123,7 @@ function StorySection() {
                     <SectionReveal direction="right">
                         <div className="relative group">
                             {/* Decorative Frame */}
-                            <div className="absolute -inset-1 bg-gradient-to-r from-brand-accent to-brand-secondary rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
+                            <div className="absolute -inset-1 text-brand-accent rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
 
                             <div className="glass-card p-10 relative overflow-hidden bg-brand-dark/50 border-brand-border backdrop-blur-2xl">
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-brand-accent/10 rounded-full blur-[100px] rtl:-ml-32 rtl:mr-auto ltr:-mr-32 -mt-32" />
@@ -380,7 +380,7 @@ function TechStackSection({ data }: { data?: any[] }) {
                                                 initial={{ width: 0 }}
                                                 whileInView={{ width: `${tech.level}%` }}
                                                 transition={{ duration: 1.5, delay: i * 0.1, ease: 'circOut' }}
-                                                className="h-full bg-gradient-to-r from-brand-accent to-brand-secondary shadow-neon-cyan"
+                                                className="h-full text-brand-accent shadow-neon-cyan"
                                             />
                                         </div>
                                     </div>

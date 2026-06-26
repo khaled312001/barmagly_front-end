@@ -44,141 +44,79 @@ function HeroSection({ data }: { data?: any }) {
 
     return (
         <section className="relative bg-brand-primary overflow-hidden">
-            {/* Quiet ambient — single radial wash at top right. */}
             <div className="absolute inset-0 bg-hero-gradient pointer-events-none" />
-            <div className="absolute inset-0 tech-grid opacity-60 pointer-events-none" />
 
-            <div className="section-container relative pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-44 lg:pb-28">
-                <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
-                    {/* Left: headline + CTAs (7 cols) */}
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="visible"
-                        className="lg:col-span-7"
-                    >
-                        <motion.span variants={heroTextReveal} className="section-eyebrow">
-                            {badgeText}
-                        </motion.span>
+            <div className="section-container relative pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-20">
+                <motion.div
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="visible"
+                    className="max-w-4xl mx-auto text-center"
+                >
+                    <motion.span variants={heroTextReveal} className="section-eyebrow">
+                        {badgeText}
+                    </motion.span>
 
-                        <motion.h1
-                            variants={heroTextReveal}
-                            className={cn(
-                                'mt-5 sm:mt-6 font-display text-brand-text',
-                                'text-[36px] sm:text-[52px] lg:text-[72px]',
-                                isAr ? 'leading-[1.3] font-bold' : 'leading-[1.05] tracking-[-0.025em] font-extrabold',
-                            )}
-                        >
-                            {headlineLead}{' '}
-                            <span className={cn(
-                                'text-brand-accent',
-                                isAr ? 'font-extrabold' : 'italic font-bold',
-                            )}>
-                                {headlineAccent}
-                            </span>
-                        </motion.h1>
-
-                        <motion.p
-                            variants={heroTextReveal}
-                            className={cn(
-                                'mt-5 sm:mt-7 max-w-[58ch] text-brand-text-soft',
-                                'text-[15px] sm:text-[17px] lg:text-[18px]',
-                                isAr ? 'leading-[1.85]' : 'leading-[1.65]',
-                            )}
-                        >
-                            {description}
-                        </motion.p>
-
-                        <motion.div variants={heroTextReveal} className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                            <Link
-                                href={`/${params.lang}/portfolio`}
-                                className="group inline-flex items-center justify-center gap-2 h-12 sm:h-[52px] px-6 sm:px-7 rounded-full bg-brand-accent text-white text-[14px] sm:text-[15px] font-semibold hover:bg-brand-accent-hover transition-all duration-200 hover:-translate-y-[1px] shadow-neon-cyan"
-                            >
-                                {primaryBtnText}
-                                <ArrowRight size={16} className="rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
-                            </Link>
-                            <Link
-                                href={`/${params.lang}/contact`}
-                                className="inline-flex items-center justify-center gap-2 h-12 sm:h-[52px] px-6 sm:px-7 rounded-full border border-brand-border-strong bg-white text-brand-text text-[14px] sm:text-[15px] font-semibold hover:border-brand-accent hover:bg-brand-accent-soft hover:text-brand-accent transition-colors"
-                            >
-                                {secondaryBtnText}
-                            </Link>
-                        </motion.div>
-
-                        {/* Social proof line under CTAs */}
-                        <motion.div variants={heroTextReveal} className="mt-6 sm:mt-8 flex items-center gap-3 text-[12px] sm:text-[13px] text-brand-muted">
-                            <div className="flex -space-x-2 rtl:space-x-reverse">
-                                {['#0A2A5C', '#1A6FD9', '#6B7588', '#1356B0'].map((c, i) => (
-                                    <div key={i} className="w-7 h-7 rounded-full border-2 border-white" style={{ background: c }} />
-                                ))}
-                            </div>
-                            <span className="font-medium">
-                                {isAr ? 'موثوق به من ١٢٠+ شركة وعلامة تجارية' : 'Trusted by 120+ businesses & brands'}
-                            </span>
-                        </motion.div>
-                    </motion.div>
-
-                    {/* Right: brand plate — actual logo + services list */}
-                    <motion.div
+                    <motion.h1
                         variants={heroTextReveal}
-                        initial="hidden"
-                        animate="visible"
-                        className="lg:col-span-5"
+                        className={cn(
+                            'mt-4 sm:mt-5 font-display text-brand-text',
+                            'text-[36px] sm:text-[56px] lg:text-[76px]',
+                            isAr ? 'leading-[1.25] font-extrabold' : 'leading-[1.04] tracking-[-0.03em] font-extrabold',
+                        )}
                     >
-                        <div className="relative aspect-[5/6] sm:aspect-[4/5] rounded-md border border-brand-border bg-white overflow-hidden shadow-card-lg">
-                            <div className="absolute inset-0 flex flex-col p-6 sm:p-8 lg:p-9">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-brand-muted font-semibold">
-                                        {isAr ? 'الاستوديو' : 'The Studio'}
-                                    </span>
-                                    <span className="text-[10px] sm:text-[11px] text-brand-text-soft font-medium">Zürich · CH</span>
-                                </div>
+                        {headlineLead}{' '}
+                        <span className="text-brand-accent">{headlineAccent}</span>
+                    </motion.h1>
 
-                                {/* Actual logo — focal element */}
-                                <div className="flex-1 flex items-center justify-center my-4 sm:my-6">
-                                    <div className="relative w-[55%] sm:w-[60%] aspect-square">
-                                        <Image
-                                            src="/logo.jpg"
-                                            alt="Barmagly"
-                                            fill
-                                            sizes="(min-width: 1024px) 280px, 220px"
-                                            priority
-                                            className="object-contain"
-                                        />
-                                    </div>
-                                </div>
+                    <motion.p
+                        variants={heroTextReveal}
+                        className={cn(
+                            'mt-5 sm:mt-6 max-w-[62ch] mx-auto text-brand-text-soft',
+                            'text-[15px] sm:text-[17px] lg:text-[18px]',
+                            isAr ? 'leading-[1.85]' : 'leading-[1.65]',
+                        )}
+                    >
+                        {description}
+                    </motion.p>
 
-                                <div>
-                                    <div className="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-brand-muted font-semibold mb-2.5 sm:mb-3">
-                                        {isAr ? 'الخدمات' : 'What we build'}
-                                    </div>
-                                    {[
-                                        isAr ? 'مواقع ومنصات ويب' : 'Web platforms',
-                                        isAr ? 'تطبيقات iOS و Android' : 'iOS & Android apps',
-                                        isAr ? 'متاجر إلكترونية' : 'E-commerce',
-                                        isAr ? 'أنظمة ERP / POS / CRM' : 'ERP · POS · CRM',
-                                        isAr ? 'تسويق رقمي و SEO' : 'Marketing & SEO',
-                                    ].map((line, i) => (
-                                        <div key={i} className="flex items-center gap-3 text-[12px] sm:text-[13px] text-brand-text border-b border-brand-border py-1.5 last:border-0">
-                                            <span className="font-mono text-brand-accent text-[10px] sm:text-[11px] font-semibold w-5">0{i + 1}</span>
-                                            <span className="font-medium">{line}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                    <motion.div variants={heroTextReveal} className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                        <Link
+                            href={`/${params.lang}/portfolio`}
+                            className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 h-12 sm:h-[52px] px-7 rounded-full bg-brand-accent text-white text-[14px] sm:text-[15px] font-semibold hover:bg-brand-accent-hover transition-all duration-200 hover:-translate-y-[1px] shadow-neon-cyan"
+                        >
+                            {primaryBtnText}
+                            <ArrowRight size={16} className="rtl:rotate-180 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 transition-transform" />
+                        </Link>
+                        <Link
+                            href={`/${params.lang}/contact`}
+                            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 h-12 sm:h-[52px] px-7 rounded-full border border-brand-border-strong bg-white text-brand-text text-[14px] sm:text-[15px] font-semibold hover:border-brand-accent hover:bg-brand-accent-soft hover:text-brand-accent transition-colors"
+                        >
+                            {secondaryBtnText}
+                        </Link>
                     </motion.div>
-                </div>
 
-                {/* Trust micro-stats below the columns */}
+                    <motion.div variants={heroTextReveal} className="mt-6 flex items-center justify-center gap-3 text-[12px] sm:text-[13px] text-brand-muted">
+                        <div className="flex -space-x-2 rtl:space-x-reverse">
+                            {['#0A2A5C', '#1A6FD9', '#6B7588', '#1356B0'].map((c, i) => (
+                                <div key={i} className="w-7 h-7 rounded-full border-2 border-white" style={{ background: c }} />
+                            ))}
+                        </div>
+                        <span className="font-medium">
+                            {isAr ? 'موثوق من ١٢٠+ شركة وعلامة تجارية' : 'Trusted by 120+ businesses & brands'}
+                        </span>
+                    </motion.div>
+                </motion.div>
+
+                {/* Trust micro-stats below the centered hero */}
                 <motion.div
                     variants={heroTextReveal}
                     initial="hidden"
                     animate="visible"
-                    className="mt-14 sm:mt-16 lg:mt-20 pt-6 sm:pt-8 border-t border-brand-border grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6 sm:gap-8"
+                    className="mt-12 sm:mt-14 lg:mt-16 pt-6 sm:pt-8 border-t border-brand-border grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-6 sm:gap-8 max-w-4xl mx-auto"
                 >
                     {trustStats.map((stat, i) => (
-                        <div key={i}>
+                        <div key={i} className="text-center sm:text-left rtl:sm:text-right">
                             <div className="font-display text-[16px] sm:text-[18px] lg:text-[22px] text-brand-text font-bold tracking-tight">
                                 {stat.value}
                             </div>
@@ -238,7 +176,7 @@ function ServicesSection() {
 
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-brand-primary">
             {/* ... header ... */}
             <div className="absolute top-20 left-1/2 -translate-x-1/2 text-[15vw] font-display font-black text-brand-text/[0.02] select-none pointer-events-none tracking-tighter">
                 {dict.home.services.title.toUpperCase()}
@@ -248,10 +186,10 @@ function ServicesSection() {
 
             <div className="section-container relative z-10">
                 <SectionReveal>
-                    <div className="text-center mb-24">
+                    <div className="text-center mb-12">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-4 block">{dict.home.services.title}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{dict.home.services.title}</span>
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6  tracking-tight">
+                            <span className="text-brand-accent">{dict.home.services.title}</span>
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
                         <p className="text-brand-muted max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">
@@ -280,7 +218,7 @@ function PosSection() {
     const dict = useDictionary();
     const params = useParams();
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[800px] h-[800px] bg-brand-accent/5 rounded-full blur-[150px] pointer-events-none" />
 
@@ -289,7 +227,7 @@ function PosSection() {
                     <div className="relative z-10">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.pos.badge}</span>
                         <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-brand-text mb-6 leading-[1.1] tracking-tight">
-                            {dict.home.pos.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-l from-brand-accent to-brand-secondary">{dict.home.pos.titleHighlight}</span> {dict.home.pos.titleLine2}
+                            {dict.home.pos.titleLine1} <span className="text-brand-accent">{dict.home.pos.titleHighlight}</span> {dict.home.pos.titleLine2}
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mb-8 rounded-full shadow-neon-cyan rtl:ml-auto ltr:mr-auto" />
                         <p className="text-brand-muted text-lg leading-relaxed mb-8 font-light opacity-90">
@@ -380,7 +318,7 @@ function WhyChooseSection({ data }: { data?: any }) {
     ];
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <div className="flex flex-col lg:flex-row gap-20 items-center">
@@ -499,9 +437,10 @@ function TestimonialsSection() {
     // Split into two rows for variety, both auto-scrolling in opposite directions.
     const rowA = testimonials.slice(0, Math.ceil(testimonials.length / 2));
     const rowB = testimonials.slice(Math.ceil(testimonials.length / 2));
-    // Duplicate for seamless infinite loop.
-    const loopA = [...rowA, ...rowA, ...rowA];
-    const loopB = [...rowB, ...rowB, ...rowB];
+    // Duplicate exactly once — pairs with the -50% marquee transform for a
+    // truly seamless, never-ending loop.
+    const loopA = [...rowA, ...rowA];
+    const loopB = [...rowB, ...rowB];
 
     const TestimonialCard = ({ t }: { t: typeof TESTIMONIALS_EN[0] }) => (
         <div className="shrink-0 w-[340px] sm:w-[400px] bg-white border border-brand-border rounded-xl p-7 shadow-card mx-3 hover:shadow-card-lg transition-shadow">
@@ -529,7 +468,7 @@ function TestimonialsSection() {
     );
 
     return (
-        <section className="relative overflow-hidden py-20 sm:py-24 lg:py-32 bg-brand-surface border-y border-brand-border">
+        <section className="relative overflow-hidden py-20 sm:py-24 lg:py-16 sm:py-20 lg:py-24 bg-brand-surface border-y border-brand-border">
             <div className="section-container">
                 <div className="max-w-2xl mb-12 sm:mb-16">
                     <span className="section-eyebrow">{dict.home.testimonials.badge}</span>
@@ -589,7 +528,7 @@ function TechSection() {
     const marqueeItems = [...techs, ...techs];
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-10" />
 
             <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[140px] pointer-events-none opacity-50" />
@@ -597,10 +536,10 @@ function TechSection() {
 
             <div className="section-container relative z-10 px-0 max-w-none">
                 <SectionReveal>
-                    <div className="text-center mb-24 section-container pb-0">
+                    <div className="text-center mb-12 section-container pb-0">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{dict.home.tech.badge}</span>
-                        <h2 className="text-4xl md:text-7xl font-display font-black text-brand-text mb-6 text-glow tracking-tighter">
-                            {dict.home.tech.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary italic">{dict.home.tech.titleHighlight}</span>
+                        <h2 className="text-4xl md:text-7xl font-display font-black text-brand-text mb-6  tracking-tighter">
+                            {dict.home.tech.titleLine1} <span className="text-brand-accent italic">{dict.home.tech.titleHighlight}</span>
                         </h2>
                         <div className="w-32 h-1 bg-brand-accent mx-auto mb-10 rounded-full shadow-neon-cyan" />
                         <p className="text-brand-muted max-w-2xl mx-auto text-lg font-light opacity-80">
@@ -675,13 +614,13 @@ function ContactFormSection({ data }: { data?: any }) {
     } = (isAr ? data : {}) || {};
 
     return (
-        <section className="relative overflow-hidden py-32 bg-brand-primary border-t border-brand-border">
+        <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-brand-primary border-t border-brand-border">
             <div className="absolute inset-0 tech-grid opacity-5" />
             <div className="section-container relative z-10">
                 <SectionReveal>
-                    <div className="text-center mb-20">
+                    <div className="text-center mb-12">
                         <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{badge}</span>
-                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight uppercase italic">
+                        <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6  tracking-tight uppercase italic">
                             {title}
                         </h2>
                         <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />

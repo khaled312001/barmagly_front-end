@@ -78,8 +78,8 @@ export default function PosPage() {
                     <SectionReveal>
                         <div className="text-center mb-24">
                             <span className="text-brand-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 block">{posDict.features.badge}</span>
-                            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6 text-glow tracking-tight">
-                                {posDict.features.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{posDict.features.titleHighlight}</span>
+                            <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-6  tracking-tight">
+                                {posDict.features.titleLine1} <span className="text-brand-accent">{posDict.features.titleHighlight}</span>
                             </h2>
                             <div className="w-24 h-1 bg-brand-accent mx-auto mb-8 rounded-full shadow-neon-cyan" />
                         </div>

@@ -187,44 +187,9 @@ export default function ServicesPage() {
         } as any));
     }, [lang]);
 
-    const [services, setServices] = React.useState<ServiceDetail[]>(staticSeed);
-
-    React.useEffect(() => {
-        setServices(staticSeed);
-        publicApi.getServices().then(({ data }) => {
-            if (!Array.isArray(data) || data.length === 0) return;
-            const apiServices = data.flatMap((cat: any) => cat.services || []).map((s: any) => {
-                let features: string[] = [];
-                const featuresStr = (lang === 'en' && s.featuresEn) ? s.featuresEn : s.features;
-                if (featuresStr) {
-                    if (Array.isArray(featuresStr)) {
-                        features = featuresStr;
-                    } else {
-                        try {
-                            const parsed = JSON.parse(featuresStr);
-                            features = Array.isArray(parsed) ? parsed : [parsed.toString()];
-                        } catch (e) {
-                            features = featuresStr.split(',').map((s: string) => s.trim()).filter(Boolean);
-                        }
-                    }
-                }
-                return {
-                    id: s.slug || '',
-                    title: lang === 'en' && s.titleEn ? s.titleEn : s.title,
-                    description: lang === 'en' && s.descriptionEn ? s.descriptionEn : s.description,
-                    icon: <DynamicIcon name={s.icon || 'Code2'} size={32} />,
-                    features,
-                    slug: s.slug,
-                };
-            });
-            const bySlug = new Map<string, any>();
-            staticSeed.forEach((s) => bySlug.set((s as any).slug, s));
-            apiServices.forEach((s: any) => bySlug.set(s.slug, s));
-            setServices(Array.from(bySlug.values()));
-        }).catch(() => { /* keep seed */ });
-    }, [lang, staticSeed]);
-
-    const displayServices = services;
+    // Use the curated 6 static services only. The Vercel API returns duplicates
+    // and items without the local image paths, which broke the layout.
+    const displayServices = staticSeed;
 
     return (
         <>
@@ -247,7 +212,7 @@ export default function ServicesPage() {
                             <span className="text-brand-accent font-mono text-xs tracking-[0.5em] uppercase mb-6 block">{dict.services.cta.badge}</span>
                             <h2 className="text-4xl md:text-6xl font-display font-black text-brand-text mb-8 tracking-tighter">
                                 {dict.services.cta.titleLine1} <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">{dict.services.cta.titleHighlight}</span>
+                                <span className="text-brand-accent">{dict.services.cta.titleHighlight}</span>
                             </h2>
                             <p className="text-brand-muted text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed">
                                 {dict.services.cta.subtitle}

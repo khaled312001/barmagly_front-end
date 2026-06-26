@@ -97,8 +97,10 @@ const config: Config = {
                 'marquee-reverse': 'marqueeReverse 40s linear infinite',
             },
             keyframes: {
-                marquee:        { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
-                marqueeReverse: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(0%)' } },
+                // Marquee shifts by exactly 50% — assumes content is duplicated
+                // once (`[...arr, ...arr]`) so the loop is seamless.
+                marquee:        { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } },
+                marqueeReverse: { '0%': { transform: 'translateX(-50%)' }, '100%': { transform: 'translateX(0%)' } },
                 fadeIn:         { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
                 fadeUp:         { '0%': { opacity: '0', transform: 'translateY(12px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                 scaleIn:        { '0%': { opacity: '0', transform: 'scale(0.98)' }, '100%': { opacity: '1', transform: 'scale(1)' } },

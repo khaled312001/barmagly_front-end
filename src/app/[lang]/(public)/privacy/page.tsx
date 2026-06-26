@@ -78,7 +78,7 @@ export default function PrivacyPage() {
                             variants={heroTextReveal}
                             className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
-                            Privacy <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">Policy</span>
+                            Privacy <span className="text-brand-accent">Policy</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-brand-muted text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
                             Last Updated: {lastUpdated}

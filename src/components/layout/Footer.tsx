@@ -3,8 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { COMPANY_ADDRESS, COMPANY_LICENSE, OFFICE_PHONE, FACEBOOK_URL, LINKEDIN_URL } from '@/lib/utils';
-import { Linkedin, Facebook, ArrowUpRight } from 'lucide-react';
+import {
+    COMPANY_ADDRESS,
+    COMPANY_LICENSE,
+    OFFICE_PHONE,
+    FACEBOOK_URL,
+    LINKEDIN_URL,
+} from '@/lib/utils';
+import { Linkedin, Facebook, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { useSiteSettings } from '@/lib/contexts/SiteContext';
 
 interface FooterProps {
@@ -14,135 +20,156 @@ interface FooterProps {
 
 export function Footer({ dict, lang }: FooterProps) {
     const { settings } = useSiteSettings();
-
-    const columns = [
-        {
-            label: dict?.footer?.services || (lang === 'ar' ? 'الخدمات' : 'Services'),
-            links: [
-                { label: dict?.footer?.links?.web || (lang === 'ar' ? 'تطوير المواقع' : 'Web platforms'), href: `/${lang}/services/web-development` },
-                { label: dict?.footer?.links?.mobile || (lang === 'ar' ? 'تطبيقات الموبايل' : 'Mobile apps'), href: `/${lang}/services/mobile-app-development` },
-                { label: dict?.footer?.links?.business || (lang === 'ar' ? 'أنظمة الأعمال' : 'POS & business systems'), href: `/${lang}/services/erp-business-systems` },
-                { label: dict?.footer?.links?.design || (lang === 'ar' ? 'تصميم UI/UX' : 'UI/UX & brand'), href: `/${lang}/services/ui-ux-design` },
-                { label: dict?.footer?.links?.marketing || (lang === 'ar' ? 'التسويق الرقمي' : 'Growth & SEO'), href: `/${lang}/services/digital-marketing` },
-            ],
-        },
-        {
-            label: lang === 'ar' ? 'الاستوديو' : 'Studio',
-            links: [
-                { label: dict?.navbar?.about || (lang === 'ar' ? 'من نحن' : 'About'), href: `/${lang}/about` },
-                { label: dict?.navbar?.portfolio || (lang === 'ar' ? 'سابقة الأعمال' : 'Work'), href: `/${lang}/portfolio` },
-                { label: dict?.navbar?.blog || (lang === 'ar' ? 'المدونة' : 'Journal'), href: `/${lang}/blog` },
-                { label: dict?.navbar?.contact || (lang === 'ar' ? 'تواصل معنا' : 'Contact'), href: `/${lang}/contact` },
-            ],
-        },
-        {
-            label: lang === 'ar' ? 'القانوني' : 'Legal',
-            links: [
-                { label: dict?.footer?.privacyPolicy || (lang === 'ar' ? 'سياسة الخصوصية' : 'Privacy'), href: `/${lang}/privacy` },
-                { label: dict?.footer?.termsOfService || (lang === 'ar' ? 'شروط الاستخدام' : 'Terms'), href: `/${lang}/terms` },
-            ],
-        },
-    ];
+    const isAr = lang === 'ar';
 
     const address = settings?.address || COMPANY_ADDRESS;
     const email = settings?.email || 'info@barmagly.tech';
     const license = settings?.license || COMPANY_LICENSE;
-    const studioDescriptor = lang === 'ar'
-        ? 'استوديو برمجة يبني مواقع، تطبيقات، وأنظمة POS لشركات تهتم بالتفاصيل.'
-        : 'A small software studio building web, mobile, and POS systems for operators who care about the details.';
+
+    const servicesLinks = [
+        { label: isAr ? 'تطوير المواقع' : 'Web Development', href: `/${lang}/services/web-development` },
+        { label: isAr ? 'تطبيقات الموبايل' : 'Mobile Apps', href: `/${lang}/services/mobile-app-development` },
+        { label: isAr ? 'أنظمة POS و ERP' : 'POS & ERP', href: `/${lang}/services/erp-business-systems` },
+        { label: isAr ? 'التجارة الإلكترونية' : 'E-Commerce', href: `/${lang}/services/e-commerce-development` },
+        { label: isAr ? 'تصميم UI/UX' : 'UI/UX Design', href: `/${lang}/services/ui-ux-design` },
+    ];
+    const studioLinks = [
+        { label: isAr ? 'من نحن' : 'About', href: `/${lang}/about` },
+        { label: isAr ? 'سابقة الأعمال' : 'Work', href: `/${lang}/portfolio` },
+        { label: isAr ? 'المدونة' : 'Journal', href: `/${lang}/blog` },
+        { label: isAr ? 'تواصل معنا' : 'Contact', href: `/${lang}/contact` },
+    ];
 
     return (
-        <footer className="relative bg-brand-ink text-brand-on-ink">
-            <div className="max-w-content mx-auto px-6 sm:px-8 lg:px-10 pt-20 pb-10 lg:pt-24 lg:pb-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-10">
-                    {/* Brand col */}
-                    <div className="lg:col-span-5">
-                        <Link href={`/${lang}`} className="inline-block bg-white rounded-md p-3" aria-label="Barmagly">
-                            <div className="relative w-[180px] h-[88px]">
+        <footer className="bg-brand-ink text-brand-on-ink">
+            {/* Main */}
+            <div className="section-container py-14 lg:py-16">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-12 gap-x-8 gap-y-12">
+                    {/* Brand + contact (left) */}
+                    <div className="col-span-2 lg:col-span-5">
+                        <Link href={`/${lang}`} className="inline-block bg-white rounded-lg p-3" aria-label="Barmagly">
+                            <div className="relative w-[160px] h-[72px]">
                                 <Image
                                     src="/logo.jpg"
                                     alt="Barmagly"
                                     fill
-                                    sizes="180px"
+                                    sizes="160px"
                                     className="object-contain"
                                 />
                             </div>
                         </Link>
-                        <p className="mt-5 text-[14px] leading-[1.7] text-brand-on-ink/70 max-w-[40ch]">
-                            {studioDescriptor}
+                        <p className="mt-6 text-[14px] leading-[1.75] text-brand-on-ink-soft max-w-sm">
+                            {isAr
+                                ? 'شركة برمجيات تبني مواقع، تطبيقات، متاجر إلكترونية، وأنظمة POS / ERP / CRM لشركات الناشئة والشركات النامية.'
+                                : 'Software company building websites, mobile apps, e-commerce, and POS / ERP / CRM systems for startups and growing businesses.'}
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-2">
-                            <span className="text-[10px] uppercase tracking-[0.16em] px-3 py-1.5 border border-brand-ink-soft rounded-full text-brand-on-ink/70">
-                                {lang === 'ar' ? 'سجل تجاري' : 'License'} · {license}
-                            </span>
-                            <span className="text-[10px] uppercase tracking-[0.16em] px-3 py-1.5 border border-brand-ink-soft rounded-full text-brand-on-ink/70">
-                                Zürich · CH
-                            </span>
-                        </div>
-
-                        <div className="mt-8 flex flex-col gap-2 text-[13px] text-brand-on-ink/75">
-                            <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="hover:text-brand-accent transition-colors" dir="ltr">
-                                {OFFICE_PHONE}
+                        <div className="mt-7 flex flex-col gap-3 text-[14px]">
+                            <a href={`tel:${OFFICE_PHONE.replace(/\s/g, '')}`} className="flex items-center gap-3 text-brand-on-ink-soft hover:text-white transition-colors">
+                                <Phone size={15} className="text-brand-accent shrink-0" />
+                                <span dir="ltr">{OFFICE_PHONE}</span>
                             </a>
-                            <a href={`mailto:${email}`} className="hover:text-brand-accent transition-colors">
+                            <a href={`mailto:${email}`} className="flex items-center gap-3 text-brand-on-ink-soft hover:text-white transition-colors">
+                                <Mail size={15} className="text-brand-accent shrink-0" />
                                 {email}
                             </a>
-                            <span className="text-brand-on-ink/55">{address}</span>
+                            <div className="flex items-start gap-3 text-brand-on-ink-soft">
+                                <MapPin size={15} className="text-brand-accent shrink-0 mt-0.5" />
+                                <span>{address}</span>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Link columns */}
-                    {columns.map((col) => (
-                        <div key={col.label} className="lg:col-span-2">
-                            <div className="text-[11px] uppercase tracking-[0.18em] text-brand-on-ink/50 font-medium">
-                                {col.label}
-                            </div>
-                            <ul className="mt-5 space-y-3">
-                                {col.links.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="text-[14px] text-brand-on-ink/85 hover:text-brand-accent transition-colors duration-200"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                    {/* Services */}
+                    <div className="lg:col-span-3 lg:col-start-7">
+                        <div className="text-[11px] uppercase tracking-[0.18em] text-white font-semibold mb-5">
+                            {isAr ? 'الخدمات' : 'Services'}
                         </div>
-                    ))}
+                        <ul className="space-y-3">
+                            {servicesLinks.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className="text-[14px] text-brand-on-ink-soft hover:text-white transition-colors">
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-                    {/* Newsletter / contact small */}
-                    <div className="lg:col-span-1 flex lg:flex-col items-start lg:items-end gap-3">
-                        <div className="text-[11px] uppercase tracking-[0.18em] text-brand-on-ink/50 font-medium lg:text-right">
-                            {lang === 'ar' ? 'تابعنا' : 'Follow'}
+                    {/* Studio */}
+                    <div className="lg:col-span-2">
+                        <div className="text-[11px] uppercase tracking-[0.18em] text-white font-semibold mb-5">
+                            {isAr ? 'الاستوديو' : 'Studio'}
                         </div>
-                        <div className="flex lg:flex-col items-center lg:items-end gap-3 mt-1 lg:mt-2">
-                            <Link href={LINKEDIN_URL} target="_blank" className="text-brand-on-ink/70 hover:text-brand-accent transition-colors" aria-label="LinkedIn">
-                                <Linkedin size={16} />
-                            </Link>
-                            <Link href={FACEBOOK_URL} target="_blank" className="text-brand-on-ink/70 hover:text-brand-accent transition-colors" aria-label="Facebook">
-                                <Facebook size={16} />
-                            </Link>
+                        <ul className="space-y-3">
+                            {studioLinks.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className="text-[14px] text-brand-on-ink-soft hover:text-white transition-colors">
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div className="lg:col-span-2">
+                        <div className="text-[11px] uppercase tracking-[0.18em] text-white font-semibold mb-5">
+                            {isAr ? 'القانوني' : 'Legal'}
                         </div>
+                        <ul className="space-y-3">
+                            <li>
+                                <Link href={`/${lang}/privacy`} className="text-[14px] text-brand-on-ink-soft hover:text-white transition-colors">
+                                    {isAr ? 'سياسة الخصوصية' : 'Privacy'}
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={`/${lang}/terms`} className="text-[14px] text-brand-on-ink-soft hover:text-white transition-colors">
+                                    {isAr ? 'شروط الاستخدام' : 'Terms'}
+                                </Link>
+                            </li>
+                            <li className="pt-4 text-[12px] uppercase tracking-[0.14em] text-brand-on-ink-soft">
+                                CR {license}
+                            </li>
+                            <li className="text-[12px] uppercase tracking-[0.14em] text-brand-on-ink-soft">
+                                Zürich · CH
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            {/* Bottom hairline strip */}
+            {/* Bottom strip */}
             <div className="border-t border-brand-ink-soft">
-                <div className="max-w-content mx-auto px-6 sm:px-8 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-[12px] text-brand-on-ink/60">
+                <div className="section-container py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[12px] text-brand-on-ink-soft">
                     <div>
-                        © {new Date().getFullYear()} Barmagly. {lang === 'ar' ? 'كل الحقوق محفوظة' : 'All rights reserved'}.
+                        © {new Date().getFullYear()} Barmagly. {isAr ? 'كل الحقوق محفوظة.' : 'All rights reserved.'}
                     </div>
-                    <Link
-                        href={`/${lang}/contact`}
-                        className="inline-flex items-center gap-1.5 hover:text-brand-accent transition-colors"
-                    >
-                        {lang === 'ar' ? 'لنبدأ مشروعاً معاً' : "Let's build something"}
-                        <ArrowUpRight size={12} />
-                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href={LINKEDIN_URL}
+                            target="_blank"
+                            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-white hover:bg-brand-accent transition-colors"
+                            aria-label="LinkedIn"
+                        >
+                            <Linkedin size={14} />
+                        </Link>
+                        <Link
+                            href={FACEBOOK_URL}
+                            target="_blank"
+                            className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/10 text-white hover:bg-brand-accent transition-colors"
+                            aria-label="Facebook"
+                        >
+                            <Facebook size={14} />
+                        </Link>
+                        <Link
+                            href={`/${lang}/contact`}
+                            className="inline-flex items-center gap-1.5 ml-2 hover:text-white transition-colors"
+                        >
+                            {isAr ? 'لنبدأ مشروعاً' : "Let's talk"}
+                            <ArrowUpRight size={12} />
+                        </Link>
+                    </div>
                 </div>
             </div>
         </footer>

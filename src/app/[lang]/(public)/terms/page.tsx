@@ -55,7 +55,7 @@ export default function TermsPage() {
                             variants={heroTextReveal}
                             className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
-                            Terms of <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">Service</span>
+                            Terms of <span className="text-brand-accent">Service</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-brand-muted text-xl md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
                             Agreement Protocol: {lastUpdated} | <span className="text-brand-text">Legal Jurisdiction: Switzerland</span>

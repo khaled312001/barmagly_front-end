@@ -142,7 +142,7 @@ export default function BlogPage() {
                             className="text-5xl md:text-6xl lg:text-8xl font-display font-bold text-brand-text mb-6 drop-shadow-2xl"
                             style={{ textShadow: '0 0 40px rgba(0, 212, 255, 0.4)' }}
                         >
-                            {blogDict.hero.titleLine1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">{blogDict.hero.titleHighlight}</span>
+                            {blogDict.hero.titleLine1} <span className="text-brand-accent">{blogDict.hero.titleHighlight}</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-lg md:text-xl text-brand-muted max-w-2xl leading-relaxed">
                             {blogDict.hero.subtitle}

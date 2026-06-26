@@ -83,7 +83,7 @@ export default function ContactPage() {
                             className="text-4xl sm:text-6xl lg:text-8xl font-display font-black text-brand-text mb-8 tracking-tighter drop-shadow-2xl"
                         >
                             {contactDict.hero.titleLine1} <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent via-white to-brand-secondary">{contactDict.hero.titleHighlight}</span>
+                            <span className="text-brand-accent">{contactDict.hero.titleHighlight}</span>
                         </motion.h1>
                         <motion.p variants={heroTextReveal} className="text-xl md:text-2xl text-brand-muted max-w-3xl mx-auto leading-relaxed font-light" dangerouslySetInnerHTML={{ __html: contactDict.hero.subtitle }} />
                     </motion.div>
